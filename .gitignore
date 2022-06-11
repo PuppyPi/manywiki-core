@@ -1,11 +1,4 @@
-target
-.settings
-.classpath
-.project
-nb-configuration.xml
-**/*.iml
-.idea
-.metadata
-.checkstyle
-**/node_modules/*
-.vscode
+/bin/
+/.classpath
+/.project
+/.gitignore

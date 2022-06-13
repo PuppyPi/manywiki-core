@@ -50,7 +50,7 @@ public class SaveUserProfileTask extends Task {
 		// Save the profile (userdatabase will take care of timestamps for us)
 		context.getEngine().getManager( UserManager.class ).getUserDatabase().save( profile );
 		
-		//RPMOD — good lord Things That Happen (if not "Events"?XD) should be handled in a universal way without the core depending on one, completely aribtrary, thing to do with them!  (the core shouldn't even depende on javax.mail!)
+		//RPMOD — TODO good lord Things That Happen (if not "Events"?XD) should be handled in a universal way without the core depending on one, completely aribtrary, thing to do with them!  (the core shouldn't even depende on javax.mail!)
 		// Send e-mail if user supplied an e-mail address
 		//        if ( profile != null && profile.getEmail() != null ) {
 		//            try {

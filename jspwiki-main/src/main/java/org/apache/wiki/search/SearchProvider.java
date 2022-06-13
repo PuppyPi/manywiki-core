@@ -59,5 +59,9 @@ public interface SearchProvider extends WikiProvider {
      * @throws IOException if for some reason the query could not be executed.
      */
     Collection< SearchResult > findPages( String query, Context wikiContext ) throws ProviderException, IOException;
-
+    
+    default Collection< SearchResult > findPages2( String query, Context wikiContext ) throws ProviderException, IOException  //RPMOD to remove dependency on Lucene in the base code!  TODO what's really the significance here in an implementation-independent sense?!
+    {
+    	return findPages(query, wikiContext);
+    }
 }

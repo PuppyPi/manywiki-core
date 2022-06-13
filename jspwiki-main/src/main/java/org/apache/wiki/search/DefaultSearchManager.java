@@ -192,11 +192,7 @@ public class DefaultSearchManager extends BasePageFilter implements SearchManage
             if( !searchString.isEmpty() ) {
                 try {
                     final Collection< SearchResult > c;
-                    if( m_searchProvider instanceof LuceneSearchProvider ) {
-                        c = ( ( LuceneSearchProvider )m_searchProvider ).findPages( searchString, 0, wikiContext );
-                    } else {
-                        c = m_searchProvider.findPages( searchString, wikiContext );
-                    }
+                        c = m_searchProvider.findPages2( searchString, wikiContext );
 
                     int count = 0;
                     for( final Iterator< SearchResult > i = c.iterator(); i.hasNext() && count < maxLength; count++ ) {

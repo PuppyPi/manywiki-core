@@ -20,10 +20,8 @@
 package org.apache.wiki.tags;
 
 
-import org.apache.wiki.filters.SpamFilter;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.jsp.PageContext;
+import org.apache.wiki.filters.ActiveSpamFilterInsertions;
+import org.apache.wiki.filters.SpamFilterInsertions;
 
 /**
  * Provides hidden input fields which are checked by the {@code SpamFilter}.
@@ -32,21 +30,16 @@ import javax.servlet.jsp.PageContext;
  */
 public class SpamFilterInputsTag extends WikiTagBase {
 
+	protected SpamFilterInsertions insertions = ActiveSpamFilterInsertions.active;
+	
     /**
      * {@inheritDoc}
      */
     @Override
     public int doWikiStartTag() throws Exception {
-        final String encodingCheckInput = SpamFilter.insertInputFields( pageContext );
-        final String hashCheckInput =
-            "<input type='hidden' name='" + SpamFilter.getHashFieldName( ( HttpServletRequest ) pageContext.getRequest() ) + "'" +
-            " value='" + pageContext.getAttribute( "lastchange", PageContext.REQUEST_SCOPE ) + "' />\n";
-
-        // This following field is only for the SpamFilter to catch bots which are just randomly filling all fields and submitting.
-        // Normal user should never see this field, nor type anything in it.
-        final String botCheckInput =
-            "<input class='hidden' type='text' name='" + SpamFilter.getBotFieldName() + "' id='" + SpamFilter.getBotFieldName() + "' value='' />\n";
-        pageContext.getOut().print( encodingCheckInput + hashCheckInput + botCheckInput );
+    	String html = insertions == null ? null : insertions.getHTMLInsertion(pageContext);
+    	if (html != null)
+    		pageContext.getOut().print( html );
         return SKIP_BODY;
     }
 

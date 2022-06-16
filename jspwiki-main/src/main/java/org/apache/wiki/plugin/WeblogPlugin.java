@@ -32,6 +32,7 @@ import org.apache.wiki.api.plugin.PluginElement;
 import org.apache.wiki.api.providers.WikiProvider;
 import org.apache.wiki.auth.AuthorizationManager;
 import org.apache.wiki.auth.permissions.PagePermission;
+import org.apache.wiki.i18n.InternationalizationManager;
 import org.apache.wiki.pages.PageManager;
 import org.apache.wiki.preferences.Preferences;
 import org.apache.wiki.preferences.Preferences.TimeFormat;
@@ -273,7 +274,7 @@ public class WeblogPlugin implements Plugin, ParserStagePlugin {
     private void addEntryHTML( final Context context, final DateFormat entryFormat, final boolean hasComments,
                                final StringBuilder buffer, final Page entry, final Map< String, String > params) {
         final Engine engine = context.getEngine();
-        final ResourceBundle rb = Preferences.getBundle(context, PluginCoreResources.CORE_PLUGINS_RESOURCEBUNDLE);
+        final ResourceBundle rb = Preferences.getBundle(context, InternationalizationManager.CORE_PLUGINS_RESOURCEBUNDLE);
 
         buffer.append("<div class=\"weblogentry\">\n");
 

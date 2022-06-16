@@ -28,6 +28,7 @@ import org.apache.wiki.api.exceptions.RedirectException;
 import org.apache.wiki.api.exceptions.WikiException;
 import org.apache.wiki.api.plugin.Plugin;
 import org.apache.wiki.api.spi.Wiki;
+import org.apache.wiki.i18n.InternationalizationManager;
 import org.apache.wiki.pages.PageManager;
 import org.apache.wiki.parser.MarkupParser;
 import org.apache.wiki.preferences.Preferences;
@@ -81,7 +82,7 @@ public class BugReportHandler implements Plugin {
         String version = params.get( PARAM_VERSION );
         String submitter = null;
         final SimpleDateFormat format = new SimpleDateFormat( DEFAULT_DATEFORMAT );
-        final ResourceBundle rb = Preferences.getBundle( context, PluginCoreResources.CORE_PLUGINS_RESOURCEBUNDLE );
+        final ResourceBundle rb = Preferences.getBundle( context, InternationalizationManager.CORE_PLUGINS_RESOURCEBUNDLE );
         final Principal wup = context.getCurrentUser();
 
         if( wup != null ) {

@@ -29,7 +29,6 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.TreeSet;
 import org.apache.wiki.i18n.InternationalizationManager;
-import org.apache.wiki.plugin.PluginCoreResources;
 
 
 /**
@@ -96,7 +95,7 @@ public class TranslationsCheck {
         final String fileSuffix = ( "en".equals( suffix ) ) ? "" : "_" + suffix;
         final Map< String, Integer > coreMetrics = checkFile( "/"+InternationalizationManager.CORE_BUNDLE.replace('.', '/'), fileSuffix, ".properties");
         final Map< String, Integer > templateMetrics = checkFile( "/"+InternationalizationManager.DEF_TEMPLATE.replace('.', '/'), fileSuffix, ".properties");
-        final Map< String, Integer > pluginMetrics = checkFile( "/"+PluginCoreResources.CORE_PLUGINS_RESOURCEBUNDLE.replace('.', '/'), fileSuffix, ".properties");
+        final Map< String, Integer > pluginMetrics = checkFile( "/"+InternationalizationManager.CORE_PLUGINS_RESOURCEBUNDLE.replace('.', '/'), fileSuffix, ".properties");
 
         if( lang >= 0 ) {
             final int expected = coreMetrics.get( "expected" ) + templateMetrics.get( "expected" ) + pluginMetrics.get( "expected" );

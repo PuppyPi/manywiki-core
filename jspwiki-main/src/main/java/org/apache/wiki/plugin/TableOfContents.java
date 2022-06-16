@@ -27,6 +27,7 @@ import org.apache.wiki.api.core.Page;
 import org.apache.wiki.api.exceptions.PluginException;
 import org.apache.wiki.api.plugin.Plugin;
 import org.apache.wiki.filters.FilterManager;
+import org.apache.wiki.i18n.InternationalizationManager;
 import org.apache.wiki.pages.PageManager;
 import org.apache.wiki.parser.Heading;
 import org.apache.wiki.parser.HeadingListener;
@@ -150,7 +151,7 @@ public class TableOfContents implements Plugin, HeadingListener {
     public String execute( final Context context, final Map<String, String> params ) throws PluginException {
         final Engine engine = context.getEngine();
         final Page page = context.getPage();
-        final ResourceBundle rb = Preferences.getBundle( context, PluginCoreResources.CORE_PLUGINS_RESOURCEBUNDLE );
+        final ResourceBundle rb = Preferences.getBundle( context, InternationalizationManager.CORE_PLUGINS_RESOURCEBUNDLE );
 
         if( context.getVariable( VAR_ALREADY_PROCESSING ) != null ) {
             //return rb.getString("tableofcontents.title");

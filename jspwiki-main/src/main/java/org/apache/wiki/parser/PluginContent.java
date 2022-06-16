@@ -30,7 +30,7 @@ import org.apache.wiki.api.exceptions.PluginException;
 import org.apache.wiki.api.plugin.ParserStagePlugin;
 import org.apache.wiki.api.plugin.Plugin;
 import org.apache.wiki.api.plugin.PluginElement;
-import org.apache.wiki.plugin.PluginCoreResources;
+import org.apache.wiki.i18n.InternationalizationManager;
 import org.apache.wiki.plugin.PluginManager;
 import org.apache.wiki.preferences.Preferences;
 import org.apache.wiki.variables.VariableManager;
@@ -173,7 +173,7 @@ public class PluginContent extends Text implements PluginElement {
                 result = "";
             } else {
                 // log.info("Failed to execute plugin",e);
-                final ResourceBundle rb = Preferences.getBundle( context, PluginCoreResources.CORE_PLUGINS_RESOURCEBUNDLE );
+                final ResourceBundle rb = Preferences.getBundle( context, InternationalizationManager.CORE_PLUGINS_RESOURCEBUNDLE );
                 result = MarkupParser.makeError( MessageFormat.format( rb.getString( "plugin.error.insertionfailed" ), 
                 		                                               context.getRealPage().getWiki(), 
                 		                                               context.getRealPage().getName(), 
@@ -189,7 +189,7 @@ public class PluginContent extends Text implements PluginElement {
     public void executeParse( final Context context ) throws PluginException {
         final PluginManager pm = context.getEngine().getManager( PluginManager.class );
         if( pm.pluginsEnabled() ) {
-            final ResourceBundle rb = Preferences.getBundle( context, PluginCoreResources.CORE_PLUGINS_RESOURCEBUNDLE);
+            final ResourceBundle rb = Preferences.getBundle( context, InternationalizationManager.CORE_PLUGINS_RESOURCEBUNDLE);
             final Map< String, String > params = getParameters();
             final Plugin plugin = pm.newWikiPlugin( getPluginName(), rb );
             try {

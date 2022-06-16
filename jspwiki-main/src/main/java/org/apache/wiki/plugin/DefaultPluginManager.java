@@ -38,6 +38,7 @@ import org.apache.wiki.api.core.Engine;
 import org.apache.wiki.api.exceptions.PluginException;
 import org.apache.wiki.api.plugin.InitializablePlugin;
 import org.apache.wiki.api.plugin.Plugin;
+import org.apache.wiki.i18n.InternationalizationManager;
 import org.apache.wiki.modules.BaseModuleManager;
 import org.apache.wiki.modules.WikiModuleInfo;
 import org.apache.wiki.preferences.Preferences;
@@ -265,7 +266,7 @@ public class DefaultPluginManager extends BaseModuleManager implements PluginMan
             return "";
         }
 
-        final ResourceBundle rb = Preferences.getBundle( context, PluginCoreResources.CORE_PLUGINS_RESOURCEBUNDLE );
+        final ResourceBundle rb = Preferences.getBundle( context, InternationalizationManager.CORE_PLUGINS_RESOURCEBUNDLE );
         final boolean debug = TextUtil.isPositive( params.get( PARAM_DEBUG ) );
         try {
             //   Create...
@@ -383,7 +384,7 @@ public class DefaultPluginManager extends BaseModuleManager implements PluginMan
             return "";
         }
 
-        final ResourceBundle rb = Preferences.getBundle( context, PluginCoreResources.CORE_PLUGINS_RESOURCEBUNDLE );
+        final ResourceBundle rb = Preferences.getBundle( context, InternationalizationManager.CORE_PLUGINS_RESOURCEBUNDLE );
         final PatternMatcher matcher = new Perl5Matcher();
 
         try {

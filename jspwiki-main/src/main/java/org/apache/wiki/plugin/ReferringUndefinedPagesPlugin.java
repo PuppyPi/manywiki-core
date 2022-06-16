@@ -20,6 +20,7 @@ package org.apache.wiki.plugin;
 
 import org.apache.wiki.api.core.Context;
 import org.apache.wiki.api.exceptions.PluginException;
+import org.apache.wiki.i18n.InternationalizationManager;
 import org.apache.wiki.preferences.Preferences;
 import org.apache.wiki.references.ReferenceManager;
 import org.apache.wiki.util.TextUtil;
@@ -45,7 +46,7 @@ public class ReferringUndefinedPagesPlugin extends AbstractReferralPlugin {
 
     @Override
     public String execute( final Context context, final Map<String, String> params) throws PluginException {
-        final ResourceBundle rb = Preferences.getBundle(context, PluginCoreResources.CORE_PLUGINS_RESOURCEBUNDLE);
+        final ResourceBundle rb = Preferences.getBundle(context, InternationalizationManager.CORE_PLUGINS_RESOURCEBUNDLE);
         final ReferenceManager referenceManager = context.getEngine().getManager( ReferenceManager.class );
 
         final int items = TextUtil.parseIntParameter(params.get(PARAM_MAX), ALL_ITEMS);

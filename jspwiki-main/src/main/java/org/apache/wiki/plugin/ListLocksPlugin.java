@@ -21,6 +21,7 @@ package org.apache.wiki.plugin;
 import org.apache.wiki.api.core.Context;
 import org.apache.wiki.api.exceptions.PluginException;
 import org.apache.wiki.api.plugin.Plugin;
+import org.apache.wiki.i18n.InternationalizationManager;
 import org.apache.wiki.pages.PageLock;
 import org.apache.wiki.pages.PageManager;
 import org.apache.wiki.preferences.Preferences;
@@ -45,7 +46,7 @@ public class ListLocksPlugin implements Plugin {
     	final StringBuilder result = new StringBuilder();
         final PageManager mgr = context.getEngine().getManager( PageManager.class );
         final List< PageLock > locks = mgr.getActiveLocks();
-        final ResourceBundle rb = Preferences.getBundle( context, PluginCoreResources.CORE_PLUGINS_RESOURCEBUNDLE );
+        final ResourceBundle rb = Preferences.getBundle( context, InternationalizationManager.CORE_PLUGINS_RESOURCEBUNDLE );
         result.append("<table class=\"wikitable\">\n");
         result.append("<tr>\n");
         result.append( "<th>" ).append( rb.getString( "plugin.listlocks.page" ) ).append( "</th><th>" ).append( rb.getString( "plugin.listlocks.locked.by" ) ).append( "</th><th>" ).append( rb.getString( "plugin.listlocks.acquired" ) ).append( "</th><th>" ).append( rb.getString( "plugin.listlocks.expires" ) ).append( "</th>\n" );

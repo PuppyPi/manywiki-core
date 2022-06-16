@@ -18,7 +18,7 @@
     specific language governing permissions and limitations
     under the License.
  */
-package org.apache.wiki.plugin;
+package org.apache.wiki.plugin.denounce;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -32,7 +32,7 @@ import org.apache.wiki.api.core.Context;
 import org.apache.wiki.api.exceptions.PluginException;
 import org.apache.wiki.api.plugin.Plugin;
 import org.apache.wiki.util.TextUtil;
-
+import rebound.annotations.semantic.meta.dependencies.DependencyDirectory;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.io.InputStream;
@@ -55,6 +55,7 @@ import java.util.Properties;
  *
  *  @since 2.1.40.
  */
+@DependencyDirectory("./res")
 public class Denounce implements Plugin {
 
     private static final Logger log = LogManager.getLogger( Denounce.class );
@@ -64,7 +65,7 @@ public class Denounce implements Plugin {
     /** Parameter name for setting the text.  Value is <tt>{@value}</tt>. */
     public static final String PARAM_TEXT = "text";
 
-    private static final String PROPERTYFILE = "org/apache/wiki/plugin/denounce.properties";
+    private static final String PROPERTYFILE = "org/apache/wiki/plugin/denounce.properties";  //TODO use ResourceBundle so it can be translated into different languages!
     private static final String PROP_AGENTPATTERN   = "denounce.agentpattern.";
     private static final String PROP_HOSTPATTERN    = "denounce.hostpattern.";
     private static final String PROP_REFERERPATTERN = "denounce.refererpattern.";

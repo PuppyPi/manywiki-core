@@ -94,9 +94,9 @@ public class TranslationsCheck {
         System.out.println( "Internationalization property file differences between 'default en' and '" + suffix + "' following:\n" );
 
         final String fileSuffix = ( "en".equals( suffix ) ) ? "" : "_" + suffix;
-        final Map< String, Integer > coreMetrics = checkFile( "/"+InternationalizationManager.CORE_BUNDLE.replace('.', '/')+".properties", "/" + InternationalizationManager.CORE_BUNDLE.replace('.', '/') + fileSuffix + ".properties" );
-        final Map< String, Integer > templateMetrics = checkFile( "/"+InternationalizationManager.DEF_TEMPLATE.replace('.', '/')+".properties", "/" + InternationalizationManager.DEF_TEMPLATE.replace('.', '/') + fileSuffix + ".properties" );
-        final Map< String, Integer > pluginMetrics = checkFile( "/"+PluginCoreResources.CORE_PLUGINS_RESOURCEBUNDLE.replace('.', '/')+".properties", "/" + PluginCoreResources.CORE_PLUGINS_RESOURCEBUNDLE.replace('.', '/') + fileSuffix + ".properties" );
+        final Map< String, Integer > coreMetrics = checkFile( "/"+InternationalizationManager.CORE_BUNDLE.replace('.', '/'), fileSuffix, ".properties");
+        final Map< String, Integer > templateMetrics = checkFile( "/"+InternationalizationManager.DEF_TEMPLATE.replace('.', '/'), fileSuffix, ".properties");
+        final Map< String, Integer > pluginMetrics = checkFile( "/"+PluginCoreResources.CORE_PLUGINS_RESOURCEBUNDLE.replace('.', '/'), fileSuffix, ".properties");
 
         if( lang >= 0 ) {
             final int expected = coreMetrics.get( "expected" ) + templateMetrics.get( "expected" ) + pluginMetrics.get( "expected" );
@@ -110,8 +110,10 @@ public class TranslationsCheck {
         return "";
     }
 
-    Map< String, Integer > checkFile( final String en, final String lang ) throws IOException {
-        //TODO shouldn't this be here?   if (en.equals(lang)) return;
+    Map< String, Integer > checkFile( final String base, final String optionalInterstitial, final String suffix ) throws IOException {
+    	
+    	final String en = base + suffix;
+    	final String lang = base + optionalInterstitial + suffix;
     	
     	final Map< String, Integer > metrics = new HashMap<>();
         try {

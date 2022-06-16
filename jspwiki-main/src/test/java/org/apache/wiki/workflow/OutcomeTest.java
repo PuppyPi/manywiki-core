@@ -54,7 +54,7 @@ public class OutcomeTest {
     public void testMessage() {
         final WikiEngine engine = TestEngine.build();
         final InternationalizationManager i18n = engine.getManager( InternationalizationManager.class );
-        final String core = "templates.default";
+        final String core = "org.apache.wiki.i18n.templates.default";
         final Locale rootLocale = Locale.ROOT;
         Outcome o;
 

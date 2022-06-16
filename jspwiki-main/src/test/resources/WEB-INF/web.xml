@@ -39,7 +39,7 @@
    <!-- Resource bundle default location -->
    <context-param>
      <param-name>javax.servlet.jsp.jstl.fmt.localizationContext</param-name>
-     <param-value>templates.default</param-value>
+     <param-value>org.apache.wiki.i18n.templates.default</param-value>
    </context-param>
 
    <!--

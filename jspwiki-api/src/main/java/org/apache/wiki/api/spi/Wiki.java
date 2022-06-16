@@ -18,102 +18,119 @@
  */
 package org.apache.wiki.api.spi;
 
+import java.util.Properties;
+import java.util.ServiceLoader;
+import javax.servlet.ServletContext;
 import org.apache.wiki.util.PropertyReader;
 import org.apache.wiki.util.TextUtil;
 
-import javax.servlet.ServletContext;
-import java.nio.file.ProviderNotFoundException;
-import java.util.Properties;
-import java.util.ServiceLoader;
-
 
 public class Wiki {
-
-    private static final String PROP_PROVIDER_IMPL_ACLS = "jspwiki.provider.impl.acls";
-    private static final String PROP_PROVIDER_IMPL_CONTENTS = "jspwiki.provider.impl.contents";
-    private static final String PROP_PROVIDER_IMPL_CONTEXT = "jspwiki.provider.impl.context";
-    private static final String PROP_PROVIDER_IMPL_ENGINE = "jspwiki.provider.impl.engine";
-    private static final String PROP_PROVIDER_IMPL_SESSION = "jspwiki.provider.impl.session";
-    
-    //Using explicit references to the classes makes this officially/bytecodily/Javaly/classwise/etc. depend on the class files it depends on
-    private static final String DEFAULT_PROVIDER_IMPL_ACLS = org.apache.wiki.spi.AclsSPIDefaultImpl.class.getName();
-    private static final String DEFAULT_PROVIDER_IMPL_CONTENTS = org.apache.wiki.spi.ContentsSPIDefaultImpl.class.getName();
-    private static final String DEFAULT_PROVIDER_IMPL_CONTEXT = org.apache.wiki.spi.ContextSPIDefaultImpl.class.getName();
-    private static final String DEFAULT_PROVIDER_IMPL_ENGINE = org.apache.wiki.spi.EngineSPIDefaultImpl.class.getName();
-    private static final String DEFAULT_PROVIDER_IMPL_SESSION = org.apache.wiki.spi.SessionSPIDefaultImpl.class.getName();
-
-    // default values
-    private static Properties properties = PropertyReader.getDefaultProperties();
-    private static AclsSPI aclsSPI = getSPI( AclsSPI.class, properties, PROP_PROVIDER_IMPL_ACLS, DEFAULT_PROVIDER_IMPL_ACLS );
-    private static ContentsSPI contentsSPI = getSPI( ContentsSPI.class, properties, PROP_PROVIDER_IMPL_CONTENTS, DEFAULT_PROVIDER_IMPL_CONTENTS );
-    private static ContextSPI contextSPI = getSPI( ContextSPI.class, properties, PROP_PROVIDER_IMPL_CONTEXT, DEFAULT_PROVIDER_IMPL_CONTEXT );
-    private static EngineSPI engineSPI = getSPI( EngineSPI.class, properties, PROP_PROVIDER_IMPL_ENGINE, DEFAULT_PROVIDER_IMPL_ENGINE );
-    private static SessionSPI sessionSPI = getSPI( SessionSPI.class, properties, PROP_PROVIDER_IMPL_SESSION, DEFAULT_PROVIDER_IMPL_SESSION );
-
-    public static Properties init( final ServletContext context ) {
-        properties = PropertyReader.loadWebAppProps( context );
-        aclsSPI = getSPI( AclsSPI.class, properties, PROP_PROVIDER_IMPL_ACLS, DEFAULT_PROVIDER_IMPL_ACLS );
-        contentsSPI = getSPI( ContentsSPI.class, properties, PROP_PROVIDER_IMPL_CONTENTS, DEFAULT_PROVIDER_IMPL_CONTENTS );
-        contextSPI = getSPI( ContextSPI.class, properties, PROP_PROVIDER_IMPL_CONTEXT, DEFAULT_PROVIDER_IMPL_CONTEXT );
-        engineSPI = getSPI( EngineSPI.class, properties, PROP_PROVIDER_IMPL_ENGINE, DEFAULT_PROVIDER_IMPL_ENGINE );
-        sessionSPI = getSPI( SessionSPI.class, properties, PROP_PROVIDER_IMPL_SESSION, DEFAULT_PROVIDER_IMPL_SESSION );
-        return properties;
-    }
-
-    /**
-     * Access to {@link AclsSPI} operations.
-     *
-     * @return {@link AclsSPI} operations.
-     */
-    public static AclsDSL acls() {
-        return new AclsDSL( aclsSPI );
-    }
-
-    /**
-     * Access to {@link ContentsSPI} operations.
-     *
-     * @return {@link ContentsSPI} operations.
-     */
-    public static ContentsDSL contents() {
-        return new ContentsDSL( contentsSPI );
-    }
-
-    /**
-     * Access to {@link ContextSPI} operations.
-     *
-     * @return {@link ContextSPI} operations.
-     */
-    public static ContextDSL context() {
-        return new ContextDSL( contextSPI );
-    }
-
-    /**
-     * Access to {@link EngineSPI} operations.
-     *
-     * @return {@link EngineSPI} operations.
-     */
-    public static EngineDSL engine() {
-        return new EngineDSL( engineSPI );
-    }
-
-    /**
-     * Access to {@link SessionSPI} operations.
-     *
-     * @return {@link SessionSPI} operations.
-     */
-    public static SessionDSL session() {
-        return new SessionDSL( sessionSPI );
-    }
-
-    static < SPI > SPI getSPI( final Class< SPI > spi, final Properties props, final String prop, final String defValue ) {
-        final String providerImpl = TextUtil.getStringProperty( props, prop, defValue );
-        final ServiceLoader< SPI > loader = ServiceLoader.load( spi );
-        for( final SPI provider : loader ) {
-            if( providerImpl.equals( provider.getClass().getName() ) ) {
-                return provider;
-            }
-        }
-        throw new ProviderNotFoundException( spi.getName() + " provider not found" );
-    }
-
+	
+	private static final String PROP_PROVIDER_IMPL_ACLS = "jspwiki.provider.impl.acls";
+	private static final String PROP_PROVIDER_IMPL_CONTENTS = "jspwiki.provider.impl.contents";
+	private static final String PROP_PROVIDER_IMPL_CONTEXT = "jspwiki.provider.impl.context";
+	private static final String PROP_PROVIDER_IMPL_ENGINE = "jspwiki.provider.impl.engine";
+	private static final String PROP_PROVIDER_IMPL_SESSION = "jspwiki.provider.impl.session";
+	
+	//Using explicit references to the classes makes this officially/bytecodily/Javaly/classwise/etc. depend on the class files it depends on
+	private static final Class DEFAULT_PROVIDER_IMPL_ACLS = org.apache.wiki.spi.AclsSPIDefaultImpl.class;
+	private static final Class DEFAULT_PROVIDER_IMPL_CONTENTS = org.apache.wiki.spi.ContentsSPIDefaultImpl.class;
+	private static final Class DEFAULT_PROVIDER_IMPL_CONTEXT = org.apache.wiki.spi.ContextSPIDefaultImpl.class;
+	private static final Class DEFAULT_PROVIDER_IMPL_ENGINE = org.apache.wiki.spi.EngineSPIDefaultImpl.class;
+	private static final Class DEFAULT_PROVIDER_IMPL_SESSION = org.apache.wiki.spi.SessionSPIDefaultImpl.class;
+	
+	// default values
+	private static Properties properties = PropertyReader.getDefaultProperties();
+	private static AclsSPI aclsSPI = getSPI( AclsSPI.class, properties, PROP_PROVIDER_IMPL_ACLS, DEFAULT_PROVIDER_IMPL_ACLS );
+	private static ContentsSPI contentsSPI = getSPI( ContentsSPI.class, properties, PROP_PROVIDER_IMPL_CONTENTS, DEFAULT_PROVIDER_IMPL_CONTENTS );
+	private static ContextSPI contextSPI = getSPI( ContextSPI.class, properties, PROP_PROVIDER_IMPL_CONTEXT, DEFAULT_PROVIDER_IMPL_CONTEXT );
+	private static EngineSPI engineSPI = getSPI( EngineSPI.class, properties, PROP_PROVIDER_IMPL_ENGINE, DEFAULT_PROVIDER_IMPL_ENGINE );
+	private static SessionSPI sessionSPI = getSPI( SessionSPI.class, properties, PROP_PROVIDER_IMPL_SESSION, DEFAULT_PROVIDER_IMPL_SESSION );
+	
+	public static Properties init( final ServletContext context ) {
+		properties = PropertyReader.loadWebAppProps( context );
+		aclsSPI = getSPI( AclsSPI.class, properties, PROP_PROVIDER_IMPL_ACLS, DEFAULT_PROVIDER_IMPL_ACLS );
+		contentsSPI = getSPI( ContentsSPI.class, properties, PROP_PROVIDER_IMPL_CONTENTS, DEFAULT_PROVIDER_IMPL_CONTENTS );
+		contextSPI = getSPI( ContextSPI.class, properties, PROP_PROVIDER_IMPL_CONTEXT, DEFAULT_PROVIDER_IMPL_CONTEXT );
+		engineSPI = getSPI( EngineSPI.class, properties, PROP_PROVIDER_IMPL_ENGINE, DEFAULT_PROVIDER_IMPL_ENGINE );
+		sessionSPI = getSPI( SessionSPI.class, properties, PROP_PROVIDER_IMPL_SESSION, DEFAULT_PROVIDER_IMPL_SESSION );
+		return properties;
+	}
+	
+	/**
+	 * Access to {@link AclsSPI} operations.
+	 *
+	 * @return {@link AclsSPI} operations.
+	 */
+	public static AclsDSL acls() {
+		return new AclsDSL( aclsSPI );
+	}
+	
+	/**
+	 * Access to {@link ContentsSPI} operations.
+	 *
+	 * @return {@link ContentsSPI} operations.
+	 */
+	public static ContentsDSL contents() {
+		return new ContentsDSL( contentsSPI );
+	}
+	
+	/**
+	 * Access to {@link ContextSPI} operations.
+	 *
+	 * @return {@link ContextSPI} operations.
+	 */
+	public static ContextDSL context() {
+		return new ContextDSL( contextSPI );
+	}
+	
+	/**
+	 * Access to {@link EngineSPI} operations.
+	 *
+	 * @return {@link EngineSPI} operations.
+	 */
+	public static EngineDSL engine() {
+		return new EngineDSL( engineSPI );
+	}
+	
+	/**
+	 * Access to {@link SessionSPI} operations.
+	 *
+	 * @return {@link SessionSPI} operations.
+	 */
+	public static SessionDSL session() {
+		return new SessionDSL( sessionSPI );
+	}
+	
+	static < SPI > SPI getSPI( final Class< SPI > spi, final Properties props, final String prop, final Class defValue ) {
+		final String providerImpl = TextUtil.getStringProperty( props, prop, null );
+		
+		if (!spi.isAssignableFrom(defValue))
+			throw new Error("This class is set up wrong!!  "+defValue+" does not implement/extend "+spi+" !!");
+		
+		if (providerImpl != null)
+		{
+			final ServiceLoader< SPI > loader = ServiceLoader.load( spi );
+			for( final SPI provider : loader ) {
+				if( providerImpl.equals( provider.getClass().getName() ) ) {
+					return provider;
+				}
+			}
+		}
+		
+		try
+		{
+			return (SPI) defValue.newInstance();
+		}
+		catch (InstantiationException exc)
+		{
+			throw new Error("Error initializing Default Service Provider ("+defValue.getName()+") for "+spi.getName(), exc);
+		}
+		catch (IllegalAccessException exc)
+		{
+			throw new Error("Error initializing Default Service Provider ("+defValue.getName()+") for "+spi.getName(), exc);
+		}
+	}
+	
 }

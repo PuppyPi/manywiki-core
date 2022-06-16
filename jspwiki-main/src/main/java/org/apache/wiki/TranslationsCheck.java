@@ -28,6 +28,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.TreeSet;
+import org.apache.wiki.i18n.InternationalizationManager;
+import org.apache.wiki.plugin.PluginCoreResources;
 
 
 /**
@@ -92,9 +94,9 @@ public class TranslationsCheck {
         System.out.println( "Internationalization property file differences between 'default en' and '" + suffix + "' following:\n" );
 
         final String fileSuffix = ( "en".equals( suffix ) ) ? "" : "_" + suffix;
-        final Map< String, Integer > coreMetrics = checkFile( "/CoreResources.properties", "/CoreResources" + fileSuffix + ".properties" );
-        final Map< String, Integer > templateMetrics = checkFile( "/templates/default.properties", "/templates/default" + fileSuffix + ".properties" );
-        final Map< String, Integer > pluginMetrics = checkFile( "/plugin/PluginResources.properties", "/plugin/PluginResources" + fileSuffix + ".properties" );
+        final Map< String, Integer > coreMetrics = checkFile( "/"+InternationalizationManager.CORE_BUNDLE.replace('.', '/')+".properties", "/" + InternationalizationManager.CORE_BUNDLE.replace('.', '/') + fileSuffix + ".properties" );
+        final Map< String, Integer > templateMetrics = checkFile( "/"+InternationalizationManager.DEF_TEMPLATE.replace('.', '/')+".properties", "/" + InternationalizationManager.DEF_TEMPLATE.replace('.', '/') + fileSuffix + ".properties" );
+        final Map< String, Integer > pluginMetrics = checkFile( "/"+PluginCoreResources.CORE_PLUGINS_RESOURCEBUNDLE.replace('.', '/')+".properties", "/" + PluginCoreResources.CORE_PLUGINS_RESOURCEBUNDLE.replace('.', '/') + fileSuffix + ".properties" );
 
         if( lang >= 0 ) {
             final int expected = coreMetrics.get( "expected" ) + templateMetrics.get( "expected" ) + pluginMetrics.get( "expected" );

@@ -18,7 +18,7 @@
     specific language governing permissions and limitations
     under the License.
  */
-package org.apache.wiki.plugin.denounce;
+package org.apache.wiki.plugin;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -55,7 +55,7 @@ import java.util.Properties;
  *
  *  @since 2.1.40.
  */
-@DependencyDirectory("./res")
+@DependencyDirectory("./denounce/res")
 public class Denounce implements Plugin {
 
     private static final Logger log = LogManager.getLogger( Denounce.class );

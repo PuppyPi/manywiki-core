@@ -16,12 +16,11 @@
     specific language governing permissions and limitations
     under the License.  
  */
-package org.apache.wiki.plugin;
+package org.apache.wiki.plugin.plugins;
 
 import org.apache.wiki.api.core.Context;
 import org.apache.wiki.api.exceptions.PluginException;
 import org.apache.wiki.references.ReferenceManager;
-
 import java.util.Collection;
 import java.util.Map;
 

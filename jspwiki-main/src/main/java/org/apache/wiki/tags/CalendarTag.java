@@ -95,7 +95,7 @@ public class CalendarTag extends WikiTagBase {
      *  @param format The format in the SimpleDateFormat fashion.
      *  
      *  @see SimpleDateFormat
-     *  @see org.apache.wiki.plugin.WeblogPlugin
+     *  @see org.apache.wiki.plugin.plugins.WeblogPlugin
      */
     public void setPageformat( final String format )
     {

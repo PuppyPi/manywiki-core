@@ -8,8 +8,8 @@ import rebound.annotations.semantic.meta.dependencies.DependencyFile;
 
 //Dependencies from the above XML file! x'D
 //@DependencyClass(org.apache.wiki.filters.SpamFilter.class)
-@DependencyClass(org.apache.wiki.plugin.IfPlugin.class)
-@DependencyClass(org.apache.wiki.plugin.Note.class)
+@DependencyClass(org.apache.wiki.plugin.plugins.IfPlugin.class)
+@DependencyClass(org.apache.wiki.plugin.plugins.Note.class)
 @DependencyClass(org.apache.wiki.ui.admin.beans.PlainEditorAdminBean.class)
 //@DependencyClass(org.apache.wiki.ui.admin.beans.WikiWizardAdminBean.class)  //The heck is this?! XD
 

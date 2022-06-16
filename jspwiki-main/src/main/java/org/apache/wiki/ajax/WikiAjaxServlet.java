@@ -19,8 +19,7 @@
  */
 package org.apache.wiki.ajax;
 
-import org.apache.wiki.plugin.SampleAjaxPlugin;
-
+import org.apache.wiki.plugin.plugins.SampleAjaxPlugin;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

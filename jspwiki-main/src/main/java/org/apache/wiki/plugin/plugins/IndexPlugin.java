@@ -17,7 +17,7 @@
     under the License.  
  */
 
-package org.apache.wiki.plugin;
+package org.apache.wiki.plugin.plugins;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
@@ -33,7 +33,6 @@ import org.jdom2.Element;
 import org.jdom2.Namespace;
 import org.jdom2.output.Format;
 import org.jdom2.output.XMLOutputter;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;

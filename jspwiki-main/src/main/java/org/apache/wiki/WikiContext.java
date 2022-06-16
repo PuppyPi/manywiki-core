@@ -59,7 +59,7 @@ import java.util.PropertyPermission;
  *  WikiSession contains information about the user's authentication status, and is consulted by {@link #getCurrentUser()} object.</p>
  *  <p>Do not cache the page object that you get from the WikiContext; always use getPage()!</p>
  *
- *  @see org.apache.wiki.plugin.Counter
+ *  @see org.apache.wiki.plugin.plugins.Counter
  */
 public class WikiContext implements Context, Command {
 

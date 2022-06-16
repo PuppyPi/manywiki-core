@@ -21,10 +21,9 @@ package org.apache.wiki.tags;
 import org.apache.wiki.api.core.ContextEnum;
 import org.apache.wiki.api.core.Engine;
 import org.apache.wiki.api.core.Page;
-import org.apache.wiki.plugin.WeblogPlugin;
+import org.apache.wiki.plugin.plugins.WeblogPlugin;
 import org.apache.wiki.rss.Feed;
 import org.apache.wiki.util.TextUtil;
-
 import java.io.IOException;
 
 /**

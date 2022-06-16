@@ -35,7 +35,7 @@ public interface PluginManager extends ModuleManager {
     String PROP_EXTERNALJARS = "jspwiki.plugin.externalJars";
 
     /** This is the default package to try in case the instantiation fails. */
-    String DEFAULT_PACKAGE = "org.apache.wiki.plugin";
+    String DEFAULT_PACKAGE = PluginManager.class.getPackage().getName()+".plugins";
 
     /** The name of the body content. Current value is "_body". */
     String PARAM_BODY      = "_body";

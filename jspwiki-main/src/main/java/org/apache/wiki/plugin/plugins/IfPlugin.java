@@ -17,7 +17,7 @@
     under the License.  
  */
 
-package org.apache.wiki.plugin;
+package org.apache.wiki.plugin.plugins;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.oro.text.regex.MalformedPatternException;
@@ -32,11 +32,11 @@ import org.apache.wiki.api.plugin.Plugin;
 import org.apache.wiki.api.providers.WikiProvider;
 import org.apache.wiki.auth.AuthorizationManager;
 import org.apache.wiki.pages.PageManager;
+import org.apache.wiki.plugin.DefaultPluginManager;
 import org.apache.wiki.render.RenderingManager;
 import org.apache.wiki.util.HttpUtil;
 import org.apache.wiki.util.TextUtil;
 import org.apache.wiki.variables.VariableManager;
-
 import java.security.Principal;
 import java.util.Map;
 

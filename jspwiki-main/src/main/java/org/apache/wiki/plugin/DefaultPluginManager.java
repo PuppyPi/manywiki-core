@@ -55,9 +55,43 @@ import org.apache.wiki.api.exceptions.PluginException;
 import org.apache.wiki.api.plugin.InitializablePlugin;
 import org.apache.wiki.api.plugin.Plugin;
 import org.apache.wiki.forms.FormHandler;
+import org.apache.wiki.forms.plugins.FormClose;
+import org.apache.wiki.forms.plugins.FormElement;
+import org.apache.wiki.forms.plugins.FormInput;
+import org.apache.wiki.forms.plugins.FormOpen;
+import org.apache.wiki.forms.plugins.FormOutput;
+import org.apache.wiki.forms.plugins.FormSelect;
+import org.apache.wiki.forms.plugins.FormSet;
+import org.apache.wiki.forms.plugins.FormTextarea;
 import org.apache.wiki.i18n.InternationalizationManager;
 import org.apache.wiki.modules.BaseModuleManager;
 import org.apache.wiki.modules.WikiModuleInfo;
+import org.apache.wiki.plugin.plugins.AbstractReferralPlugin;
+import org.apache.wiki.plugin.plugins.BugReportHandler;
+import org.apache.wiki.plugin.plugins.Counter;
+import org.apache.wiki.plugin.plugins.CurrentTimePlugin;
+import org.apache.wiki.plugin.plugins.Denounce;
+import org.apache.wiki.plugin.plugins.Groups;
+import org.apache.wiki.plugin.plugins.IfPlugin;
+import org.apache.wiki.plugin.plugins.Image;
+import org.apache.wiki.plugin.plugins.IndexPlugin;
+import org.apache.wiki.plugin.plugins.InsertPage;
+import org.apache.wiki.plugin.plugins.ListLocksPlugin;
+import org.apache.wiki.plugin.plugins.Note;
+import org.apache.wiki.plugin.plugins.PageViewPlugin;
+import org.apache.wiki.plugin.plugins.RecentChangesPlugin;
+import org.apache.wiki.plugin.plugins.ReferredPagesPlugin;
+import org.apache.wiki.plugin.plugins.ReferringPagesPlugin;
+import org.apache.wiki.plugin.plugins.ReferringUndefinedPagesPlugin;
+import org.apache.wiki.plugin.plugins.SampleAjaxPlugin;
+import org.apache.wiki.plugin.plugins.Search;
+import org.apache.wiki.plugin.plugins.SessionsPlugin;
+import org.apache.wiki.plugin.plugins.TableOfContents;
+import org.apache.wiki.plugin.plugins.UndefinedPagesPlugin;
+import org.apache.wiki.plugin.plugins.UnusedPagesPlugin;
+import org.apache.wiki.plugin.plugins.WeblogArchivePlugin;
+import org.apache.wiki.plugin.plugins.WeblogEntryPlugin;
+import org.apache.wiki.plugin.plugins.WeblogPlugin;
 import org.apache.wiki.preferences.Preferences;
 import org.apache.wiki.util.ClassUtil;
 import org.apache.wiki.util.FileUtil;
@@ -66,6 +100,7 @@ import org.apache.wiki.util.XHTML;
 import org.apache.wiki.util.XhtmlUtil;
 import org.apache.wiki.util.XmlUtil;
 import org.jdom2.Element;
+import rebound.annotations.semantic.meta.dependencies.DependencyClass;
 
 /**
  *  Manages plugin classes.  There exists a single instance of PluginManager
@@ -158,6 +193,43 @@ import org.jdom2.Element;
  *
  *  @since 1.6.1
  */
+
+@DependencyClass(AbstractReferralPlugin.class)
+@DependencyClass(BugReportHandler.class)
+@DependencyClass(Counter.class)
+@DependencyClass(CurrentTimePlugin.class)
+@DependencyClass(Denounce.class)
+@DependencyClass(Groups.class)
+@DependencyClass(IfPlugin.class)
+@DependencyClass(Image.class)
+@DependencyClass(IndexPlugin.class)
+@DependencyClass(InsertPage.class)
+@DependencyClass(ListLocksPlugin.class)
+@DependencyClass(Note.class)
+@DependencyClass(PageViewPlugin.class)
+@DependencyClass(RecentChangesPlugin.class)
+@DependencyClass(ReferredPagesPlugin.class)
+@DependencyClass(ReferringPagesPlugin.class)
+@DependencyClass(ReferringUndefinedPagesPlugin.class)
+@DependencyClass(SampleAjaxPlugin.class)
+@DependencyClass(Search.class)
+@DependencyClass(SessionsPlugin.class)
+@DependencyClass(TableOfContents.class)
+@DependencyClass(UndefinedPagesPlugin.class)
+@DependencyClass(UnusedPagesPlugin.class)
+@DependencyClass(WeblogArchivePlugin.class)
+@DependencyClass(WeblogEntryPlugin.class)
+@DependencyClass(WeblogPlugin.class)
+
+@DependencyClass(FormClose.class)
+@DependencyClass(FormElement.class)
+@DependencyClass(FormInput.class)
+@DependencyClass(FormOpen.class)
+@DependencyClass(FormOutput.class)
+@DependencyClass(FormSelect.class)
+@DependencyClass(FormSet.class)
+@DependencyClass(FormTextarea.class)
+
 public class DefaultPluginManager extends BaseModuleManager implements PluginManager {
 
     /** This is the default package to try in case the instantiation fails. */

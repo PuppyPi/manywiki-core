@@ -34,9 +34,6 @@ public interface PluginManager extends ModuleManager {
     /** The property name defining which external jars will be added to the classpath when searching for plugin classes. */
     String PROP_EXTERNALJARS = "jspwiki.plugin.externalJars";
 
-    /** This is the default package to try in case the instantiation fails. */
-    String DEFAULT_PACKAGE = PluginManager.class.getPackage().getName()+".plugins";
-
     /** The name of the body content. Current value is "_body". */
     String PARAM_BODY      = "_body";
 

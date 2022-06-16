@@ -160,10 +160,16 @@ import org.jdom2.Element;
  */
 public class DefaultPluginManager extends BaseModuleManager implements PluginManager {
 
-    private static final String PLUGIN_INSERT_PATTERN = "\\{?(INSERT)?\\s*([\\w\\._]+)[ \\t]*(WHERE)?[ \\t]*";
-    private static final Logger log = LogManager.getLogger( DefaultPluginManager.class );
+    /** This is the default package to try in case the instantiation fails. */
+    private static final String DEFAULT_PACKAGE = DefaultPluginManager.class.getPackage().getName()+".plugins";
+    
     private static final String DEFAULT_FORMS_PACKAGE = FormHandler.class.getPackage().getName()+".plugins";
 
+    
+    
+    private static final String PLUGIN_INSERT_PATTERN = "\\{?(INSERT)?\\s*([\\w\\._]+)[ \\t]*(WHERE)?[ \\t]*";
+    private static final Logger log = LogManager.getLogger( DefaultPluginManager.class );
+    
     private final ArrayList< String > m_searchPath = new ArrayList<>();
     private final ArrayList< String > m_externalJars = new ArrayList<>();
     private final Pattern m_pluginPattern;

@@ -1,12 +1,22 @@
 package org.apache.wiki.modules;
 
 import java.util.Collection;
+import rebound.annotations.semantic.meta.dependencies.DependencyClass;
+import rebound.annotations.semantic.meta.dependencies.DependencyFile;
 
+@DependencyFile("./modules.xml")
+
+//Dependencies from the above XML file! x'D
+//@DependencyClass(org.apache.wiki.filters.SpamFilter.class)
+@DependencyClass(org.apache.wiki.plugin.IfPlugin.class)
+@DependencyClass(org.apache.wiki.plugin.Note.class)
+@DependencyClass(org.apache.wiki.ui.admin.beans.PlainEditorAdminBean.class)
+//@DependencyClass(org.apache.wiki.ui.admin.beans.WikiWizardAdminBean.class)  //The heck is this?! XD
 
 public interface ModuleManager {
 
     /** Location of the property-files of plugins. (Each plugin should include this property-file in its jar-file) */
-    String PLUGIN_RESOURCE_LOCATION = "ini/jspwiki_module.xml";
+    String PLUGIN_RESOURCE_LOCATION = "modules.xml";
 
     /**
      *  Returns true, if the given module is compatible with this version of JSPWiki.

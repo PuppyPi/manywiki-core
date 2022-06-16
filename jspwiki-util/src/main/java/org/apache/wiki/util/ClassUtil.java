@@ -23,7 +23,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.jdom2.Element;
-
+import rebound.annotations.semantic.meta.dependencies.DependencyFile;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Constructor;
@@ -45,15 +45,16 @@ import java.util.jar.JarFile;
  *
  * @since 2.1.29.
  */
+@DependencyFile("./classmappings.xml")
 public final class ClassUtil {
 
     private static final Logger log = LogManager.getLogger(ClassUtil.class);
 
     /** The location of the classmappings.xml document. It will be searched for in the classpath. Its value is "{@value}". */
-    public  static final String MAPPINGS = "ini/classmappings.xml";
+    public  static final String MAPPINGS = "org/apache/wiki/util/classmappings.xml";
 
     /** The location of the classmappings-extra.xml document. It will be searched for in the classpath. Its value is "{@value}". */
-    public  static final String MAPPINGS_EXTRA = "ini/classmappings-extra.xml";
+    public  static final String MAPPINGS_EXTRA = "ini/classmappings-extra.xml";  //TODO remove!
 
     /** Initialize the class mappings document. */
     private static final Map< String, String > c_classMappings = populateClassMappingsFrom( MAPPINGS );

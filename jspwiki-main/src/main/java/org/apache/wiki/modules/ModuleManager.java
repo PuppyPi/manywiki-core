@@ -16,7 +16,7 @@ import rebound.annotations.semantic.meta.dependencies.DependencyFile;
 public interface ModuleManager {
 
     /** Location of the property-files of plugins. (Each plugin should include this property-file in its jar-file) */
-    String PLUGIN_RESOURCE_LOCATION = "modules.xml";
+    String PLUGIN_RESOURCE_LOCATION = "org/apache/wiki/modules/modules.xml";
 
     /**
      *  Returns true, if the given module is compatible with this version of JSPWiki.

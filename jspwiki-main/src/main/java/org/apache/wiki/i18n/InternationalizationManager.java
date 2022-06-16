@@ -34,14 +34,16 @@ import rebound.annotations.semantic.meta.dependencies.DependencyDirectory;
 @DependencyDirectory("./plugin")
 public interface InternationalizationManager {
 
+	String pkg = InternationalizationManager.class.getPackage().getName();
+	
     /** The name of the ResourceBundle which contains any and all JSPWiki core resource strings.  It's value is {@value}. */
-    String CORE_BUNDLE = "org.apache.wiki.i18n.core.CoreResources";
+    String CORE_BUNDLE = pkg+".core.CoreResources";
     
     /** The name of the ResourceBundle which contains any and all JSPWiki default templates resource strings.  It's value is {@value}. */
-    String DEF_TEMPLATE = "org.apache.wiki.i18n.templates.default";
+    String DEF_TEMPLATE = pkg+".templates.default";
 
 	/** Name of the default plugin resource bundle. */
-	public static final String CORE_PLUGINS_RESOURCEBUNDLE = "org.apache.wiki.i18n.plugin.PluginResources";
+	public static final String CORE_PLUGINS_RESOURCEBUNDLE = pkg+".plugin.PluginResources";
 	
     // public static final String JSPWIKI_BUNDLE = "jspwiki";
     // public static final String PLUGINS_BUNDLE = "plugins";

@@ -22,17 +22,18 @@ import java.text.MessageFormat;
 import java.util.Locale;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
-
+import rebound.annotations.semantic.meta.dependencies.DependencyDirectory;
 
 /**
  *  Manages all internationalization in JSPWiki.
  *
  *  @since 2.6
  */
+@DependencyDirectory("./core")
 public interface InternationalizationManager {
 
     /** The name of the ResourceBundle which contains any and all JSPWiki core resource strings.  It's value is {@value}. */
-    String CORE_BUNDLE = "CoreResources";
+    String CORE_BUNDLE = "org/apache/wiki/i18n/core/CoreResources";
     
     /** The name of the ResourceBundle which contains any and all JSPWiki default templates resource strings.  It's value is {@value}. */
     String DEF_TEMPLATE = "templates.default";

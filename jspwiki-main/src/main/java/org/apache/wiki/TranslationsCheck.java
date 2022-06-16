@@ -109,7 +109,9 @@ public class TranslationsCheck {
     }
 
     Map< String, Integer > checkFile( final String en, final String lang ) throws IOException {
-        final Map< String, Integer > metrics = new HashMap<>();
+        //TODO shouldn't this be here?   if (en.equals(lang)) return;
+    	
+    	final Map< String, Integer > metrics = new HashMap<>();
         try {
             metrics.putAll( diff( en, lang ) );
             metrics.put( "duplicates", detectDuplicates( lang ) );

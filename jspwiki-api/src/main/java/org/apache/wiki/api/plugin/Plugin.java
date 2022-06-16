@@ -18,19 +18,15 @@
  */
 package org.apache.wiki.api.plugin;
 
+import java.util.Map;
 import org.apache.wiki.api.core.Context;
 import org.apache.wiki.api.exceptions.PluginException;
-
-import java.util.Map;
 
 
 /**
  *  Defines an interface for plugins.  Any instance of a wiki plugin should implement this interface.
  */
 public interface Plugin {
-
-    /** Name of the default plugin resource bundle. */
-    String CORE_PLUGINS_RESOURCEBUNDLE = "plugin.PluginResources";
 
     /**
      *  This is the main entry point for any plugin.  The parameters are parsed, and a special parameter called "_body" signifies the name

@@ -23,9 +23,8 @@ import org.apache.logging.log4j.Logger;
 import org.apache.wiki.api.core.Context;
 import org.apache.wiki.api.core.ContextEnum;
 import org.apache.wiki.api.exceptions.PluginException;
-import org.apache.wiki.api.plugin.Plugin;
+import org.apache.wiki.api.plugin.PluginCoreResources;
 import org.apache.wiki.preferences.Preferences;
-
 import java.text.MessageFormat;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -78,7 +77,7 @@ public class FormOpen extends FormElement {
      */
     @Override
     public String execute( final Context ctx, final Map< String, String > params ) throws PluginException {
-        final ResourceBundle rb = Preferences.getBundle( ctx, Plugin.CORE_PLUGINS_RESOURCEBUNDLE );
+        final ResourceBundle rb = Preferences.getBundle( ctx, PluginCoreResources.CORE_PLUGINS_RESOURCEBUNDLE );
         final String formName = params.get( PARAM_FORM );
         if( formName == null ) {
             throw new PluginException( MessageFormat.format( rb.getString( "formopen.missingparam" ), PARAM_FORM ) );

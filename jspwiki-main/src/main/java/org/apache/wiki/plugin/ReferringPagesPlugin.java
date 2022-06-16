@@ -24,12 +24,11 @@ import org.apache.wiki.api.core.Context;
 import org.apache.wiki.api.core.ContextEnum;
 import org.apache.wiki.api.core.Page;
 import org.apache.wiki.api.exceptions.PluginException;
-import org.apache.wiki.api.plugin.Plugin;
+import org.apache.wiki.api.plugin.PluginCoreResources;
 import org.apache.wiki.pages.PageManager;
 import org.apache.wiki.preferences.Preferences;
 import org.apache.wiki.references.ReferenceManager;
 import org.apache.wiki.util.TextUtil;
-
 import java.text.MessageFormat;
 import java.util.Collection;
 import java.util.Map;
@@ -71,7 +70,7 @@ public class ReferringPagesPlugin extends AbstractReferralPlugin {
     public String execute( final Context context, final Map< String, String > params ) throws PluginException {
         final ReferenceManager refmgr = context.getEngine().getManager( ReferenceManager.class );
         String pageName = params.get( PARAM_PAGE );
-        final ResourceBundle rb = Preferences.getBundle( context, Plugin.CORE_PLUGINS_RESOURCEBUNDLE );
+        final ResourceBundle rb = Preferences.getBundle( context, PluginCoreResources.CORE_PLUGINS_RESOURCEBUNDLE );
 
         StringBuilder result = new StringBuilder( 256 );
 

@@ -21,9 +21,9 @@ package org.apache.wiki.plugin;
 import org.apache.wiki.api.core.Context;
 import org.apache.wiki.api.exceptions.PluginException;
 import org.apache.wiki.api.plugin.Plugin;
+import org.apache.wiki.api.plugin.PluginCoreResources;
 import org.apache.wiki.preferences.Preferences;
 import org.apache.wiki.preferences.Preferences.TimeFormat;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Map;
@@ -61,7 +61,7 @@ public class CurrentTimePlugin implements Plugin {
 
             return fmt.format( d );
         } catch( final IllegalArgumentException e ) {
-            final ResourceBundle rb = Preferences.getBundle( context, Plugin.CORE_PLUGINS_RESOURCEBUNDLE );
+            final ResourceBundle rb = Preferences.getBundle( context, PluginCoreResources.CORE_PLUGINS_RESOURCEBUNDLE );
             throw new PluginException( rb.getString( "currenttimeplugin.badformat" ) + e.getMessage() );
         }
     }

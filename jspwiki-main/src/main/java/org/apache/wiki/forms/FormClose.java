@@ -20,9 +20,8 @@ package org.apache.wiki.forms;
 
 import org.apache.wiki.api.core.Context;
 import org.apache.wiki.api.exceptions.PluginException;
-import org.apache.wiki.api.plugin.Plugin;
+import org.apache.wiki.api.plugin.PluginCoreResources;
 import org.apache.wiki.preferences.Preferences;
-
 import java.util.Map;
 import java.util.ResourceBundle;
 
@@ -43,7 +42,7 @@ public class FormClose extends FormElement {
         // Don't render if no error and error-only-rendering is on.
         final FormInfo info = getFormInfo( ctx );
         if( info != null && info.hide() ) {
-            final ResourceBundle rb = Preferences.getBundle( ctx, Plugin.CORE_PLUGINS_RESOURCEBUNDLE );
+            final ResourceBundle rb = Preferences.getBundle( ctx, PluginCoreResources.CORE_PLUGINS_RESOURCEBUNDLE );
             return "<p>" + rb.getString( "formclose.noneedtoshow" ) + "</p>";
         }
 

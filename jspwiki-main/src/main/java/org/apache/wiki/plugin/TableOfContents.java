@@ -26,6 +26,7 @@ import org.apache.wiki.api.core.Engine;
 import org.apache.wiki.api.core.Page;
 import org.apache.wiki.api.exceptions.PluginException;
 import org.apache.wiki.api.plugin.Plugin;
+import org.apache.wiki.api.plugin.PluginCoreResources;
 import org.apache.wiki.filters.FilterManager;
 import org.apache.wiki.pages.PageManager;
 import org.apache.wiki.parser.Heading;
@@ -35,7 +36,6 @@ import org.apache.wiki.preferences.Preferences;
 import org.apache.wiki.render.RenderingManager;
 import org.apache.wiki.util.TextUtil;
 import org.apache.wiki.variables.VariableManager;
-
 import java.io.IOException;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -151,7 +151,7 @@ public class TableOfContents implements Plugin, HeadingListener {
     public String execute( final Context context, final Map<String, String> params ) throws PluginException {
         final Engine engine = context.getEngine();
         final Page page = context.getPage();
-        final ResourceBundle rb = Preferences.getBundle( context, Plugin.CORE_PLUGINS_RESOURCEBUNDLE );
+        final ResourceBundle rb = Preferences.getBundle( context, PluginCoreResources.CORE_PLUGINS_RESOURCEBUNDLE );
 
         if( context.getVariable( VAR_ALREADY_PROCESSING ) != null ) {
             //return rb.getString("tableofcontents.title");

@@ -38,6 +38,7 @@ import org.apache.wiki.api.core.Engine;
 import org.apache.wiki.api.exceptions.PluginException;
 import org.apache.wiki.api.plugin.InitializablePlugin;
 import org.apache.wiki.api.plugin.Plugin;
+import org.apache.wiki.api.plugin.PluginCoreResources;
 import org.apache.wiki.modules.BaseModuleManager;
 import org.apache.wiki.modules.WikiModuleInfo;
 import org.apache.wiki.preferences.Preferences;
@@ -48,7 +49,7 @@ import org.apache.wiki.util.XHTML;
 import org.apache.wiki.util.XhtmlUtil;
 import org.apache.wiki.util.XmlUtil;
 import org.jdom2.Element;
-
+import rebound.annotations.semantic.meta.dependencies.DependencyDirectory;
 import javax.servlet.http.HttpServlet;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -265,7 +266,7 @@ public class DefaultPluginManager extends BaseModuleManager implements PluginMan
             return "";
         }
 
-        final ResourceBundle rb = Preferences.getBundle( context, Plugin.CORE_PLUGINS_RESOURCEBUNDLE );
+        final ResourceBundle rb = Preferences.getBundle( context, PluginCoreResources.CORE_PLUGINS_RESOURCEBUNDLE );
         final boolean debug = TextUtil.isPositive( params.get( PARAM_DEBUG ) );
         try {
             //   Create...
@@ -383,7 +384,7 @@ public class DefaultPluginManager extends BaseModuleManager implements PluginMan
             return "";
         }
 
-        final ResourceBundle rb = Preferences.getBundle( context, Plugin.CORE_PLUGINS_RESOURCEBUNDLE );
+        final ResourceBundle rb = Preferences.getBundle( context, PluginCoreResources.CORE_PLUGINS_RESOURCEBUNDLE );
         final PatternMatcher matcher = new Perl5Matcher();
 
         try {

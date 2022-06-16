@@ -26,7 +26,6 @@ import org.apache.wiki.api.core.Engine;
 import org.apache.wiki.api.core.Page;
 import org.apache.wiki.api.exceptions.PluginException;
 import org.apache.wiki.api.plugin.Plugin;
-import org.apache.wiki.api.plugin.PluginCoreResources;
 import org.apache.wiki.filters.FilterManager;
 import org.apache.wiki.pages.PageManager;
 import org.apache.wiki.parser.Heading;

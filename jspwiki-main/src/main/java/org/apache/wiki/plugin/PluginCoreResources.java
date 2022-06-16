@@ -1,4 +1,4 @@
-package org.apache.wiki.api.plugin;
+package org.apache.wiki.plugin;
 
 import rebound.annotations.semantic.meta.dependencies.DependencyDirectory;
 

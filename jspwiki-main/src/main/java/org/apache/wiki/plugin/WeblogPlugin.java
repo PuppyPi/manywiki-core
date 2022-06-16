@@ -28,7 +28,6 @@ import org.apache.wiki.api.exceptions.PluginException;
 import org.apache.wiki.api.exceptions.ProviderException;
 import org.apache.wiki.api.plugin.ParserStagePlugin;
 import org.apache.wiki.api.plugin.Plugin;
-import org.apache.wiki.api.plugin.PluginCoreResources;
 import org.apache.wiki.api.plugin.PluginElement;
 import org.apache.wiki.api.providers.WikiProvider;
 import org.apache.wiki.auth.AuthorizationManager;

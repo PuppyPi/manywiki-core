@@ -17,10 +17,11 @@
     under the License.  
  */
 
-package org.apache.wiki.forms;
+package org.apache.wiki.forms.plugins;
 
 import org.apache.wiki.api.core.Context;
 import org.apache.wiki.api.exceptions.PluginException;
+import org.apache.wiki.forms.FormInfo;
 import org.apache.wiki.i18n.InternationalizationManager;
 import org.apache.wiki.preferences.Preferences;
 import org.apache.wiki.util.XHTML;

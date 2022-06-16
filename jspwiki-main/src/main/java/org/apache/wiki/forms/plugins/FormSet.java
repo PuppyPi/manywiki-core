@@ -16,12 +16,12 @@
     specific language governing permissions and limitations
     under the License.  
  */
-package org.apache.wiki.forms;
+package org.apache.wiki.forms.plugins;
 
 import org.apache.wiki.api.core.Context;
 import org.apache.wiki.api.exceptions.PluginException;
 import org.apache.wiki.api.plugin.Plugin;
-
+import org.apache.wiki.forms.FormInfo;
 import java.util.HashMap;
 import java.util.Map;
 

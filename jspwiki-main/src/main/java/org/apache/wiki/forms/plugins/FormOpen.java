@@ -16,13 +16,14 @@
     specific language governing permissions and limitations
     under the License.  
  */
-package org.apache.wiki.forms;
+package org.apache.wiki.forms.plugins;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.wiki.api.core.Context;
 import org.apache.wiki.api.core.ContextEnum;
 import org.apache.wiki.api.exceptions.PluginException;
+import org.apache.wiki.forms.FormInfo;
 import org.apache.wiki.i18n.InternationalizationManager;
 import org.apache.wiki.preferences.Preferences;
 import java.text.MessageFormat;

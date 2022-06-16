@@ -19,6 +19,22 @@
 
 package org.apache.wiki.plugin;
 
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.StreamTokenizer;
+import java.io.StringReader;
+import java.io.StringWriter;
+import java.text.MessageFormat;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.NoSuchElementException;
+import java.util.Properties;
+import java.util.ResourceBundle;
+import java.util.StringTokenizer;
+import javax.servlet.http.HttpServlet;
 import org.apache.commons.lang3.ClassUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
@@ -38,6 +54,7 @@ import org.apache.wiki.api.core.Engine;
 import org.apache.wiki.api.exceptions.PluginException;
 import org.apache.wiki.api.plugin.InitializablePlugin;
 import org.apache.wiki.api.plugin.Plugin;
+import org.apache.wiki.forms.FormHandler;
 import org.apache.wiki.i18n.InternationalizationManager;
 import org.apache.wiki.modules.BaseModuleManager;
 import org.apache.wiki.modules.WikiModuleInfo;
@@ -49,23 +66,6 @@ import org.apache.wiki.util.XHTML;
 import org.apache.wiki.util.XhtmlUtil;
 import org.apache.wiki.util.XmlUtil;
 import org.jdom2.Element;
-import rebound.annotations.semantic.meta.dependencies.DependencyDirectory;
-import javax.servlet.http.HttpServlet;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.io.StreamTokenizer;
-import java.io.StringReader;
-import java.io.StringWriter;
-import java.text.MessageFormat;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.NoSuchElementException;
-import java.util.Properties;
-import java.util.ResourceBundle;
-import java.util.StringTokenizer;
 
 /**
  *  Manages plugin classes.  There exists a single instance of PluginManager
@@ -162,7 +162,7 @@ public class DefaultPluginManager extends BaseModuleManager implements PluginMan
 
     private static final String PLUGIN_INSERT_PATTERN = "\\{?(INSERT)?\\s*([\\w\\._]+)[ \\t]*(WHERE)?[ \\t]*";
     private static final Logger log = LogManager.getLogger( DefaultPluginManager.class );
-    private static final String DEFAULT_FORMS_PACKAGE = "org.apache.wiki.forms";
+    private static final String DEFAULT_FORMS_PACKAGE = FormHandler.class.getPackage().getName()+".plugins";
 
     private final ArrayList< String > m_searchPath = new ArrayList<>();
     private final ArrayList< String > m_externalJars = new ArrayList<>();

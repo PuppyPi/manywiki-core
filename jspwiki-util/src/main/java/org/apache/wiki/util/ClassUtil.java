@@ -40,6 +40,8 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
+//TODO PPMOD obliterate this with Java-based "configuration" XD
+
 /**
  * Contains useful utilities for class file manipulation. This is a static class, so there is no need to instantiate it.
  *
@@ -53,14 +55,8 @@ public final class ClassUtil {
     /** The location of the classmappings.xml document. It will be searched for in the classpath. Its value is "{@value}". */
     public  static final String MAPPINGS = "org/apache/wiki/util/classmappings.xml";
 
-    /** The location of the classmappings-extra.xml document. It will be searched for in the classpath. Its value is "{@value}". */
-    public  static final String MAPPINGS_EXTRA = "ini/classmappings-extra.xml";  //TODO remove!
-
     /** Initialize the class mappings document. */
     private static final Map< String, String > c_classMappings = populateClassMappingsFrom( MAPPINGS );
-
-    /** Initialize the class mappings extra document. */
-    private static final Map< String, String > c_classMappingsExtra = populateClassMappingsFrom( MAPPINGS_EXTRA ) ;
 
     private static boolean classLoaderSetup;
     private static ClassLoader loader;
@@ -347,10 +343,6 @@ public final class ClassUtil {
         } catch( final ClassNotFoundException e ) {
             return false;
         }
-    }
-
-    public static Map< String, String > getExtraClassMappings() {
-        return c_classMappingsExtra;
     }
 
     /**

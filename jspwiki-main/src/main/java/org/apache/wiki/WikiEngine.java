@@ -343,9 +343,6 @@ public class WikiEngine implements Engine {
             LOG.error( "Unable to start RSS generator - JSPWiki will still work, but there will be no RSS feed.", e );
         }
 
-        final Map< String, String > extraComponents = ClassUtil.getExtraClassMappings();
-        initExtraComponents( extraComponents );
-
         fireEvent( WikiEngineEvent.INITIALIZED ); // initialization complete
 
         LOG.info( "WikiEngine configured." );
@@ -378,17 +375,6 @@ public class WikiEngine implements Engine {
     void checkWorkingDirectory( final boolean condition, final String errMsg ) throws WikiException {
         if( condition ) {
             throw new WikiException( errMsg );
-        }
-    }
-
-    void initExtraComponents( final Map< String, String > extraComponents ) {
-        for( final Map.Entry< String, String > extraComponent : extraComponents.entrySet() ) {
-            try {
-                LOG.info( "Registering on WikiEngine {} as {}", extraComponent.getKey(), extraComponent.getValue() );
-                initComponent( extraComponent.getKey(), Class.forName( extraComponent.getValue() ) );
-            } catch( final Exception e ) {
-                LOG.error( "Unable to start {}", extraComponent.getKey(), e );
-            }
         }
     }
 

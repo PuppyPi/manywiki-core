@@ -33,7 +33,7 @@ import rebound.annotations.semantic.meta.dependencies.DependencyDirectory;
 public interface InternationalizationManager {
 
     /** The name of the ResourceBundle which contains any and all JSPWiki core resource strings.  It's value is {@value}. */
-    String CORE_BUNDLE = "org/apache/wiki/i18n/core/CoreResources";
+    String CORE_BUNDLE = "org.apache.wiki.i18n.core.CoreResources";
     
     /** The name of the ResourceBundle which contains any and all JSPWiki default templates resource strings.  It's value is {@value}. */
     String DEF_TEMPLATE = "templates.default";

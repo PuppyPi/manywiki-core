@@ -6,5 +6,5 @@ import rebound.annotations.semantic.meta.dependencies.DependencyDirectory;
 public class PluginCoreResources
 {
 	/** Name of the default plugin resource bundle. */
-	public static final String CORE_PLUGINS_RESOURCEBUNDLE = "org.apache.wiki.api.plugin.res.PluginResources";
+	public static final String CORE_PLUGINS_RESOURCEBUNDLE = "org.apache.wiki.plugin.res.PluginResources";
 }

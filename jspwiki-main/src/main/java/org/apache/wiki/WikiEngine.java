@@ -18,6 +18,27 @@
  */
 package org.apache.wiki;
 
+import java.io.File;
+import java.io.UnsupportedEncodingException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Date;
+import java.util.Enumeration;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.Properties;
+import java.util.TimeZone;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Collectors;
+import javax.servlet.ServletConfig;
+import javax.servlet.ServletContext;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -54,34 +75,16 @@ import org.apache.wiki.ui.EditorManager;
 import org.apache.wiki.ui.TemplateManager;
 import org.apache.wiki.ui.admin.AdminBeanManager;
 import org.apache.wiki.ui.progress.ProgressManager;
+import org.apache.wiki.url.DefaultURLConstructor;
+import org.apache.wiki.url.ShortURLConstructor;
+import org.apache.wiki.url.ShortViewURLConstructor;
 import org.apache.wiki.url.URLConstructor;
 import org.apache.wiki.util.ClassUtil;
 import org.apache.wiki.util.PropertyReader;
 import org.apache.wiki.util.TextUtil;
 import org.apache.wiki.variables.VariableManager;
 import org.apache.wiki.workflow.WorkflowManager;
-
-import javax.servlet.ServletConfig;
-import javax.servlet.ServletContext;
-import java.io.File;
-import java.io.UnsupportedEncodingException;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLDecoder;
-import java.net.URLEncoder;
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
-import java.util.Enumeration;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Properties;
-import java.util.TimeZone;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.stream.Collectors;
+import rebound.annotations.semantic.meta.dependencies.DependencyClass;
 
 
 /**
@@ -94,6 +97,9 @@ import java.util.stream.Collectors;
  *  <p>
  *  {@inheritDoc}
  */
+@DependencyClass(DefaultURLConstructor.class)
+@DependencyClass(ShortURLConstructor.class)
+@DependencyClass(ShortViewURLConstructor.class)
 public class WikiEngine implements Engine {
 
     private static final String ATTR_WIKIENGINE = "org.apache.wiki.WikiEngine";

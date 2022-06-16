@@ -34,11 +34,13 @@ public class Wiki {
     private static final String PROP_PROVIDER_IMPL_CONTEXT = "jspwiki.provider.impl.context";
     private static final String PROP_PROVIDER_IMPL_ENGINE = "jspwiki.provider.impl.engine";
     private static final String PROP_PROVIDER_IMPL_SESSION = "jspwiki.provider.impl.session";
-    private static final String DEFAULT_PROVIDER_IMPL_ACLS = "org.apache.wiki.spi.AclsSPIDefaultImpl";
-    private static final String DEFAULT_PROVIDER_IMPL_CONTENTS = "org.apache.wiki.spi.ContentsSPIDefaultImpl";
-    private static final String DEFAULT_PROVIDER_IMPL_CONTEXT = "org.apache.wiki.spi.ContextSPIDefaultImpl";
-    private static final String DEFAULT_PROVIDER_IMPL_ENGINE = "org.apache.wiki.spi.EngineSPIDefaultImpl";
-    private static final String DEFAULT_PROVIDER_IMPL_SESSION = "org.apache.wiki.spi.SessionSPIDefaultImpl";
+    
+    //Using explicit references to the classes makes this officially/bytecodily/Javaly/classwise/etc. depend on the class files it depends on
+    private static final String DEFAULT_PROVIDER_IMPL_ACLS = org.apache.wiki.spi.AclsSPIDefaultImpl.class.getName();
+    private static final String DEFAULT_PROVIDER_IMPL_CONTENTS = org.apache.wiki.spi.ContentsSPIDefaultImpl.class.getName();
+    private static final String DEFAULT_PROVIDER_IMPL_CONTEXT = org.apache.wiki.spi.ContextSPIDefaultImpl.class.getName();
+    private static final String DEFAULT_PROVIDER_IMPL_ENGINE = org.apache.wiki.spi.EngineSPIDefaultImpl.class.getName();
+    private static final String DEFAULT_PROVIDER_IMPL_SESSION = org.apache.wiki.spi.SessionSPIDefaultImpl.class.getName();
 
     // default values
     private static Properties properties = PropertyReader.getDefaultProperties();

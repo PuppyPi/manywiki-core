@@ -71,15 +71,15 @@ public interface TemplateManager extends ModuleManager {
     String DEFAULT_TEMPLATE = "default";
 
     /** Name of the file that contains the properties. */
-    String PROPERTYFILE = "template.properties";
+    String PROPERTYFILE = "template.properties";  //TODO remove?
 
     /** Location of I18N Resource bundles, and path prefix and suffixes */
-    String I18NRESOURCE_PREFIX = "templates/default_";
+    String I18NRESOURCE_PREFIX = InternationalizationManager.DEF_TEMPLATE.replace('.', '/')+"_";
 
     String I18NRESOURCE_SUFFIX = ".properties";
 
     /** The default (en) RESOURCE name and id. */
-    String I18NRESOURCE_EN = "templates/default.properties";
+    String I18NRESOURCE_EN = InternationalizationManager.DEF_TEMPLATE.replace('.', '/')+I18NRESOURCE_SUFFIX;
     String I18NRESOURCE_EN_ID = "en";
 
     /** I18N string to mark the default locale */

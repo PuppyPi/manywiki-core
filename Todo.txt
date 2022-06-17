@@ -9,3 +9,5 @@ Things for the new code-based configuration scheme!
 	WikiEngine.initialize(..)
 	
 	Check all @Dependency* annotations!
+	All System.getProperty() / getProperties() / setProperties()!
+	All Class[Loader].getResource...

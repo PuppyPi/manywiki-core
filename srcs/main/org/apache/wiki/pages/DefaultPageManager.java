@@ -111,7 +111,7 @@ public class DefaultPageManager implements PageManager {
 
         //  If user wants to use a cache, then we'll use the CachingProvider.
         if( useCache ) {
-            classname = "org.apache.wiki.providers.CachingProvider";
+            classname = org.apache.wiki.providers.CachingProvider.class.getName();  //semantic reference!
         } else {
             classname = TextUtil.getRequiredProperty( props, PROP_PAGEPROVIDER );
         }

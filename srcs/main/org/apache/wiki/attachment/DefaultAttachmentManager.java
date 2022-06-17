@@ -76,7 +76,7 @@ public class DefaultAttachmentManager implements AttachmentManager {
         cachingManager = m_engine.getManager( CachingManager.class );
         final String classname;
         if( cachingManager.enabled( CachingManager.CACHE_ATTACHMENTS_DYNAMIC ) ) {
-            classname = "org.apache.wiki.providers.CachingAttachmentProvider";
+            classname = org.apache.wiki.providers.CachingAttachmentProvider.class.getName();  //semantic reference!
         } else {
             classname = TextUtil.getRequiredProperty( props, PROP_PROVIDER, PROP_PROVIDER_DEPRECATED );
         }

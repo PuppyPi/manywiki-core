@@ -60,6 +60,7 @@ import rebound.annotations.semantic.meta.dependencies.DependencyFile;
 @DependencyClass(org.apache.wiki.auth.authorize.GroupManager.class)
 @DependencyClass(org.apache.wiki.cache.CachingManager.class)
 //@DependencyClass(org.apache.wiki.cache.EhcacheCachingManager.class)
+@DependencyClass(org.apache.wiki.cache.SimpleInMemoryCachingManager.class)
 @DependencyClass(org.apache.wiki.content.DefaultPageRenamer.class)
 @DependencyClass(org.apache.wiki.content.PageRenamer.class)
 @DependencyClass(org.apache.wiki.diff.DefaultDifferenceManager.class)

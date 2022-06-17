@@ -92,7 +92,7 @@ public interface AttachmentProvider extends WikiProvider {
      *  @return A List of Attachment objects, in most-recently-changed first order.
      *  @throws ProviderException If something goes wrong.
      */
-    List< Attachment > listAllChanged( Date timestamp ) throws ProviderException;
+    List< Attachment > listAllChanged( Date timestamp ) throws ProviderException;  //TODO either fix CachingAttachmentProvider to sort them or check all uses of this don't rely on the ordering and remove that sort order from this spec and make this Collection not List!
 
     /**
      *  Returns info about an attachment.

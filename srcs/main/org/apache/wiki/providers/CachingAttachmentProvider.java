@@ -151,9 +151,8 @@ public class CachingAttachmentProvider implements AttachmentProvider {
                 }
             }
         } else {
-            final List< String > keys = cachingManager.keys( CachingManager.CACHE_ATTACHMENTS );
             all = new ArrayList<>();
-            for( final String key : keys) {
+            for( final String key : cachingManager.keys( CachingManager.CACHE_ATTACHMENTS )) {
                 final Attachment cachedAttachment = cachingManager.get( CachingManager.CACHE_ATTACHMENTS, key, () -> null );
                 if( cachedAttachment != null ) {
                     all.add( cachedAttachment );
@@ -274,8 +273,7 @@ public class CachingAttachmentProvider implements AttachmentProvider {
 
         // This is a kludge to make sure that the pages are removed from the other cache as well.
         final String checkName = oldParent + "/";
-        final List< String > names = cachingManager.keys( CachingManager.CACHE_ATTACHMENTS_COLLECTION );
-        for( final String name : names ) {
+        for( final String name : cachingManager.keys( CachingManager.CACHE_ATTACHMENTS_COLLECTION ) ) {
             if( name.startsWith( checkName ) ) {
                 cachingManager.remove( CachingManager.CACHE_ATTACHMENTS, name );
             }

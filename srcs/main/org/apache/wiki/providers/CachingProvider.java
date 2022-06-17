@@ -251,9 +251,8 @@ public class CachingProvider implements PageProvider {
             }
             pages.set( all.size() );
         } else {
-            final List< String > keys = cachingManager.keys( CachingManager.CACHE_PAGES );
             all = new TreeSet<>();
-            for( final String key : keys ) {
+            for( final String key : cachingManager.keys( CachingManager.CACHE_PAGES ) ) {
                 final Page cachedPage = cachingManager.get( CachingManager.CACHE_PAGES, key, () -> null );
                 if( cachedPage != null ) {
                     all.add( cachedPage );

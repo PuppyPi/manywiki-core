@@ -19,44 +19,60 @@
 
 package org.apache.wiki.cache;
 
+import rebound.util.functional.FunctionInterfaces.NullaryFunctionToLong;
+
 /**
  * Simple pojo that holds cache information.
  */
-public class CacheInfo {
-
-    private final String name;
-    private final long maxElementsAllowed;
-    private long misses;
-    private long hits;
-
-    public CacheInfo( final String name, final long maxElementsAllowed ) {
-        this.name = name;
-        this.maxElementsAllowed = maxElementsAllowed;
-        this.hits = 0L;
-        this.misses = 0L;
-    }
-
-    public void hit() {
-        hits++;
-    }
-
-    public void miss() {
-        misses++;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public long getMisses() {
-        return misses;
-    }
-
-    public long getHits() {
-        return hits;
-    }
-
-    public long getMaxElementsAllowed() {
-        return maxElementsAllowed;
-    }
+public class CacheInfo
+{
+	private final String name;
+	private final long maxElementsAllowed;
+	private final NullaryFunctionToLong getCurrentNumberOfElementsCached;
+	private long misses;
+	private long hits;
+	
+	public CacheInfo(final String name, final long maxElementsAllowed, final NullaryFunctionToLong getCurrentNumberOfElementsCached)
+	{
+		this.name = name;
+		this.maxElementsAllowed = maxElementsAllowed;
+		this.hits = 0l;
+		this.misses = 0l;
+		this.getCurrentNumberOfElementsCached = getCurrentNumberOfElementsCached;
+	}
+	
+	public void hit()
+	{
+		hits++;
+	}
+	
+	public void miss()
+	{
+		misses++;
+	}
+	
+	public String getName()
+	{
+		return name;
+	}
+	
+	public long getMisses()
+	{
+		return misses;
+	}
+	
+	public long getHits()
+	{
+		return hits;
+	}
+	
+	public long getMaxElementsAllowed()
+	{
+		return maxElementsAllowed;
+	}
+	
+	public long getCurrentNumberOfElementsCached()
+	{
+		return getCurrentNumberOfElementsCached.f();
+	}
 }

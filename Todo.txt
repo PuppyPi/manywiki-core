@@ -1,0 +1,11 @@
+Things for the new code-based configuration scheme!
+	plugins, forms
+	modules
+	PropertyReader
+	InternationalizationManager
+	TextUtil
+	ClassUtil
+	caching
+	WikiEngine.initialize(..)
+	
+	Check all @Dependency* annotations!

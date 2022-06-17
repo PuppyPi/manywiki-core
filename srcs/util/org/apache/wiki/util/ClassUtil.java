@@ -18,12 +18,6 @@
  */
 package org.apache.wiki.util;
 
-import org.apache.commons.io.FileUtils;
-import org.apache.commons.lang3.StringUtils;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.jdom2.Element;
-import rebound.annotations.semantic.meta.dependencies.DependencyFile;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Constructor;
@@ -39,15 +33,77 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.jdom2.Element;
+import rebound.annotations.semantic.meta.dependencies.DependencyClass;
+import rebound.annotations.semantic.meta.dependencies.DependencyFile;
 
 //TODO PPMOD obliterate this with Java-based "configuration" XD
+
+@DependencyFile("./classmappings.xml")
+
+//Dependencies for above file!
+@DependencyClass(org.apache.wiki.attachment.AttachmentManager.class)
+@DependencyClass(org.apache.wiki.attachment.DefaultAttachmentManager.class)
+@DependencyClass(org.apache.wiki.auth.AuthenticationManager.class)
+@DependencyClass(org.apache.wiki.auth.AuthorizationManager.class)
+@DependencyClass(org.apache.wiki.auth.DefaultAuthenticationManager.class)
+@DependencyClass(org.apache.wiki.auth.DefaultAuthorizationManager.class)
+@DependencyClass(org.apache.wiki.auth.DefaultUserManager.class)
+@DependencyClass(org.apache.wiki.auth.UserManager.class)
+@DependencyClass(org.apache.wiki.auth.acl.AclManager.class)
+@DependencyClass(org.apache.wiki.auth.acl.DefaultAclManager.class)
+@DependencyClass(org.apache.wiki.auth.authorize.DefaultGroupManager.class)
+@DependencyClass(org.apache.wiki.auth.authorize.GroupManager.class)
+@DependencyClass(org.apache.wiki.cache.CachingManager.class)
+@DependencyClass(org.apache.wiki.cache.EhcacheCachingManager.class)
+@DependencyClass(org.apache.wiki.content.DefaultPageRenamer.class)
+@DependencyClass(org.apache.wiki.content.PageRenamer.class)
+@DependencyClass(org.apache.wiki.diff.DefaultDifferenceManager.class)
+@DependencyClass(org.apache.wiki.diff.DifferenceManager.class)
+@DependencyClass(org.apache.wiki.filters.DefaultFilterManager.class)
+@DependencyClass(org.apache.wiki.filters.FilterManager.class)
+@DependencyClass(org.apache.wiki.i18n.DefaultInternationalizationManager.class)
+@DependencyClass(org.apache.wiki.i18n.InternationalizationManager.class)
+@DependencyClass(org.apache.wiki.pages.DefaultPageManager.class)
+@DependencyClass(org.apache.wiki.pages.PageManager.class)
+@DependencyClass(org.apache.wiki.plugin.DefaultPluginManager.class)
+@DependencyClass(org.apache.wiki.plugin.PluginManager.class)
+@DependencyClass(org.apache.wiki.references.DefaultReferenceManager.class)
+@DependencyClass(org.apache.wiki.references.ReferenceManager.class)
+@DependencyClass(org.apache.wiki.render.DefaultRenderingManager.class)
+@DependencyClass(org.apache.wiki.render.RenderingManager.class)
+@DependencyClass(org.apache.wiki.rss.DefaultRSSGenerator.class)
+@DependencyClass(org.apache.wiki.rss.RSSGenerator.class)
+@DependencyClass(org.apache.wiki.search.DefaultSearchManager.class)
+@DependencyClass(org.apache.wiki.search.SearchManager.class)
+@DependencyClass(org.apache.wiki.tasks.DefaultTasksManager.class)
+@DependencyClass(org.apache.wiki.tasks.TasksManager.class)
+@DependencyClass(org.apache.wiki.ui.CommandResolver.class)
+@DependencyClass(org.apache.wiki.ui.DefaultCommandResolver.class)
+@DependencyClass(org.apache.wiki.ui.DefaultEditorManager.class)
+@DependencyClass(org.apache.wiki.ui.DefaultTemplateManager.class)
+@DependencyClass(org.apache.wiki.ui.EditorManager.class)
+@DependencyClass(org.apache.wiki.ui.TemplateManager.class)
+@DependencyClass(org.apache.wiki.ui.admin.AdminBeanManager.class)
+@DependencyClass(org.apache.wiki.ui.admin.DefaultAdminBeanManager.class)
+@DependencyClass(org.apache.wiki.ui.progress.DefaultProgressManager.class)
+@DependencyClass(org.apache.wiki.ui.progress.ProgressManager.class)
+@DependencyClass(org.apache.wiki.variables.DefaultVariableManager.class)
+@DependencyClass(org.apache.wiki.variables.VariableManager.class)
+@DependencyClass(org.apache.wiki.workflow.DefaultWorkflowManager.class)
+@DependencyClass(org.apache.wiki.workflow.WorkflowManager.class)
+
+
 
 /**
  * Contains useful utilities for class file manipulation. This is a static class, so there is no need to instantiate it.
  *
  * @since 2.1.29.
  */
-@DependencyFile("./classmappings.xml")
 public final class ClassUtil {
 
     private static final Logger log = LogManager.getLogger(ClassUtil.class);

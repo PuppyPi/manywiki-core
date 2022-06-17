@@ -22,7 +22,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.Validate;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
+import rebound.annotations.semantic.meta.dependencies.DependencyFile;
 import javax.servlet.ServletContext;
 import java.io.*;
 import java.util.*;
@@ -31,6 +31,7 @@ import java.nio.file.Files;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Properties;
 
 
@@ -49,14 +50,14 @@ public final class PropertyReader {
 	
     /**
      * Path to the base property file, usually overridden by values provided in
-     * a jspwiki-custom.properties file {@value #DEFAULT_JSPWIKI_CONFIG}
+     * a jspwiki-custom.properties file {@value #DEFAULT_JSPWIKI_CONFIG_RELATIVE_TO_THIS_PACKAGE}
      */
-    public static final String DEFAULT_JSPWIKI_CONFIG = "/ini/jspwiki.properties";
+    public static final String DEFAULT_JSPWIKI_CONFIG_RELATIVE_TO_THIS_PACKAGE = "jspwiki.properties";  //TODO obliterate this annoying cross-level resource dependency when we change to the new configuration system X3
 
     /**
      * The servlet context parameter (from web.xml)  that defines where the config file is to be found. If it is not defined, checks
      * the Java System Property, if that is not defined either, uses the default as defined by DEFAULT_PROPERTYFILE.
-     * {@value #DEFAULT_JSPWIKI_CONFIG}
+     * {@value #DEFAULT_JSPWIKI_CONFIG_RELATIVE_TO_THIS_PACKAGE}
      */
     public static final String PARAM_CUSTOMCONFIG = "jspwiki.custom.config";
 
@@ -149,7 +150,14 @@ public final class PropertyReader {
 
             // finally, expand the variables (new in 2.5)
             expandVars( props );
-
+            
+            //TODO is this necessary??
+            {
+            	Properties newsysprops = new Properties(System.getProperties());
+            	newsysprops.putAll(props);
+            	System.setProperties(newsysprops);
+            }
+            
             return props;
         } catch( final Exception e ) {
             LOG.error( "JSPWiki: Unable to load and setup properties from jspwiki.properties. " + e.getMessage(), e );
@@ -194,12 +202,15 @@ public final class PropertyReader {
      */
     public static Properties getDefaultProperties() {
         final Properties props = new Properties();
-        try( final InputStream in = PropertyReader.class.getResourceAsStream( DEFAULT_JSPWIKI_CONFIG ) ) {
+        try( final InputStream in = PropertyReader.class.getResourceAsStream( DEFAULT_JSPWIKI_CONFIG_RELATIVE_TO_THIS_PACKAGE ) ) {
             if( in != null ) {
                 props.load( in );
             }
+            else {
+                LOG.error( "Unable to find default propertyfile '" + DEFAULT_JSPWIKI_CONFIG_RELATIVE_TO_THIS_PACKAGE + "'");
+            }
         } catch( final IOException e ) {
-            LOG.error( "Unable to load default propertyfile '" + DEFAULT_JSPWIKI_CONFIG + "'" + e.getMessage(), e );
+            LOG.error( "Unable to load default propertyfile '" + DEFAULT_JSPWIKI_CONFIG_RELATIVE_TO_THIS_PACKAGE + "'" + e.getMessage(), e );
         }
         
         return props;

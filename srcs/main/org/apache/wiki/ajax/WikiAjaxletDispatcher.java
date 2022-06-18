@@ -41,7 +41,7 @@ import org.apache.wiki.auth.AuthorizationManager;
 import org.apache.wiki.auth.permissions.PagePermission;
 import rebound.net.NetworkUtilities;
 
-//Todo make not static and make the toplevel code-config register the things!
+//Todo make it not be static and make the toplevel code-config register the things!
 
 /**
  * This provides a simple ajax servlet for handling /ajax/<ClassName> requests.

@@ -39,6 +39,7 @@ import org.apache.wiki.api.core.Engine;
 import org.apache.wiki.api.spi.Wiki;
 import org.apache.wiki.auth.AuthorizationManager;
 import org.apache.wiki.auth.permissions.PagePermission;
+import rebound.net.NetworkUtilities;
 
 //Todo make not static and make the toplevel code-config register the things!
 
@@ -68,9 +69,9 @@ public class WikiAjaxletDispatcher
 	 */
 	public static boolean dispatch(final Engine engine, String ajaxPrefix, final HttpServletRequest request, final HttpServletResponse response) throws IOException, ServletException
 	{
-		final String uri = request.getRequestURI();
+		final String uriPath = request.getRequestURI();  //This is really the URI path; it doesn't include the query string (and the protocol/scheme, host, username, port, and anchor aren't sent to HTTP servers in the URI region!  Just path and query string (and HttpServletRequest separates the query string out (I'm not sure why it's not called getRequestPath() but oh well) ) )
 		
-		final String ajaxletName = getAjaxletName(uri, ajaxPrefix);
+		final String ajaxletName = getAjaxletName(uriPath, ajaxPrefix);
 		
 		if (ajaxletName != null)
 		{
@@ -106,7 +107,7 @@ public class WikiAjaxletDispatcher
 			}
 			else
 			{
-				log.error("No registered class for ajaxletName=" + ajaxletName + " in uri=" + uri);
+				log.error("No registered class for ajaxletName=" + ajaxletName + " in uri=" + uriPath);
 				return false;
 			}
 		}
@@ -138,16 +139,20 @@ public class WikiAjaxletDispatcher
 	}
 	
 	
+	
+	
+	
+	
 	/**
 	 * Get the AjaxletName from a requestURI like "/ajax/(AjaxletName)".
 	 * 
 	 * @param ajaxPrefix  usually "/ajax/"
 	 * @return The AjaxletName for the requestURI, or null if none/syntaxerror
 	 */
-	public static @Nullable String getAjaxletName(final @Nonnull String uri, @Nonnull String ajaxPrefix)
+	public static @Nullable String getAjaxletName(final @Nonnull String uriPath, @Nonnull String ajaxPrefix)
 	{
-		String p = ltrimstrOrNull(uri, ajaxPrefix);
-		return nullIfEmpty(removeQueryAndOrAnchorOrPassThroughIfNull(p == null ? null : splitonceReturnPrecedingOrWhole(p, '/')));
+		String p = ltrimstrOrNull(uriPath, ajaxPrefix);
+		return postProcess(p == null ? null : splitonceReturnPrecedingOrWhole(p, '/'));
 	}
 	
 	
@@ -157,26 +162,21 @@ public class WikiAjaxletDispatcher
 	 * @param ajaxPrefix  usually "/ajax/"
 	 * @return The AjaxletName for the requestURI, or null if none/syntaxerror
 	 */
-	public static @Nullable String getAjaxletAction(final @Nonnull String uri, @Nonnull String ajaxPrefix)
+	public static @Nullable String getAjaxletAction(final @Nonnull String uriPath, @Nonnull String ajaxPrefix)
 	{
-		String p = ltrimstrOrNull(uri, ajaxPrefix);
+		String p = ltrimstrOrNull(uriPath, ajaxPrefix);
 		
 		if (p == null)
 			return null;
 		
 		String pp = splitonceReturnSucceedingOrNull(p, '/');
 		
-		return nullIfEmpty(removeQueryAndOrAnchorOrPassThroughIfNull(pp == null ? null : splitonceReturnPrecedingOrWhole(pp, '/')));
+		return postProcess(pp == null ? null : splitonceReturnPrecedingOrWhole(pp, '/'));
 	}
 	
-	protected static @Nullable String removeQueryAndOrAnchorOrPassThroughIfNull(final @Nullable String uriFragment)
+	protected static @Nullable String postProcess(final @Nullable String s)
 	{
-		return uriFragment == null ? null : splitonceReturnPrecedingOrWhole(splitonceReturnPrecedingOrWhole(uriFragment, '?'), '#');
-	}
-	
-	protected static @Nullable String nullIfEmpty(final @Nullable String s)
-	{
-		return s != null && s.isEmpty() ? null : s;
+		return (s != null && s.isEmpty())  ?  null  :  (s == null ? null : NetworkUtilities.urldescape(s));
 	}
 	
 	

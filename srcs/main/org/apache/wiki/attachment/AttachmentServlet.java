@@ -161,7 +161,7 @@ public class AttachmentServlet extends HttpServlet {
 
     @Override
     protected void doOptions( final HttpServletRequest req, final HttpServletResponse res ) {
-        res.setHeader( "Allow", "GET, PUT, POST, OPTIONS, PROPFIND, PROPPATCH, MOVE, COPY, DELETE");
+        res.setHeader( "Allow", "GET, POST, OPTIONS");
         res.setStatus( HttpServletResponse.SC_OK );
     }
 

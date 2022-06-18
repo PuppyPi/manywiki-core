@@ -29,8 +29,7 @@ import javax.servlet.http.HttpServlet;
  * 
  * @since 2.10.2-svn12
  */
-public class AjaxUtil extends HttpServlet {
-	private static final long serialVersionUID = 3170439306358345408L;
+public class AjaxUtil {
 	private static final Gson gson = new Gson();
 
 	/**

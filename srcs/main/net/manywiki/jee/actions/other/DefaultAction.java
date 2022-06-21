@@ -10,6 +10,6 @@ extends ManyWikiActionBean
 	@Override
 	protected void doValidAction() throws ServletException, IOException
 	{
-		sendError(404);
+		sendError(404);  //To be picked up by the error interceptor :3
 	}
 }

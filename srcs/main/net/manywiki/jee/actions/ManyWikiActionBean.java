@@ -9,9 +9,12 @@ import javax.annotation.Nullable;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletResponse;
 import net.manywiki.jee.TemporaryManyWikiRoot;
+import net.manywiki.jee.actions.errors.ManyWikiErrorStatusCodeInterceptor;
+import net.manywiki.jee.actions.errors.pages.Error_jsp;
 import org.apache.wiki.WikiEngine;
 import rebound.net.ReURL;
 import rebound.simplejee.FlushPendingHttpServletResponseDecorator;
+import rebound.simplejee.ReplacementErrorResolutionResponseWrapper;
 import rebound.spots.util.binding.annotated.util.AbstractBindingAnnotatedSimpleJEEActionBeanWithViewResourcePath;
 import rebound.spots.util.binding.annotated.util.TuneBuffer;
 import rebound.text.StringUtilities;
@@ -21,7 +24,10 @@ public class ManyWikiActionBean
 extends AbstractBindingAnnotatedSimpleJEEActionBeanWithViewResourcePath
 {
 	protected final boolean usesFlushPending;
+	
+	//Put the flush pender after!  Its whole point is to prevent premature flushing and committal of the response!  So if we err, we *want* to discard this one's whole buffer! so that the error page can be sent instead!
 	protected FlushPendingHttpServletResponseDecorator flushPendingResponse;  //if usesFlushPending, this must always be null!! 
+	protected ReplacementErrorResolutionResponseWrapper errorInterceptorResponse;
 	
 	protected WikiEngine engine;
 	
@@ -48,15 +54,26 @@ extends AbstractBindingAnnotatedSimpleJEEActionBeanWithViewResourcePath
 	
 	public HttpServletResponse getResponse()
 	{
+		ReplacementErrorResolutionResponseWrapper errorInterceptorResponse = this.errorInterceptorResponse;
+		{
+			if (errorInterceptorResponse == null)
+			{
+				HttpServletResponse underlying = getContext().getResponse();
+				errorInterceptorResponse = new ReplacementErrorResolutionResponseWrapper(getRequest(), underlying, getContext().getServletContext(), ManyWikiErrorStatusCodeInterceptor::sendError);
+				this.errorInterceptorResponse = errorInterceptorResponse;
+			}
+		}
+		
+		
 		if (this.usesFlushPending)
 		{
 			if (this.flushPendingResponse == null)
-				this.flushPendingResponse = new FlushPendingHttpServletResponseDecorator(getContext().getResponse());
+				this.flushPendingResponse = new FlushPendingHttpServletResponseDecorator(errorInterceptorResponse);
 			return this.flushPendingResponse;
 		}
 		else
 		{
-			return getContext().getResponse();
+			return errorInterceptorResponse;
 		}
 	}
 	
@@ -83,6 +100,9 @@ extends AbstractBindingAnnotatedSimpleJEEActionBeanWithViewResourcePath
 		log("DFLKDSJFLJF 7) "+getResponse().isCommitted());  //TODO REMOVE
 		if (!getRequest().getMethod().equals("GET") && !getRequest().getMethod().equals("POST"))
 		{
+			//We can include a nice body in this as HTML in case they render it to someone somewhere X3
+			//So use getResponse().sendError() which has the error interceptor decorator :3
+			
 			getResponse().setHeader("Allow", "GET, POST");
 			sendError(405);
 			return;
@@ -156,6 +176,8 @@ extends AbstractBindingAnnotatedSimpleJEEActionBeanWithViewResourcePath
 		}
 		catch (Throwable exc)
 		{
+			//Note that we VERY MUCH don't want to use getResponse()!! (or else when it invoked response.sendError() it will get intercepted!!).
+			//It must use the equivalent of getContext().getResponse() instead—ie, the original response!
 			Error_jsp errorHandler = new Error_jsp(getContext(), engine);
 			errorHandler.doLogic(exc);
 		}

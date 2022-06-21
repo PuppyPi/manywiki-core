@@ -23,8 +23,8 @@ import org.apache.commons.lang3.time.StopWatch;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.wiki.ajax.AjaxUtil;
-import org.apache.wiki.ajax.WikiAjaxDispatcherServlet;
-import org.apache.wiki.ajax.WikiAjaxServlet;
+import org.apache.wiki.ajax.WikiAjaxletDispatcher;
+import org.apache.wiki.ajax.WikiAjaxlet;
 import org.apache.wiki.api.core.Context;
 import org.apache.wiki.api.core.ContextEnum;
 import org.apache.wiki.api.core.Engine;
@@ -79,24 +79,18 @@ public class DefaultSearchManager extends BasePageFilter implements SearchManage
         WikiEventManager.addWikiEventListener( m_engine.getManager( PageManager.class ), this );
 
         // TODO: Replace with custom annotations. See JSPWIKI-566
-        WikiAjaxDispatcherServlet.registerServlet( JSON_SEARCH, new JSONSearch() );
+        WikiAjaxletDispatcher.registerAjaxlet( JSON_SEARCH, new JSONSearch() );
     }
 
     /**
      *  Provides a JSON AJAX API to the JSPWiki Search Engine.
      */
-    public class JSONSearch implements WikiAjaxServlet {
+    public class JSONSearch implements WikiAjaxlet {
 
         public static final String AJAX_ACTION_SUGGESTIONS = "suggestions";
         public static final String AJAX_ACTION_PAGES = "pages";
         public static final int DEFAULT_MAX_RESULTS = 20;
         public int maxResults = DEFAULT_MAX_RESULTS;
-
-        /** {@inheritDoc} */
-        @Override
-        public String getServletMapping() {
-            return JSON_SEARCH;
-        }
 
         /** {@inheritDoc} */
         @Override

@@ -20,8 +20,8 @@ package org.apache.wiki.ui.progress;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.apache.wiki.ajax.WikiAjaxDispatcherServlet;
-import org.apache.wiki.ajax.WikiAjaxServlet;
+import org.apache.wiki.ajax.WikiAjaxletDispatcher;
+import org.apache.wiki.ajax.WikiAjaxlet;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -50,7 +50,7 @@ public class DefaultProgressManager implements ProgressManager {
      */
     public DefaultProgressManager() {
     	// TODO: Replace with custom annotations. See JSPWIKI-566
-        WikiAjaxDispatcherServlet.registerServlet( JSON_PROGRESSTRACKER, new JSONTracker() );
+        WikiAjaxletDispatcher.registerAjaxlet( JSON_PROGRESSTRACKER, new JSONTracker() );
     }
 
     /**
@@ -109,7 +109,7 @@ public class DefaultProgressManager implements ProgressManager {
      *  Provides access to a progress indicator, assuming you know the ID. Progress of zero (0) means that the progress has just started,
      *  and a progress of 100 means that it is complete.
      */
-    public class JSONTracker implements WikiAjaxServlet {
+    public class JSONTracker implements WikiAjaxlet {
         /**
          *  Returns upload progress in percents so far.
          *
@@ -119,10 +119,6 @@ public class DefaultProgressManager implements ProgressManager {
         public int getProgress( final String progressId )
         {
             return DefaultProgressManager.this.getProgress( progressId );
-        }
-        
-        public String getServletMapping() {
-        	return JSON_PROGRESSTRACKER;
         }
         
         public void service( final HttpServletRequest req,

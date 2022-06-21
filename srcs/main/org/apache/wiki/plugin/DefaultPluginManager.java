@@ -47,8 +47,8 @@ import org.apache.oro.text.regex.PatternMatcher;
 import org.apache.oro.text.regex.Perl5Compiler;
 import org.apache.oro.text.regex.Perl5Matcher;
 import org.apache.wiki.InternalWikiException;
-import org.apache.wiki.ajax.WikiAjaxDispatcherServlet;
-import org.apache.wiki.ajax.WikiAjaxServlet;
+import org.apache.wiki.ajax.WikiAjaxletDispatcher;
+import org.apache.wiki.ajax.WikiAjaxlet;
 import org.apache.wiki.api.core.Context;
 import org.apache.wiki.api.core.Engine;
 import org.apache.wiki.api.exceptions.PluginException;
@@ -83,7 +83,6 @@ import org.apache.wiki.plugin.plugins.RecentChangesPlugin;
 import org.apache.wiki.plugin.plugins.ReferredPagesPlugin;
 import org.apache.wiki.plugin.plugins.ReferringPagesPlugin;
 import org.apache.wiki.plugin.plugins.ReferringUndefinedPagesPlugin;
-import org.apache.wiki.plugin.plugins.SampleAjaxPlugin;
 import org.apache.wiki.plugin.plugins.Search;
 import org.apache.wiki.plugin.plugins.SessionsPlugin;
 import org.apache.wiki.plugin.plugins.TableOfContents;
@@ -211,7 +210,6 @@ import rebound.annotations.semantic.meta.dependencies.DependencyClass;
 @DependencyClass(ReferredPagesPlugin.class)
 @DependencyClass(ReferringPagesPlugin.class)
 @DependencyClass(ReferringUndefinedPagesPlugin.class)
-@DependencyClass(SampleAjaxPlugin.class)
 @DependencyClass(Search.class)
 @DependencyClass(SessionsPlugin.class)
 @DependencyClass(TableOfContents.class)
@@ -567,7 +565,7 @@ public class DefaultPluginManager extends BaseModuleManager implements PluginMan
 
         /**
          *  Initializes a plugin, if it has not yet been initialized. If the plugin extends {@link HttpServlet} it will automatically
-         *  register it as AJAX using {@link WikiAjaxDispatcherServlet#registerServlet(String, WikiAjaxServlet)}.
+         *  register it as AJAX using {@link WikiAjaxletDispatcher#registerAjaxlet(String, WikiAjaxlet)}.
          *
          *  @param engine The Engine
          *  @param searchPath A List of Strings, containing different package names.
@@ -583,11 +581,10 @@ public class DefaultPluginManager extends BaseModuleManager implements PluginMan
                     if( p instanceof InitializablePlugin ) {
                         ( ( InitializablePlugin )p ).initialize( engine );
                     }
-                    if( p instanceof WikiAjaxServlet ) {
-                    	WikiAjaxDispatcherServlet.registerServlet( (WikiAjaxServlet) p );
+                    if( p instanceof WikiAjaxlet ) {
                     	final String ajaxAlias = info.getAjaxAlias();
                     	if (StringUtils.isNotBlank(ajaxAlias)) {
-                    		WikiAjaxDispatcherServlet.registerServlet( info.getAjaxAlias(), (WikiAjaxServlet) p );
+                    		WikiAjaxletDispatcher.registerAjaxlet( info.getAjaxAlias(), (WikiAjaxlet) p );
                     	}
                     }
                 } catch( final Exception e ) {

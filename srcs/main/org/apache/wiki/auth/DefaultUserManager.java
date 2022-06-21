@@ -22,8 +22,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.wiki.ajax.AjaxUtil;
-import org.apache.wiki.ajax.WikiAjaxDispatcherServlet;
-import org.apache.wiki.ajax.WikiAjaxServlet;
+import org.apache.wiki.ajax.WikiAjaxletDispatcher;
+import org.apache.wiki.ajax.WikiAjaxlet;
 import org.apache.wiki.api.core.Context;
 import org.apache.wiki.api.core.Engine;
 import org.apache.wiki.api.core.Session;
@@ -106,7 +106,7 @@ public class DefaultUserManager implements UserManager {
         addWikiEventListener( engine.getManager( PageManager.class ) );
 
         //TODO: Replace with custom annotations. See JSPWIKI-566
-        WikiAjaxDispatcherServlet.registerServlet( JSON_USERS, new JSONUserModule(this), new AllPermission(null));
+        WikiAjaxletDispatcher.registerAjaxlet( JSON_USERS, new JSONUserModule(this), new AllPermission(null));
     }
 
     /** {@inheritDoc} */
@@ -419,13 +419,15 @@ public class DefaultUserManager implements UserManager {
         WikiEventManager.removeWikiEventListener( this, listener );
     }
 
+    
+    //FIXME-PP DOES THIS ALLOW ANY USER TO GET INFO ON ANY OTHER USER!??!  ARE WE SURE EVERYONE ALWAYS WANTS THAT??!?  WHAT DATA DOES IT RETURN!!??!??
     /**
      *  Implements the JSON API for usermanager.
      *  <p>
      *  Even though this gets serialized whenever container shuts down/restarts, this gets reinstalled to the session when JSPWiki starts.
      *  This means that it's not actually necessary to save anything.
      */
-    public static final class JSONUserModule implements WikiAjaxServlet {
+    public static final class JSONUserModule implements WikiAjaxlet {
 
 		private final DefaultUserManager m_manager;
 
@@ -436,11 +438,6 @@ public class DefaultUserManager implements UserManager {
         public JSONUserModule( final DefaultUserManager mgr )
         {
             m_manager = mgr;
-        }
-
-        @Override
-        public String getServletMapping() {
-        	return JSON_USERS;
         }
 
         @Override
@@ -456,6 +453,8 @@ public class DefaultUserManager implements UserManager {
 		            resp.getWriter().write(AjaxUtil.toJson(prof));
 	        	}
         	} catch (final NoSuchPrincipalException e) {
+        		
+        		//TODO-PP what should we do if they ask for a user that doesn't exist?
         		throw new ServletException(e);
         	}
         }

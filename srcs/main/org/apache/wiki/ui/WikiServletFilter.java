@@ -164,7 +164,9 @@ public class WikiServletFilter implements Filter {
      * @return <code>true</code> if the request has previously been wrapped; <code>false</code> otherwise
      */
     private boolean isWrapped( ServletRequest request ) {
-        while( !(request instanceof WikiRequestWrapper ) && request instanceof HttpServletRequestWrapper ) {
+        
+    	//TODO-PP no. XD
+    	while( !(request instanceof WikiRequestWrapper ) && request instanceof HttpServletRequestWrapper ) {
             request = ( ( HttpServletRequestWrapper ) request ).getRequest();
         }
         return request instanceof WikiRequestWrapper;

@@ -27,6 +27,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
 import java.security.Principal;
 
+//TODO-PP Remove this (and remove it from my site too, really X'D   and use pure-code-based configuration and interoperation! with full access to the code to make things cooperate and not Interfere instead of a restrictive api that allows text/xml-based configuration that forces things to shove things into whatever code objects they can pass to each other and just hope there's no conflicts X'D )
+
 /**
  * Servlet request wrapper that encapsulates an incoming HTTP request and overrides its security methods so that the request returns
  * JSPWiki-specific values.

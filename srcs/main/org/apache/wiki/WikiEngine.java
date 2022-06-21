@@ -102,7 +102,7 @@ import rebound.annotations.semantic.meta.dependencies.DependencyClass;
 @DependencyClass(ShortViewURLConstructor.class)
 public class WikiEngine implements Engine {
 
-    private static final String ATTR_WIKIENGINE = "org.apache.wiki.WikiEngine";
+    private static final String ATTR_WIKIENGINE = "org.apache.wiki.WikiEngine";  //Remove using unstructured attributes stored in JEE!  Just keep it in ManyWikiTheOneServlet or something XD
     private static final Logger LOG = LogManager.getLogger( WikiEngine.class );
 
     /** Stores properties. */

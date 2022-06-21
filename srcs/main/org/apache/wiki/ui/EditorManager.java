@@ -21,7 +21,7 @@ package org.apache.wiki.ui;
 import org.apache.wiki.api.core.Context;
 import org.apache.wiki.api.engine.Initializable;
 import org.apache.wiki.modules.ModuleManager;
-
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.PageContext;
 
 
@@ -109,4 +109,8 @@ public interface EditorManager extends ModuleManager, Initializable {
         return usertext;
     }
 
+    static String getEditedText( final HttpServletRequest req ) {
+    	return req.getParameter( REQ_EDITEDTEXT );  //TODO-PP we don't need pageContext.findAttribute(..), right??
+    }
+    
 }

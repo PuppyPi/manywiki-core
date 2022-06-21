@@ -12,6 +12,8 @@ import org.apache.wiki.ui.TemplateManager;
 import org.apache.wiki.util.*;
 import java.io.IOException;
 import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import net.manywiki.jee.actions.ManyWikiActionBean;
 
 public class Wiki_jsp
@@ -23,16 +25,19 @@ extends ManyWikiActionBean
 	@Override
 	protected void doLogic() throws ServletException, IOException
 	{
+		HttpServletRequest request = getRequest();
+		HttpServletResponse response = getResponse();
+		
 	    // Create wiki context and check for authorization
-	    Context wikiContext = Wiki.context().create( engine, getRequest(), ContextEnum.PAGE_VIEW.getRequestContext() );
-	    if( !engine.getManager( AuthorizationManager.class ).hasAccess( wikiContext, getResponse() ) ) return;
+	    Context wikiContext = Wiki.context().create( engine, request, ContextEnum.PAGE_VIEW.getRequestContext() );
+	    if( !engine.getManager( AuthorizationManager.class ).hasAccess( wikiContext, response ) ) return;
 	    String pagereq = wikiContext.getName();
 
 	    // Redirect if request was for a special page
 	    String redirect = wikiContext.getRedirectURL( );
 	    if( redirect != null )
 	    {
-	        getResponse().sendRedirect( redirect );
+	        response.sendRedirect( redirect );
 	        return;
 	    }
 
@@ -43,11 +48,11 @@ extends ManyWikiActionBean
 	        w.enterState("Generating VIEW response for "+wikiContext.getPage(),60);
 
 	        // Set the content type and include the response content
-	        getResponse().setContentType("text/html; charset="+engine.getContentEncoding() );
+	        response.setContentType("text/html; charset="+engine.getContentEncoding() );
 	        
-	        serveJSPView("/templates/default/ViewTemplate.jsp");
 	        //String contentPage = engine.getManager( TemplateManager.class ).findJSP( pageContext, wikiContext.getTemplate(), "ViewTemplate.jsp" );
 	        //%><wiki:Include page="<%=contentPage%>" /><%
+	        serveJSPView("/templates/default/ViewTemplate.jsp");
 	    }
 	    finally
 	    {

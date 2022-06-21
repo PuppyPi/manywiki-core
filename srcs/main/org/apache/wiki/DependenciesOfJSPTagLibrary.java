@@ -32,7 +32,6 @@ import rebound.annotations.semantic.meta.dependencies.DependencyFile;
 @DependencyClass(org.apache.wiki.tags.HistoryIteratorTag.class)
 @DependencyClass(org.apache.wiki.tags.IfNoSearchResultsTag.class)
 @DependencyClass(org.apache.wiki.tags.IncludeResourcesTag.class)
-@DependencyClass(org.apache.wiki.tags.IncludeTag.class)
 @DependencyClass(org.apache.wiki.tags.InsertDiffTag.class)
 @DependencyClass(org.apache.wiki.tags.InsertPageTag.class)
 @DependencyClass(org.apache.wiki.tags.LinkTag.class)

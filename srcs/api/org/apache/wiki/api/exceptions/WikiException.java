@@ -24,7 +24,7 @@ package org.apache.wiki.api.exceptions;
  *
  *  @since 2.0
  */
-public class WikiException extends Exception {
+public class WikiException extends RuntimeException {
 
 	private static final long serialVersionUID = 3257290231723210803L;
 

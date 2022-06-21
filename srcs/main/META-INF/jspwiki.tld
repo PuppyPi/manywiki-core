@@ -287,16 +287,6 @@
   </tag>
 
   <tag>
-    <name>Include</name>
-    <tag-class>org.apache.wiki.tags.IncludeTag</tag-class>
-    <body-content>empty</body-content>
-    <attribute>
-       <name>page</name>
-       <rtexprvalue>true</rtexprvalue>
-    </attribute>
-  </tag>
-
-  <tag>
     <name>IncludeResources</name>
     <tag-class>org.apache.wiki.tags.IncludeResourcesTag</tag-class>
     <body-content>empty</body-content>

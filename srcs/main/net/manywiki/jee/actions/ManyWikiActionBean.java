@@ -69,7 +69,7 @@ extends AbstractBindingAnnotatedSimpleJEEActionBeanWithViewResourcePath
 		
 		FlushPendingHttpServletResponseDecorator flushPendingResponse = this.flushPendingResponse;
 		
-		if (this.usesFlushPending || flushPendingResponse != null)
+		if (flushPendingResponse != null || this.usesFlushPending)
 		{
 			if (flushPendingResponse == null)
 			{

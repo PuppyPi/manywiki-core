@@ -33,7 +33,7 @@ extends AbstractBindingAnnotatedSimpleJEEActionBeanWithViewResourcePath
 	
 	public ManyWikiActionBean()
 	{
-		this(false);
+		this(false);  //DON'T CHANGE THIS WITHOUT UPDATING EVERYTHING XD
 	}
 	
 	

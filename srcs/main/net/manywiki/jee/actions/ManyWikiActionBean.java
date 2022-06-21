@@ -10,7 +10,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletResponse;
 import net.manywiki.jee.TemporaryManyWikiRoot;
 import net.manywiki.jee.actions.errors.ManyWikiErrorStatusCodeInterceptor;
-import net.manywiki.jee.actions.errors.pages.Error_jsp;
+import net.manywiki.jee.actions.errors.pages.ManyWikiCaughtErrorHandlerPage;
 import org.apache.wiki.WikiEngine;
 import rebound.net.ReURL;
 import rebound.simplejee.FlushPendingHttpServletResponseDecorator;
@@ -59,7 +59,7 @@ extends AbstractBindingAnnotatedSimpleJEEActionBeanWithViewResourcePath
 			if (errorInterceptorResponse == null)
 			{
 				HttpServletResponse underlying = getContext().getResponse();
-				errorInterceptorResponse = new ReplacementErrorResolutionResponseWrapper(getRequest(), underlying, getContext().getServletContext(), ManyWikiErrorStatusCodeInterceptor::sendError);
+				errorInterceptorResponse = new ReplacementErrorResolutionResponseWrapper(underlying, (int code, String message) -> ManyWikiErrorStatusCodeInterceptor.sendError(getContext().getRequest(), underlying, getContext().getServletContext(), code, message, engine));
 				this.errorInterceptorResponse = errorInterceptorResponse;
 			}
 		}
@@ -178,7 +178,7 @@ extends AbstractBindingAnnotatedSimpleJEEActionBeanWithViewResourcePath
 		{
 			//Note that we VERY MUCH don't want to use getResponse()!! (or else when it invoked response.sendError() it will get intercepted!!).
 			//It must use the equivalent of getContext().getResponse() instead—ie, the original response!
-			Error_jsp errorHandler = new Error_jsp(getContext(), engine);
+			ManyWikiCaughtErrorHandlerPage errorHandler = new ManyWikiCaughtErrorHandlerPage(getContext().getRequest(), getContext().getResponse(), getContext().getServletContext(), engine);
 			errorHandler.doLogic(exc);
 		}
 	}

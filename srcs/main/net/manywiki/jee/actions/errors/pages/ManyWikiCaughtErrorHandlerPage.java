@@ -1,45 +1,40 @@
 package net.manywiki.jee.actions.errors.pages;
 
-import org.apache.logging.log4j.Logger;
-import org.apache.logging.log4j.LogManager;
-import org.apache.wiki.WikiEngine;
-import org.apache.wiki.api.core.Context;
-import org.apache.wiki.api.core.ContextEnum;
-import org.apache.wiki.api.core.Engine;
-import org.apache.wiki.api.spi.Wiki;
-import org.apache.wiki.util.FileUtil;
-import rebound.exceptions.UnreachableCodeError;
-import rebound.simplejee.SimpleJEEUtilities;
-import rebound.spots.ActionBeanContext;
-import rebound.spots.util.AbstractActionBean;
-import rebound.spots.util.ActionBeanWithViewResourcePath;
-import rebound.spots.util.DefaultSimpleJEEActionBeanWithViewResourcePath;
 import java.io.IOException;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import net.manywiki.jee.actions.ManyWikiActionBean;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.apache.wiki.WikiEngine;
+import org.apache.wiki.api.core.Context;
+import org.apache.wiki.api.core.ContextEnum;
+import org.apache.wiki.api.spi.Wiki;
+import org.apache.wiki.util.FileUtil;
+import rebound.simplejee.SimpleJEEUtilities;
 
-public class Error_jsp
+public class ManyWikiCaughtErrorHandlerPage
 {
 	protected static final Logger log = LogManager.getLogger("JSPWiki");
 	
-	protected final ActionBeanContext context;
+	protected final HttpServletRequest request;
+	protected final HttpServletResponse response;
+	protected final ServletContext servletContext;
 	protected final WikiEngine engine;
 	
-	public Error_jsp(ActionBeanContext context, WikiEngine engine)
+	public ManyWikiCaughtErrorHandlerPage(HttpServletRequest request, HttpServletResponse response, ServletContext servletContext, WikiEngine engine)
 	{
-		this.context = context;
+		this.request = request;
+		this.response = response;
+		this.servletContext = servletContext;
 		this.engine = engine;
 	}
 	
 	
+	
 	public void doLogic(Throwable exception) throws ServletException, IOException
 	{
-		HttpServletRequest request = getRequest();
-		HttpServletResponse response = getResponse();
-		
-		
 		Context wikiContext = Wiki.context().create( engine, request, ContextEnum.WIKI_ERROR.getRequestContext() );
 		String pagereq = wikiContext.getName();
 		
@@ -80,7 +75,7 @@ public class Error_jsp
 			//FIXME-PP DSLJDSFLKDSJFDLKJF YOU DON'T SEND ERROR DETAILS TO THE POTENTIALLY-UNTRUSTED CLIENT!!LDKJFdlkjflkfj  (Store these in a database or something somewhere!!)
 			setVariableForJSPView("errorClassName", realcause.getClass().getName());
 			setVariableForJSPView("throwingMethod", FileUtil.getThrowingMethod(realcause));
-			SimpleJEEUtilities.serveJSP(getContext().getServletContext(), getRequest(), getResponse(), "/Error.jsp");
+			SimpleJEEUtilities.serveJSP(servletContext, getRequest(), getResponse(), "/errors/Caught.jsp");
 		}
 	}
 	
@@ -97,18 +92,13 @@ public class Error_jsp
 	}
 	
 	
-	public ActionBeanContext getContext()
-	{
-		return this.context;
-	}
-	
 	public HttpServletRequest getRequest()
 	{
-		return getContext().getRequest();
+		return request;
 	}
 	
 	public HttpServletResponse getResponse()
 	{
-		return getContext().getResponse();
+		return response;
 	}
 }

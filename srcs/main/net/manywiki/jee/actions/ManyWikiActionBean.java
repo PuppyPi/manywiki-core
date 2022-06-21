@@ -128,28 +128,36 @@ extends AbstractBindingAnnotatedSimpleJEEActionBeanWithViewResourcePath
 	 */
 	protected void doValidAction() throws ServletException, IOException
 	{
-		log("DFLKDSJFLJF 9) "+getResponse().isCommitted());  //TODO REMOVE
-		
-		doBufferTuning();
-		
-		log("DFLKDSJFLJF 10) "+getResponse().isCommitted());  //TODO REMOVE
-		
-		long start = System.currentTimeMillis();
 		try
 		{
-			if (doBinding()) //This has to come before passFail() because it binds information used in determining the  auth checks, etc.
+			log("DFLKDSJFLJF 9) "+getResponse().isCommitted());  //TODO REMOVE
+			
+			doBufferTuning();
+			
+			log("DFLKDSJFLJF 10) "+getResponse().isCommitted());  //TODO REMOVE
+			
+			long start = System.currentTimeMillis();
+			try
 			{
-				log("DFLKDSJFLJF 11) "+getResponse().isCommitted());  //TODO REMOVE
-				if (passFail())
+				if (doBinding()) //This has to come before passFail() because it binds information used in determining the  auth checks, etc.
 				{
-					log("DFLKDSJFLJF 12) "+getResponse().isCommitted());  //TODO REMOVE
-					doLogic();
+					log("DFLKDSJFLJF 11) "+getResponse().isCommitted());  //TODO REMOVE
+					if (passFail())
+					{
+						log("DFLKDSJFLJF 12) "+getResponse().isCommitted());  //TODO REMOVE
+						doLogic();
+					}
 				}
 			}
+			finally
+			{
+				logBenchmark(start, "Whole action for "+getClass());
+			}
 		}
-		finally
+		catch (Throwable exc)
 		{
-			logBenchmark(start, "Whole action for "+getClass());
+			Error_jsp errorHandler = new Error_jsp(getContext(), engine);
+			errorHandler.doLogic(exc);
 		}
 	}
 	

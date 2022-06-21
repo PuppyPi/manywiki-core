@@ -65,11 +65,19 @@ extends AbstractBindingAnnotatedSimpleJEEActionBeanWithViewResourcePath
 		}
 		
 		
-		if (this.usesFlushPending)
+		
+		
+		FlushPendingHttpServletResponseDecorator flushPendingResponse = this.flushPendingResponse;
+		
+		if (this.usesFlushPending || flushPendingResponse != null)
 		{
-			if (this.flushPendingResponse == null)
-				this.flushPendingResponse = new FlushPendingHttpServletResponseDecorator(errorInterceptorResponse);
-			return this.flushPendingResponse;
+			if (flushPendingResponse == null)
+			{
+				flushPendingResponse = new FlushPendingHttpServletResponseDecorator(errorInterceptorResponse);
+				this.flushPendingResponse = flushPendingResponse;
+			}
+			
+			return flushPendingResponse;
 		}
 		else
 		{

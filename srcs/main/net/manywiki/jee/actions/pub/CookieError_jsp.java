@@ -26,6 +26,6 @@ extends ManyWikiActionBean
 		
 		//String contentPage = engine.getManager( TemplateManager.class ).findJSP( pageContext, wikiContext.getTemplate(), "CookieErrorTemplate.jsp" );
 		//%><wiki:Include page="<%=contentPage%>" />
-        serveJSPView("/templates/default/CookieErrorTemplate.jsp");
+        serveJSPView("/templates/default/CookieErrorTemplate.jsp");  //FIXME-PP THIS DOESN'T EXIST X'D
 	}
 }

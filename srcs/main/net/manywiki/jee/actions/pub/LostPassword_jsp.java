@@ -2,7 +2,6 @@ package net.manywiki.jee.actions.pub;
 
 import java.util.*;
 import java.text.*;
-import javax.mail.*;
 import javax.servlet.jsp.jstl.fmt.*;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
@@ -22,6 +21,7 @@ import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import net.manywiki.jee.TemporaryManyWikiRoot;
 import net.manywiki.jee.actions.ManyWikiActionBean;
 
 public class LostPassword_jsp
@@ -66,7 +66,7 @@ extends ManyWikiActionBean
             String mailMessage = MessageFormat.format( rb.getString( "lostpwd.newpassword.email" ), args );
 
             Object[] args2 = { wiki.getApplicationName() };
-            MailUtil.sendMessage( wiki.getWikiProperties(), 
+            TemporaryManyWikiRoot.sendMessage( wiki.getWikiProperties(), 
             		              email, 
             		              MessageFormat.format( rb.getString( "lostpwd.newpassword.subject" ), args2 ),
                                   mailMessage );
@@ -82,12 +82,6 @@ extends ManyWikiActionBean
             Object[] args = { name };
             message = MessageFormat.format( rb.getString( "lostpwd.nouser" ), args );
             log.info( "Tried to reset password for non-existent user '" + name + "'" );
-        } catch( SendFailedException e ) {
-            message = rb.getString( "lostpwd.nomail" );
-            log.error( "Tried to reset password and got SendFailedException: " + e );
-        } catch( AuthenticationFailedException e ) {
-            message = rb.getString( "lostpwd.nomail" );
-            log.error( "Tried to reset password and got AuthenticationFailedException: " + e );
         } catch( Exception e ) {
             message = rb.getString( "lostpwd.nomail" );
             log.error( "Tried to reset password and got another exception: " + e );
@@ -104,15 +98,16 @@ extends ManyWikiActionBean
 		HttpServletResponse response = getResponse();
 		
 		
+		//TODO-PP is this right? now that this is a toplevel page server and not to be included in other pages?
 	    //Create wiki context like in Login.jsp:
 	    //don't check for access permissions: if you have lost your password you cannot login!
-	    Context wikiContext = ( Context )pageContext.getAttribute( Context.ATTR_CONTEXT, PageContext.REQUEST_SCOPE );
+//	    Context wikiContext = ( Context )pageContext.getAttribute( Context.ATTR_CONTEXT, PageContext.REQUEST_SCOPE );
 	    
 	    // If no context, it means we're using container auth.  So, create one anyway
-	    if( wikiContext == null ) {
-	        wikiContext = Wiki.context().create( engine, request, ContextEnum.WIKI_LOGIN.getRequestContext() ); /* reuse login context ! */
+//	    if( wikiContext == null ) {
+	    	Context wikiContext = Wiki.context().create( engine, request, ContextEnum.WIKI_LOGIN.getRequestContext() ); /* reuse login context ! */
 	        setVariableForJSPView( Context.ATTR_CONTEXT, wikiContext );  //Todo is it a problem that we don't specify the scope as PageContext.REQUEST_SCOPE anymore??
-	    }
+//	    }
 
 	    ResourceBundle rb = Preferences.getBundle( wikiContext, "org.apache.wiki.i18n.core.CoreResources" );
 

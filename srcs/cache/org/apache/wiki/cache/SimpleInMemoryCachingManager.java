@@ -29,6 +29,7 @@ implements CachingManager
 		registerCache(CACHE_PAGES);
 		registerCache(CACHE_PAGES_HISTORY);
 		registerCache(CACHE_PAGES_TEXT);
+		registerCache(CACHE_RSS);
 	}
 	
 	protected void registerCache(String cacheName)

@@ -29,7 +29,7 @@ import org.apache.wiki.i18n.InternationalizationManager;
 import org.apache.wiki.util.HttpUtil;
 import org.apache.wiki.util.PropertyReader;
 import org.apache.wiki.util.TextUtil;
-
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.PageContext;
 import java.text.DateFormat;
@@ -91,12 +91,19 @@ public class Preferences extends HashMap< String,String > {
     //        with which the user happened to first arrive to the site with.  This, unfortunately, means that even if the user changes e.g.
     //        language preferences (like in a web cafe), the old preferences still remain in a site cookie.
     public static void reloadPreferences( final PageContext pageContext ) {
-        final Preferences prefs = new Preferences();
-        final Properties props = PropertyReader.loadWebAppProps( pageContext.getServletContext() );
-        final Context ctx = Context.findContext( pageContext );
+    	reloadPreferences((HttpServletRequest)pageContext.getRequest(), pageContext.getServletContext());
+    }
+    
+    public static void reloadPreferences( final HttpServletRequest request, final ServletContext servletContext ) {
+        final Properties props = PropertyReader.loadWebAppProps( servletContext );
+        
+        final Context ctx = Context.findContext( request );
+        
         final String dateFormat = ctx.getEngine().getManager( InternationalizationManager.class )
-                                           .get( InternationalizationManager.CORE_BUNDLE, getLocale( ctx ), "common.datetimeformat" );
-
+        .get( InternationalizationManager.CORE_BUNDLE, getLocale( ctx ), "common.datetimeformat" );
+        
+        final Preferences prefs = new Preferences();
+        
         prefs.put("SkinName", TextUtil.getStringProperty( props, "jspwiki.defaultprefs.template.skinname", "PlainVanilla" ) );
         prefs.put("DateFormat", TextUtil.getStringProperty( props, "jspwiki.defaultprefs.template.dateformat", dateFormat ) );
         prefs.put("TimeZone", TextUtil.getStringProperty( props, "jspwiki.defaultprefs.template.timezone", java.util.TimeZone.getDefault().getID() ) );
@@ -117,8 +124,10 @@ public class Preferences extends HashMap< String,String > {
 
         // FIXME: editormanager reads jspwiki.editor -- which of both properties should continue
         prefs.put("editor", TextUtil.getStringProperty( props, "jspwiki.defaultprefs.template.editor", "plain" ) );
-        parseJSONPreferences( (HttpServletRequest) pageContext.getRequest(), prefs );
-        pageContext.getSession().setAttribute( SESSIONPREFS, prefs );
+        parseJSONPreferences( request, prefs );
+        
+        //pageContext.getSession().setAttribute( SESSIONPREFS, prefs );
+        request.getSession().setAttribute( SESSIONPREFS, prefs );  //Todo-PP this is equivalent, right??  TODO-PP stop using hidden variables to pass things around anyway >>  x'D
     }
 
 

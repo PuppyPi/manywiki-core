@@ -65,6 +65,11 @@ public interface CachingManager
 	/** Name of the rendering cache. */
 	String CACHE_DOCUMENTS = "jspwiki.renderingCache";
 	
+	/** Name of the RSS cache. */
+	String CACHE_RSS = "jspwiki.rssCache";
+	
+	
+	
 	/**
 	 * Checks if the requested cache is enabled or not.
 	 *

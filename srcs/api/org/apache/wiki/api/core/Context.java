@@ -270,7 +270,11 @@ public interface Context extends Cloneable, Command {
      */
     static Context findContext( final PageContext pageContext ) {
         final HttpServletRequest request = ( HttpServletRequest )pageContext.getRequest();
-        return ( Context )request.getAttribute( ATTR_CONTEXT );
+        return findContext(request);
     }
 
+    static Context findContext( final HttpServletRequest request ) {
+    	return ( Context )request.getAttribute( ATTR_CONTEXT );
+    }
+    
 }

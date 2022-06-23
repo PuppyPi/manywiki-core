@@ -20,7 +20,7 @@
 package org.apache.wiki.tags;
 
 
-import org.apache.wiki.filters.ActiveSpamFilterInsertions;
+import net.manywiki.jee.TemporaryManyWikiRoot;
 import org.apache.wiki.filters.SpamFilterInsertions;
 
 /**
@@ -30,7 +30,9 @@ import org.apache.wiki.filters.SpamFilterInsertions;
  */
 public class SpamFilterInputsTag extends WikiTagBase {
 
-	protected SpamFilterInsertions insertions = ActiveSpamFilterInsertions.active;
+	//TODO get the JSP to pass around an opaque token which contains both the SpamFilter and the "lastchange" attribute value, and no longer use hidden variables to pass data inside the HttpServletRequest (especially with such a very generic name that IS IN THIS VERY PROJECT USED TO ENCODE SOMETHING ELSE SOMETIMES (a timestamp of the last change not a String internal to Akismet..like you'd expect it might be!!!) sdlkfsdljkdsfldskj X'D )
+	
+	protected SpamFilterInsertions insertions = TemporaryManyWikiRoot.active;
 	
     /**
      * {@inheritDoc}

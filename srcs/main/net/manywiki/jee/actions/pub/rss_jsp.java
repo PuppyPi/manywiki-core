@@ -2,16 +2,14 @@ package net.manywiki.jee.actions.pub;
 
 import java.text.*;
 import java.util.*;
-import net.sf.ehcache.Cache;
-import net.sf.ehcache.Element;
-import net.sf.ehcache.CacheManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
 import org.apache.wiki.WatchDog;
 import org.apache.wiki.api.core.*;
 import org.apache.wiki.api.spi.Wiki;
 import org.apache.wiki.auth.AuthorizationManager;
-import org.apache.wiki.plugin.WeblogPlugin;
+import org.apache.wiki.cache.CachingManager;
+import org.apache.wiki.plugin.plugins.WeblogPlugin;
 import org.apache.wiki.pages.PageManager;
 import org.apache.wiki.preferences.Preferences;
 import org.apache.wiki.rss.*;
@@ -28,11 +26,6 @@ extends ManyWikiActionBean
 {
     protected static final Logger log = LogManager.getLogger("JSPWiki");
     
-    private CacheManager m_cacheManager = CacheManager.getInstance();
-    private String cacheName = "jspwiki.rssCache";
-    private Cache m_rssCache;
-    private int m_expiryPeriod = 24*60*60;
-    private int cacheCapacity = 1000;
 	
 	@Override
 	protected void doLogic() throws ServletException, IOException
@@ -40,19 +33,13 @@ extends ManyWikiActionBean
 		HttpServletRequest request = getRequest();
 		HttpServletResponse response = getResponse();
 		
+		CachingManager cacheManager = engine.getManager( CachingManager.class );
+		
 		ServletOutputStream out = getResponse().getOutputStream();
 		
 		out.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
 		
 		
-	    if (m_cacheManager.cacheExists(cacheName)) {
-	        m_rssCache = m_cacheManager.getCache(cacheName);
-	    } else {
-	        log.info("cache with name " + cacheName +  " not found in ehcache.xml, creating it with defaults.");
-	        m_rssCache = new Cache(cacheName, cacheCapacity, false, false, m_expiryPeriod, m_expiryPeriod);
-	        m_cacheManager.addCache(m_rssCache);
-	    }
-	    
 	    // Create wiki context and check for authorization
 	    Context wikiContext = Wiki.context().create( engine, request, ContextEnum.PAGE_RSS.getRequestContext() );
 	    if(!engine.getManager( AuthorizationManager.class ).hasAccess( wikiContext, response ) ) return;
@@ -135,15 +122,11 @@ extends ManyWikiActionBean
 	    //
 	    String hashKey = wikipage.getName()+";"+mode+";"+type+";"+latest.getTime();
 	    
-	    String rss = "";
-
-	    Element element = m_rssCache.get(hashKey);
-	    if (element != null) {
-	      rss = (String) element.getObjectValue();
-	    } else { 
-	        rss = engine.getManager( RSSGenerator.class ).generateFeed( wikiContext, changed, mode, type );
-	        m_rssCache.put( new Element( hashKey, rss ) );
-	    }
+	    final String mode_ = mode;
+	    final String type_ = type;
+	    CheckedSupplier<String, RuntimeException> supplier = () -> engine.getManager( RSSGenerator.class ).generateFeed( wikiContext, changed, mode_, type_ );
+	    
+	    String rss = cacheManager == null ? supplier.get() : cacheManager.get(CachingManager.CACHE_RSS, hashKey, supplier);
 	    
 	    out.println( rss );
 	    

@@ -5,6 +5,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.wiki.api.core.*;
 import org.apache.wiki.api.spi.Wiki;
 import org.apache.wiki.plugin.*;
+import org.apache.wiki.plugin.plugins.WeblogEntryPlugin;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;

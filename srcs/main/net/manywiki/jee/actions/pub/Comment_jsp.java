@@ -32,6 +32,7 @@ import javax.servlet.http.HttpSession;
 import javax.servlet.jsp.jstl.fmt.*;
 import java.io.IOException;
 import javax.servlet.ServletException;
+import net.manywiki.jee.TemporaryManyWikiRoot;
 import net.manywiki.jee.actions.ManyWikiActionBean;
 
 public class Comment_jsp
@@ -132,10 +133,16 @@ extends ManyWikiActionBean
 
 	        Page modifiedPage = (Page)wikiContext.getPage().clone();
 
-	        String spamhash = request.getParameter( SpamFilter.getHashFieldName(request) );
-
-	        if( !SpamFilter.checkHash(wikiContext,pageContext) ) {
-	            return;
+	        SpamFilter spamFilter = TemporaryManyWikiRoot.getSpamFilter();
+	        
+	        if (spamFilter != null)
+	        {
+		        String spamhash = request.getParameter( spamFilter.getHashFieldName(request) );
+	
+		        if(! spamFilter.checkHash(wikiContext,request) ) {
+		        	response.sendRedirect(wikiContext.getURL(ContextEnum.PAGE_VIEW.getRequestContext(), "SessionExpired"));
+		            return;
+		        }
 	        }
 
 	        //
@@ -260,6 +267,7 @@ extends ManyWikiActionBean
 	    Date d = latestversion.getLastModified();
 	    if( d != null ) lastchange = d.getTime();
 
+	    //TODO-PP sdlfkjdsfldskjf .. sdflkdsfldskjfdsldsjf what on Earth is this for!?!  Other places it's a string for the spam hash!!
 	    setVariableForJSPView( "lastchange", Long.toString( lastchange ) );  //Todo is it a problem that we don't specify the scope as PageContext.REQUEST_SCOPE anymore??
 
 	    //  This is a hack to get the preview to work.

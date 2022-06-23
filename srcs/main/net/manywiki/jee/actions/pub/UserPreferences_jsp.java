@@ -96,7 +96,7 @@ extends ManyWikiActionBean
 			}
 		}
 		if( "setAssertedName".equals( request.getParameter( "action" ) ) ) {
-			Preferences.reloadPreferences( pageContext );
+			Preferences.reloadPreferences( request, getContext().getServletContext() );
 			
 			String assertedName = request.getParameter( "assertedName" );
 			CookieAssertionLoginModule.setUserCookie( response, assertedName );
@@ -115,7 +115,7 @@ extends ManyWikiActionBean
 		if( "clearAssertedName".equals( request.getParameter( "action" ) ) ) {
 			HttpUtil.clearCookie( response, Preferences.COOKIE_USER_PREFS_NAME );
 			CookieAssertionLoginModule.clearUserCookie( response );
-			Preferences.reloadPreferences( pageContext );
+			Preferences.reloadPreferences( request, getContext().getServletContext() );
 			
 			String redirectPage = request.getParameter( "redirect" );
 			if( !engine.getManager( PageManager.class ).wikiPageExists( redirectPage ) )

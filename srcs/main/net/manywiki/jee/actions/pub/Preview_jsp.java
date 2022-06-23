@@ -15,6 +15,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import net.manywiki.jee.TemporaryManyWikiRoot;
 import net.manywiki.jee.actions.ManyWikiActionBean;
 
 public class Preview_jsp
@@ -42,9 +43,12 @@ extends ManyWikiActionBean
 		
 		setVariableForJSPView( EditorManager.ATTR_EDITEDTEXT, session.getAttribute( EditorManager.REQ_EDITEDTEXT ) );  //Todo is it a problem that we don't specify the scope as PageContext.REQUEST_SCOPE anymore??
 		
-		String lastchange = SpamFilter.getSpamHash( wikiContext.getPage(), request );
-		
-		setVariableForJSPView( "lastchange", lastchange );  //Todo is it a problem that we don't specify the scope as PageContext.REQUEST_SCOPE anymore??
+		SpamFilter spamFilter = TemporaryManyWikiRoot.getSpamFilter();
+		if (spamFilter != null)
+		{
+			String lastchange = spamFilter.getSpamHash( wikiContext.getPage(), request );
+			getRequest().setAttribute( SpamFilter.HorribleHiddenVariableInHttpServletRequest, lastchange );
+		}
 		
 		// Set the content type and include the response content
 		response.setContentType("text/html; charset="+engine.getContentEncoding() );

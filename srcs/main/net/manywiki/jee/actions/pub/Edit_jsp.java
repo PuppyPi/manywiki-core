@@ -17,11 +17,13 @@ import org.apache.wiki.ui.EditorManager;
 import org.apache.wiki.ui.TemplateManager;
 import org.apache.wiki.util.TextUtil;
 import org.apache.wiki.workflow.DecisionRequiredException;
+import org.jdom2.JDOMException;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import net.manywiki.jee.TemporaryManyWikiRoot;
 import net.manywiki.jee.actions.ManyWikiActionBean;
 
 public class Edit_jsp
@@ -62,9 +64,8 @@ extends ManyWikiActionBean
 		String edit    = request.getParameter("edit");
 		String author  = TextUtil.replaceEntities( findParam( "author" ) );
 		String changenote = findParam( "changenote" );
-		String text    = EditorManager.getEditedText( pageContext );
+		String text    = EditorManager.getEditedText( request );
 		String link    = TextUtil.replaceEntities( findParam( "link") );
-		String spamhash = findParam( SpamFilter.getHashFieldName(request) );
 		String captcha = (String)session.getAttribute("captcha");
 		
 		if ( !wikiSession.isAuthenticated() && wikiSession.isAnonymous() && author != null ) {
@@ -76,7 +77,18 @@ extends ManyWikiActionBean
 		//
 		String htmlText = findParam( "htmlPageText" );
 		if( htmlText != null && cancel == null ) {
-			text = new HtmlStringToWikiTranslator( engine ).translate( htmlText, wikiContext );
+			try
+			{
+				text = new HtmlStringToWikiTranslator( engine ).translate( htmlText, wikiContext );
+			}
+			catch (JDOMException exc)
+			{
+				throw new ServletException(exc);
+			}
+			catch (ReflectiveOperationException exc)
+			{
+				throw new ServletException(exc);
+			}
 		}
 		
 		Page wikipage = wikiContext.getPage();
@@ -98,33 +110,37 @@ extends ManyWikiActionBean
 		//log.debug("Request content type+"+request.getContentType());
 		log.debug("preview="+preview+", ok="+ok);
 		
+		SpamFilter spamFilter = TemporaryManyWikiRoot.getSpamFilter();
+		
+		String spamhash = spamFilter == null ? null : getRequest().getParameter( spamFilter.getHashFieldName(request) );  //Todo-PP we don't need to use pageContext.findAttribute() anymore here because this is a toplevel page serving bean and nothing is communicating to it with hidden variables, right?!
+		
 		if( ok != null || captcha != null ) {
 			log.info("Saving page "+pagereq+". User="+user+", host="+HttpUtil.getRemoteAddress(request) );
 			
-			//
-			//  Check for session expiry
-			//
-			if( !SpamFilter.checkHash(wikiContext,pageContext) ) {
-				return;
+			if (spamFilter != null)
+			{
+				//
+				//  Check for session expiry
+				//
+				if( !spamFilter.checkHash(wikiContext, request) ) {
+					return;
+				}
+				
+				String h = spamFilter.getSpamHash( latestversion, request );
+				
+				if( !h.equals(spamhash) ) {
+					//
+					// Someone changed the page while we were editing it!
+					//
+					log.info("Page changed, warning user.");
+					
+					session.setAttribute( EditorManager.REQ_EDITEDTEXT, EditorManager.getEditedText(request) );
+					response.sendRedirect( engine.getURL( ContextEnum.PAGE_CONFLICT.getRequestContext(), pagereq, null ) );
+					return;
+				}
 			}
 			
 			Page modifiedPage = (Page)wikiContext.getPage().clone();
-			
-			//  FIXME: I am not entirely sure if the JSP page is the
-			//  best place to check for concurrent changes.  It certainly
-			//  is the best place to show errors, though.
-			String h = SpamFilter.getSpamHash( latestversion, request );
-			
-			if( !h.equals(spamhash) ) {
-				//
-				// Someone changed the page while we were editing it!
-				//
-				log.info("Page changed, warning user.");
-				
-				session.setAttribute( EditorManager.REQ_EDITEDTEXT, EditorManager.getEditedText(request) );
-				response.sendRedirect( engine.getURL( ContextEnum.PAGE_CONFLICT.getRequestContext(), pagereq, null ) );
-				return;
-			}
 			
 			//
 			//  We expire ALL locks at this moment, simply because someone has already broken it.
@@ -190,7 +206,10 @@ extends ManyWikiActionBean
 				if( htmlText != null ) session.setAttribute( EditorManager.REQ_EDITEDTEXT, text );
 				
 				session.setAttribute("changenote", changenote != null ? changenote : "" );
-				session.setAttribute(SpamFilter.getHashFieldName(request), spamhash);
+				
+				if (spamFilter != null)
+					session.setAttribute(spamFilter.getHashFieldName(request), spamhash);
+				
 				response.sendRedirect( ex.getRedirect() );
 				return;
 			}
@@ -226,14 +245,16 @@ extends ManyWikiActionBean
 		log.info("Editing page "+pagereq+". User="+user+", host="+HttpUtil.getRemoteAddress(request) );
 		
 		
-		//
-		//  Determine and store the date the latest version was changed.  Since
-		//  the newest version is the one that is changed, we need to track
-		//  that instead of the edited version.
-		//
-		String lastchange = SpamFilter.getSpamHash( latestversion, request );
-		
-		setVariableForJSPView( "lastchange", lastchange );  //Todo is it a problem that we don't specify the scope as PageContext.REQUEST_SCOPE anymore??
+		if (spamFilter != null)
+		{
+			//
+			//  Determine and store the date the latest version was changed.  Since
+			//  the newest version is the one that is changed, we need to track
+			//  that instead of the edited version.
+			//
+			String lastchange = spamFilter.getSpamHash( latestversion, request );
+			getRequest().setAttribute( SpamFilter.HorribleHiddenVariableInHttpServletRequest, lastchange );
+		}
 		
 		//
 		//  Attempt to lock the page.

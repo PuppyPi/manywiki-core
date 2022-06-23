@@ -37,19 +37,35 @@ extends ManyWikiActionBean
 	    // Set the content type and include the response content
 	    response.setContentType("text/html; charset="+engine.getContentEncoding() );
 
-	    setVariableForJSPView( "engine", engine );  //Todo is it a problem that we don't specify the scope as PageContext.REQUEST_SCOPE anymore??
-	    setVariableForJSPView( "context", wikiContext );  //Todo is it a problem that we don't specify the scope as PageContext.REQUEST_SCOPE anymore??
-
-	    if( request.getMethod().equalsIgnoreCase("post") && bean != null ) {
-	        AdminBean ab = engine.getManager( AdminBeanManager.class ).findBean( bean );
-
-	        if( ab != null ) {
-	            ab.doPost( wikiContext );
-	        } else {
-	            wikiContext.getWikiSession().addMessage( "No such bean "+bean+" was found!" );
-	        }
+	    AdminBean ab = engine.getManager( AdminBeanManager.class ).findBean( bean );
+	    
+	    String adminBeanResponse;
+	    
+	    if (ab != null)
+	    {
+	    	String m = request.getMethod();
+	    	
+	    	if( m.equalsIgnoreCase("post"))
+	    		adminBeanResponse = ab.doPost( wikiContext );
+	    	else if( m.equalsIgnoreCase("get"))
+	    		adminBeanResponse = ab.doGet( wikiContext );
+	    	else
+	    	{
+	    		wikiContext.getWikiSession().addMessage( "Unsupported HTTP method for admin bean "+bean+"!: "+m);
+	    		adminBeanResponse = null;
+	    	}
 	    }
-
+	    else
+	    {
+	    	wikiContext.getWikiSession().addMessage( "No such bean "+bean+" was found!" );
+	    	adminBeanResponse = null;
+	    }
+	    
+	    setVariableForJSPView("adminBeanFound", ab != null);
+	    setVariableForJSPView("adminBeanId", ab == null ? null : ab.getId());
+	    setVariableForJSPView("adminBeanTitle", ab == null ? null : ab.getTitle());
+	    setVariableForJSPView("adminBeanResponse", adminBeanResponse);
+	    
 	    //%><wiki:Include page="<%=contentPage%>" />		
 		serveJSPView("/templates/default/admin/AdminTemplate.jsp");
 	}

@@ -16,7 +16,7 @@ import net.manywiki.jee.actions.ManyWikiActionBean;
 public class AJAXPreview_jsp
 extends ManyWikiActionBean
 {
-    protected static final Logger log = LogManager.getLogger("JSPWikiSearch");
+    protected static final Logger log = LogManager.getLogger("JSPWikiSearch");  //Todo should this be just JSPWiki (was that a copy-paste typo on their part) ?
 	
 	@Override
 	protected void doLogic() throws ServletException, IOException

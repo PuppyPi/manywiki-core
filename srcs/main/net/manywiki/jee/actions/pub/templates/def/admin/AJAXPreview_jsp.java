@@ -7,6 +7,7 @@ import org.apache.wiki.api.spi.Wiki;
 import org.apache.wiki.auth.*;
 import org.apache.wiki.auth.permissions.*;
 import org.apache.wiki.preferences.Preferences;
+import org.apache.wiki.render.RenderingManager;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -32,7 +33,13 @@ extends ManyWikiActionBean
 		  
 		  String wikimarkup = request.getParameter( "wikimarkup" );
 		  
+		  //TODO-PP finish replacing this..once I'm done with the immediate important things X3''
 		  setVariableForJSPView("wikimarkup", wikimarkup);
+		  
+		  wikimarkup = wikimarkup.trim();
+          final String renderedMarkup = engine.getManager( RenderingManager.class ).textToHTML( wikiContext, wikimarkup );
+		  //setVariableForJSPView("renderedMarkup", renderedMarkup);
+          
 		  serveJSPView();
 	}
 }

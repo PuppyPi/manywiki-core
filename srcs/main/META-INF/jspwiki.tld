@@ -145,52 +145,6 @@
   </tag>
 
   <tag>
-    <name>Content</name>
-    <tag-class>org.apache.wiki.tags.ContentTag</tag-class>
-    <body-content>empty</body-content>
-    <attribute>
-       <name>view</name>
-       <rtexprvalue>true</rtexprvalue>
-    </attribute>
-    <attribute>
-       <name>diff</name>
-       <rtexprvalue>true</rtexprvalue>
-    </attribute>
-    <attribute>
-       <name>info</name>
-       <rtexprvalue>true</rtexprvalue>
-    </attribute>
-    <attribute>
-       <name>preview</name>
-       <rtexprvalue>true</rtexprvalue>
-    </attribute>
-    <attribute>
-       <name>conflict</name>
-       <rtexprvalue>true</rtexprvalue>
-    </attribute>
-    <attribute>
-       <name>find</name>
-       <rtexprvalue>true</rtexprvalue>
-    </attribute>
-    <attribute>
-       <name>prefs</name>
-       <rtexprvalue>true</rtexprvalue>
-    </attribute>
-    <attribute>
-       <name>error</name>
-       <rtexprvalue>true</rtexprvalue>
-    </attribute>
-    <attribute>
-       <name>edit</name>
-       <rtexprvalue>true</rtexprvalue>
-    </attribute>
-    <attribute>
-       <name>comment</name>
-       <rtexprvalue>true</rtexprvalue>
-    </attribute>
-  </tag>
-
-  <tag>
     <name>ContentEncoding</name>
     <tag-class>org.apache.wiki.tags.ContentEncodingTag</tag-class>
     <body-content>empty</body-content>
@@ -240,12 +194,6 @@
        <name>accesskey</name>
        <rtexprvalue>true</rtexprvalue>
     </attribute>
-  </tag>
-
-  <tag>
-    <name>Editor</name>
-    <tag-class>org.apache.wiki.tags.EditorTag</tag-class>
-    <body-content>JSP</body-content>
   </tag>
 
   <tag>

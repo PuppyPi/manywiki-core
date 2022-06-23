@@ -80,6 +80,7 @@ extends ManyWikiActionBean
 		
 		//String contentPage = engine.getManager( TemplateManager.class ).findJSP( pageContext, wikiContext.getTemplate(), "EditTemplate.jsp" );
 		//%><wiki:Include page="<%=contentPage%>" />
+	    setVariableForJSPView("contentSelector", cte.getContentSelector());
 		serveJSPView("/templates/default/EditTemplate.jsp");
 	}
 }

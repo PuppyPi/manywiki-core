@@ -21,6 +21,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import net.manywiki.jee.actions.ManyWikiActionBean;
 
+//Todo-PP consider the security/privacy ramifications of this.
+
 public class SisterSites_jsp
 extends ManyWikiActionBean
 {
@@ -44,7 +46,7 @@ extends ManyWikiActionBean
 	    
 	    Set< String > allPages = engine.getManager( ReferenceManager.class ).findCreated();
 	    
-	    response.setContentType("text/plain; charset=UTF-8");
+	    response.setContentType("text/plain; charset=UTF-8");  //Todo-PP What if the stream's encoding isn't UTF-8??
 	    
 	    ServletOutputStream out = response.getOutputStream();
 	    

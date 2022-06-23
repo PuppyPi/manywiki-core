@@ -186,21 +186,20 @@ extends ManyWikiActionBean
 	    response.setContentType("text/html; charset="+engine.getContentEncoding() );
 	    
 	    //serveJSPView("/LoginForm.jsp");
-	    doLogicLoginForm(wikiContext);
+	    doLogicLoginForm(wikiContext, cte);
 	}
 	
 	
 	
 	
-    public void doLogicLoginForm(Context wikiContext) throws ServletException, IOException
+    public void doLogicLoginForm(Context wikiContext, ContextEnum cte) throws ServletException, IOException
     {
         // Retrieve the Login page context, then go and find the login form
 
         //String contentPage = engine.getManager( TemplateManager.class ).findJSP( pageContext, wikiContext.getTemplate(), "ViewTemplate.jsp" );
         //log.debug( "Login template content is: {}", contentPage );
-        
         //%><wiki:Include page="<%=contentPage%>" />
-        
+	    setVariableForJSPView("contentSelector", cte.getContentSelector());
         serveJSPView("/templates/default/ViewTemplate.jsp");
     }
 }

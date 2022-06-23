@@ -57,6 +57,7 @@ extends ManyWikiActionBean
 		//String contentPage = engine.getManager( TemplateManager.class ).findJSP( pageContext, wikiContext.getTemplate(), "ViewTemplate.jsp" );
 		//%><wiki:Include page="<%=contentPage%>" />
 	    setVariableForJSPView("contentSelector", cte.getContentSelector());
+	    setVariableForJSPView("editorSelector", EditorSelectors.getActiveEditorsSelector(engine, wikiContext));
 		serveJSPView("/templates/default/ViewTemplate.jsp");
 	}
 }

@@ -137,25 +137,8 @@ public class DefaultEditorManager extends BaseModuleManager implements EditorMan
         return keys.toArray( editors );
     }
 
-    /** {@inheritDoc} */
-    @Override
-    public String getEditorPath( final Context context ) {
-        final String editor = getEditorName( context );
-        final WikiEditorInfo ed = m_editors.get( editor );
-        final String path;
-        if( ed != null ) {
-            path = ed.getPath();
-        } else {
-            path = "editors/"+editor+".jsp";
-        }
-
-        return path;
-    }
-
     /**  Contains info about an editor. */
     private static final class WikiEditorInfo extends WikiModuleInfo {
-        private String m_path;
-
         static WikiEditorInfo newInstance( final String name, final Element el ) {
             if( name == null || name.isEmpty() ) {
                 return null;
@@ -169,15 +152,10 @@ public class DefaultEditorManager extends BaseModuleManager implements EditorMan
         @Override
         protected void initializeFromXML( final Element el ) {
             super.initializeFromXML( el );
-            m_path = el.getChildText("path");
         }
 
         private WikiEditorInfo( final String name ) {
             super( name );
-        }
-
-        public String getPath() {
-            return m_path;
         }
     }
 

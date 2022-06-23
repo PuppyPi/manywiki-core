@@ -31,7 +31,6 @@
    -->
    <editor name="plain">
       <author>Janne Jalkanen</author>
-      <path>editors/plain.jsp</path>
       <minVersion>2.4</minVersion>
       <adminBean>org.apache.wiki.ui.admin.beans.PlainEditorAdminBean</adminBean>
    </editor>
@@ -40,7 +39,6 @@
    -->
    <editor name="wysiwyg">
       <author>MooEditable</author>
-      <path>editors/wysiwyg.jsp</path>
       <minVersion>2.10</minVersion>
    </editor>
 

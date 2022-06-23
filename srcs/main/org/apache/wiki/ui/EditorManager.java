@@ -86,14 +86,6 @@ public interface EditorManager extends ModuleManager, Initializable {
     String[] getEditorList();
 
     /**
-     *  Convenience method for getting the path to the editor JSP file.
-     *
-     *  @param context WikiContext from where the editor name is retrieved.
-     *  @return e.g. "editors/plain.jsp"
-     */
-    String getEditorPath( Context context );
-
-    /**
      *  Convenience function which examines the current context and attempts to figure out whether the edited text is in the HTTP
      *  request parameters or somewhere in the session.
      *

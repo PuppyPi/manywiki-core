@@ -56,7 +56,7 @@ public final class GroupCommand extends AbstractCommand {
      * @throws IllegalArgumentException if the request content, URL pattern, or type is <code>null</code>
      */
     private GroupCommand( final ContextEnum currentContext, final GroupPrincipal target, final String action ) {
-        this( currentContext.getRequestContext(), currentContext.getUrlPattern(), currentContext.getContentTemplate(), target, action );
+        this( currentContext.getRequestContext(), currentContext.getUrlPattern(), target, action );
     }
     
     /**
@@ -72,10 +72,9 @@ public final class GroupCommand extends AbstractCommand {
      */
     private GroupCommand( final String requestContext,
                           final String urlPattern,
-                          final String contentTemplate,
                           final GroupPrincipal target,
                           final String action ) {
-        super( requestContext, urlPattern, contentTemplate, target );
+        super( requestContext, urlPattern, target );
         m_action = action;
         if ( target == null || m_action == null ) {
             m_permission = null;
@@ -96,7 +95,7 @@ public final class GroupCommand extends AbstractCommand {
         if( !( target instanceof GroupPrincipal ) ) {
             throw new IllegalArgumentException( "Target must non-null and of type GroupPrincipal." );
         }
-        return new GroupCommand( getRequestContext(), getURLPattern(), getContentTemplate(), ( GroupPrincipal )target, m_action );
+        return new GroupCommand( getRequestContext(), getURLPattern(), ( GroupPrincipal )target, m_action );
     }
     
     /**

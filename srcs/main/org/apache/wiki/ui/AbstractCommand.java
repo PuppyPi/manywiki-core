@@ -36,7 +36,6 @@ public abstract class AbstractCommand implements Command {
     private final String m_jspFriendlyName;
     private final String m_urlPattern;
     private final String m_requestContext;
-    private final String m_contentTemplate;
     private final Object m_target;
 
     /**
@@ -47,11 +46,10 @@ public abstract class AbstractCommand implements Command {
      *
      * @param requestContext the request context
      * @param urlPattern the URL pattern
-     * @param contentTemplate the content template; may be <code>null</code>
      * @param target the target of the command, such as a WikiPage; may be <code>null</code>
      * @throws IllegalArgumentException if the request content or URL pattern is <code>null</code>
      */
-    protected AbstractCommand( final String requestContext, final String urlPattern, final String contentTemplate, final Object target ) {
+    protected AbstractCommand( final String requestContext, final String urlPattern, final Object target ) {
         if( requestContext == null || urlPattern == null ) {
             throw new IllegalArgumentException( "Request context, URL pattern and type must not be null." );
         }
@@ -78,7 +76,6 @@ public abstract class AbstractCommand implements Command {
             }
         }
         m_urlPattern = urlPattern;
-        m_contentTemplate = contentTemplate;
         m_target = target;
     }
 
@@ -103,13 +100,6 @@ public abstract class AbstractCommand implements Command {
      * @see org.apache.wiki.api.core.Command#targetedCommand(Object)
      */
     public abstract Command targetedCommand( final Object target );
-
-    /**
-     * @see org.apache.wiki.api.core.Command#getContentTemplate()
-     */
-    public final String getContentTemplate() {
-        return m_contentTemplate;
-    }
 
     /**
      * @see org.apache.wiki.api.core.Command#getJSP()

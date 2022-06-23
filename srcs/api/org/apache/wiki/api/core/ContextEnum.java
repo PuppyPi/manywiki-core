@@ -18,52 +18,49 @@
  */
 package org.apache.wiki.api.core;
 
+//////// The "ContentSelector"s here must match up with /WEB-INF/tags/templates/default/Content.tag !! ////////
 
 public enum ContextEnum {
 
     GROUP_DELETE( "deleteGroup", "%uDeleteGroup.jsp?group=%n", null ),
-    GROUP_EDIT( "editGroup", "%uEditGroup.jsp?group=%n", "EditGroupContent.jsp" ),
-    GROUP_VIEW( "viewGroup", "%uGroup.jsp?group=%n", "GroupContent.jsp" ),
+    GROUP_EDIT( "editGroup", "%uEditGroup.jsp?group=%n", "ContentSelector_EditGroupContent" ),
+    GROUP_VIEW( "viewGroup", "%uGroup.jsp?group=%n", "ContentSelector_GroupContent" ),
 
     PAGE_ATTACH( "att", "%uattach/%n", null ),
-    PAGE_COMMENT( "comment", "%uComment.jsp?page=%n", "CommentContent.jsp" ),
-    PAGE_CONFLICT ( "conflict", "%uPageModified.jsp?page=%n", "ConflictContent.jsp" ),
+    PAGE_COMMENT( "comment", "%uComment.jsp?page=%n", "ContentSelector_CommentContent" ),
+    PAGE_CONFLICT ( "conflict", "%uPageModified.jsp?page=%n", "ContentSelector_ConflictContent" ),
     PAGE_DELETE( "del", "%uDelete.jsp?page=%n", null ),
-    PAGE_DIFF( "diff", "%uDiff.jsp?page=%n", "DiffContent.jsp" ),
-    PAGE_EDIT( "edit", "%uEdit.jsp?page=%n", "EditContent.jsp" ),
-    PAGE_INFO( "info", "%uPageInfo.jsp?page=%n", "InfoContent.jsp" ),
+    PAGE_DIFF( "diff", "%uDiff.jsp?page=%n", "ContentSelector_DiffContent" ),
+    PAGE_EDIT( "edit", "%uEdit.jsp?page=%n", "ContentSelector_EditContent" ),
+    PAGE_INFO( "info", "%uPageInfo.jsp?page=%n", "ContentSelector_InfoContent" ),
     PAGE_NONE( "", "%u%n", null ),
-    PAGE_PREVIEW( "preview", "%uPreview.jsp?page=%n", "PreviewContent.jsp" ),
-    PAGE_RENAME( "rename", "%uRename.jsp?page=%n", "InfoContent.jsp" ),
+    PAGE_PREVIEW( "preview", "%uPreview.jsp?page=%n", "ContentSelector_PreviewContent" ),
+    PAGE_RENAME( "rename", "%uRename.jsp?page=%n", "ContentSelector_InfoContent" ),
     PAGE_RSS( "rss", "%urss.jsp", null ),
     PAGE_UPLOAD( "upload", "%uUpload.jsp?page=%n", null ),
-    PAGE_VIEW( "view", "%uWiki.jsp?page=%n", "PageContent.jsp" ),
+    PAGE_VIEW( "view", "%uWiki.jsp?page=%n", "ContentSelector_PageContent" ),
 
     REDIRECT( "", "%u%n", null ),
 
-    WIKI_ADMIN( "admin", "%uadmin/Admin.jsp", "AdminContent.jsp" ),
-    WIKI_CREATE_GROUP( "createGroup", "%uNewGroup.jsp", "NewGroupContent.jsp" ),
-    WIKI_ERROR( "error", "%uError.jsp", "DisplayMessage.jsp" ),
-    WIKI_FIND( "find", "%uSearch.jsp", "FindContent.jsp" ),
+    WIKI_ADMIN( "admin", "%uadmin/Admin.jsp", null ),
+    WIKI_CREATE_GROUP( "createGroup", "%uNewGroup.jsp", "ContentSelector_NewGroupContent" ),
+    WIKI_ERROR( "error", "%uError.jsp", "ContentSelector_DisplayMessage" ),
+    WIKI_FIND( "find", "%uSearch.jsp", "ContentSelector_FindContent" ),
     WIKI_INSTALL( "install", "%uInstall.jsp", null ),
-    WIKI_LOGIN( "login", "%uLogin.jsp?redirect=%n", "LoginContent.jsp" ),
+    WIKI_LOGIN( "login", "%uLogin.jsp?redirect=%n", "ContentSelector_LoginContent" ),
     WIKI_LOGOUT( "logout", "%uLogout.jsp", null ),
-    WIKI_MESSAGE( "message", "%uMessage.jsp", "DisplayMessage.jsp" ),
-    WIKI_PREFS( "prefs", "%uUserPreferences.jsp", "PreferencesContent.jsp" ),
-    WIKI_WORKFLOW( "workflow", "%uWorkflow.jsp", "WorkflowContent.jsp" );
+    WIKI_MESSAGE( "message", "%uMessage.jsp", "ContentSelector_DisplayMessage" ),
+    WIKI_PREFS( "prefs", "%uUserPreferences.jsp", "ContentSelector_PreferencesContent" ),
+    WIKI_WORKFLOW( "workflow", "%uWorkflow.jsp", "ContentSelector_WorkflowContent" );
 
-    private final String contentTemplate;
+    private final String contentSelector;
     private final String requestContext;
     private final String urlPattern;
 
-    ContextEnum( final String requestContext, final String urlPattern, final String contentTemplate ) {
+    ContextEnum( final String requestContext, final String urlPattern, final String contentSelector ) {
         this.requestContext = requestContext;
         this.urlPattern = urlPattern;
-        this.contentTemplate = contentTemplate;
-    }
-
-    public String getContentTemplate() {
-        return contentTemplate;
+        this.contentSelector = contentSelector;
     }
 
     public String getRequestContext() {
@@ -74,4 +71,7 @@ public enum ContextEnum {
         return urlPattern;
     }
 
+    public String getContentSelector() {
+        return contentSelector;
+    }
 }

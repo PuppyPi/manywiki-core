@@ -44,7 +44,7 @@ public final class RedirectCommand extends AbstractCommand {
      * @throws IllegalArgumentException if the request content, URL pattern, or type is <code>null</code>
      */
     private RedirectCommand( final ContextEnum currentContext, final String target ) {
-        this( currentContext.getRequestContext(), currentContext.getUrlPattern(), currentContext.getContentTemplate(), target );
+        this( currentContext.getRequestContext(), currentContext.getUrlPattern(), target );
     }
 
     /**
@@ -55,8 +55,8 @@ public final class RedirectCommand extends AbstractCommand {
      * @param target the target of the command
      * @throws IllegalArgumentException if the request content, URL pattern, or type is <code>null</code>
      */
-    private RedirectCommand( final String requestContext, final String urlPattern, final String contentTemplate, final String target ) {
-        super( requestContext, urlPattern, contentTemplate, target );
+    private RedirectCommand( final String requestContext, final String urlPattern, final String target ) {
+        super( requestContext, urlPattern, target );
     }
     
     /**
@@ -72,7 +72,7 @@ public final class RedirectCommand extends AbstractCommand {
         if ( !( target instanceof String ) ) {
             throw new IllegalArgumentException( "Target must non-null and of type String." );
         }
-        return new RedirectCommand( getRequestContext(), ( String )target, getContentTemplate(), ( String )target );
+        return new RedirectCommand( getRequestContext(), ( String )target, ( String )target );
     }
     
     /**

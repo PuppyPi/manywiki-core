@@ -69,15 +69,6 @@ public interface Command {
     Command targetedCommand( Object target );
 
     /**
-     * Returns the content template associated with a Command, such as <code>PreferencesContent.jsp</code>. For Commands that are not
-     * page-related, this method will always return <code>null</code>. <em>Calling methods should always check to see if the result
-     * of this method is <code>null</code></em>.
-     *
-     * @return the content template
-     */
-    String getContentTemplate();
-
-    /**
      * Returns the JSP associated with the Command. The JSP is a "local" JSP within the JSPWiki webapp; it is not a general HTTP URL.
      * If it exists, the JSP will be expressed relative to the webapp root, without a leading slash. This method is guaranteed to return
      * a non-<code>null</code> result, although in some cases the result may be an empty string.

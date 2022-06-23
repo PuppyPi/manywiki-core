@@ -63,7 +63,7 @@ public final class PageCommand extends AbstractCommand {
      * @throws IllegalArgumentException if the request content, URL pattern, or type is <code>null</code>
      */
     private PageCommand( final ContextEnum currentContext, final Page target, final String action ) {
-        this( currentContext.getRequestContext(), currentContext.getUrlPattern(), currentContext.getContentTemplate(), target, action );
+        this( currentContext.getRequestContext(), currentContext.getUrlPattern(), target, action );
     }
     
     /**
@@ -79,10 +79,9 @@ public final class PageCommand extends AbstractCommand {
      */
     private PageCommand( final String requestContext,
                          final String urlPattern,
-                         final String contentTemplate,
                          final Page target,
                          final String action ) {
-        super( requestContext, urlPattern, contentTemplate, target );
+        super( requestContext, urlPattern, target );
         m_action = action;
         if( target == null || m_action == null ) {
             m_permission = null;
@@ -103,7 +102,7 @@ public final class PageCommand extends AbstractCommand {
         if( !( target instanceof Page ) ) {
             throw new IllegalArgumentException( "Target must non-null and of type Page." );
         }
-        return new PageCommand( getRequestContext(), getURLPattern(), getContentTemplate(), ( Page )target, m_action );
+        return new PageCommand( getRequestContext(), getURLPattern(), ( Page )target, m_action );
     }
 
     /**

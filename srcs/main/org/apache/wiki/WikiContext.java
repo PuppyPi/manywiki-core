@@ -257,22 +257,12 @@ public class WikiContext implements Context, Command {
 
     /**
      * {@inheritDoc}
-     * @see org.apache.wiki.api.core.Command#getContentTemplate()
-     */
-    @Override
-    public String getContentTemplate()
-    {
-        return m_command.getContentTemplate();
-    }
-
-    /**
-     * {@inheritDoc}
      * @see org.apache.wiki.api.core.Command#getJSP()
      */
     @Override
     public String getJSP()
     {
-        return m_command.getContentTemplate();
+        return m_command.getJSP();  //Todo-PP is this okay?
     }
 
     /**

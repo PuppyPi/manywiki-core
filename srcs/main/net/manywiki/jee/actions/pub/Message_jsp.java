@@ -25,7 +25,8 @@ extends ManyWikiActionBean
 		HttpServletRequest request = getRequest();
 		HttpServletResponse response = getResponse();
 		
-		Context wikiContext = Wiki.context().create( engine, request, ContextEnum.WIKI_MESSAGE.getRequestContext() );
+		ContextEnum cte = ContextEnum.WIKI_MESSAGE;
+		Context wikiContext = Wiki.context().create( engine, request, cte.getRequestContext() );
 		
 		// Stash the wiki context and message text
 		request.setAttribute( Context.ATTR_CONTEXT, wikiContext );

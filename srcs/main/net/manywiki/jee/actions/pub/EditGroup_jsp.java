@@ -30,7 +30,8 @@ extends ManyWikiActionBean
 		
 		
 		// Create wiki context and check for authorization
-		Context wikiContext = Wiki.context().create( engine, request, ContextEnum.GROUP_EDIT.getRequestContext() );
+		ContextEnum cte = ContextEnum.GROUP_EDIT;
+		Context wikiContext = Wiki.context().create( engine, request, cte.getRequestContext() );
 		if(!engine.getManager( AuthorizationManager.class ).hasAccess( wikiContext, response )) return;
 		
 		// Extract the current user, group name, members and action attributes

@@ -40,7 +40,8 @@ extends ManyWikiActionBean
 		HttpServletResponse response = getResponse();
 		
 		// Create wiki context and check for authorization
-		Context wikiContext = Wiki.context().create( engine, request, ContextEnum.WIKI_PREFS.getRequestContext() );
+		ContextEnum cte = ContextEnum.WIKI_PREFS;
+		Context wikiContext = Wiki.context().create( engine, request, cte.getRequestContext() );
 		if( !engine.getManager( AuthorizationManager.class ).hasAccess( wikiContext, response ) ) return;
 		
 		// Extract the user profile and action attributes
@@ -134,5 +135,6 @@ extends ManyWikiActionBean
 		
 		//String contentPage = engine.getManager( TemplateManager.class ).findJSP( pageContext, wikiContext.getTemplate(), "ViewTemplate.jsp" );
 		//%><wiki:Include page="<%=contentPage%>" />
+        serveJSPView("/templates/default/ViewTemplate.jsp");
 	}
 }

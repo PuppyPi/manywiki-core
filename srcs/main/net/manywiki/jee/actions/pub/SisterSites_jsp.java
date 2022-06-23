@@ -38,7 +38,8 @@ extends ManyWikiActionBean
 	     *  http://usemod.com/cgi-bin/mb.pl?SisterSitesImplementationGuide
 	     */
 	    // Create wiki context and check for authorization
-	    Context wikiContext = Wiki.context().create( engine, request, ContextEnum.PAGE_RSS.getRequestContext() );
+		ContextEnum cte = ContextEnum.PAGE_RSS;
+	    Context wikiContext = Wiki.context().create( engine, request, cte.getRequestContext() );
 	    if( !engine.getManager( AuthorizationManager.class ).hasAccess( wikiContext, response ) ) return;
 	    
 	    Set< String > allPages = engine.getManager( ReferenceManager.class ).findCreated();

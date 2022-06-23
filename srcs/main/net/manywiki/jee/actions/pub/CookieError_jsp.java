@@ -19,7 +19,8 @@ extends ManyWikiActionBean
 		HttpServletResponse response = getResponse();
 		
 		// Create wiki context; authorization check not needed
-		Context wikiContext = Wiki.context().create( engine, request, ContextEnum.PAGE_VIEW.getRequestContext() );
+		ContextEnum cte = ContextEnum.PAGE_VIEW;
+		Context wikiContext = Wiki.context().create( engine, request, cte.getRequestContext() );
 		
 		// Set the content type and include the response content
 		response.setContentType("text/html; charset="+engine.getContentEncoding() );

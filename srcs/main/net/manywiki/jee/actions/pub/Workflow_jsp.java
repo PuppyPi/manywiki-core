@@ -37,7 +37,8 @@ extends ManyWikiActionBean
 		HttpServletResponse response = getResponse();
 		
 	    // Create wiki context and check for authorization
-	    Context wikiContext = Wiki.context().create( engine, request, ContextEnum.WIKI_WORKFLOW.getRequestContext() );
+		ContextEnum cte = ContextEnum.WIKI_WORKFLOW;
+	    Context wikiContext = Wiki.context().create( engine, request, cte.getRequestContext() );
 	    if(!engine.getManager( AuthorizationManager.class ).hasAccess( wikiContext, response )) return;
 	    
 	    // Extract the wiki session

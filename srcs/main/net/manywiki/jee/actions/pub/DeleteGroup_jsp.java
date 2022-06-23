@@ -29,7 +29,8 @@ extends ManyWikiActionBean
 		HttpServletResponse response = getResponse();
 		
 	    // Create wiki context and check for authorization
-	    Context wikiContext = Wiki.context().create( engine, request, ContextEnum.GROUP_DELETE.getRequestContext() );
+		ContextEnum cte = ContextEnum.GROUP_DELETE;
+	    Context wikiContext = Wiki.context().create( engine, request, cte.getRequestContext() );
 	    if(!engine.getManager( AuthorizationManager.class ).hasAccess( wikiContext, response )) return;
 
 	    Session wikiSession = wikiContext.getWikiSession();

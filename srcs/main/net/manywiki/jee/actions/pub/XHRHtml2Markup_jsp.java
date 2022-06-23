@@ -20,7 +20,8 @@ extends ManyWikiActionBean
 	@Override
 	protected void doLogic() throws ServletException, IOException
 	{
-		Context wikiContext = Wiki.context().create( engine, getRequest(), ContextEnum.PAGE_VIEW.getRequestContext() );
+		ContextEnum cte = ContextEnum.PAGE_VIEW;
+		Context wikiContext = Wiki.context().create( engine, getRequest(), cte.getRequestContext() );
 		
 		if( !engine.getManager( AuthorizationManager.class ).hasAccess( wikiContext, getResponse() ) ) return;
 		

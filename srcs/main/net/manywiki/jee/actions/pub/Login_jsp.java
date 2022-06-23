@@ -25,7 +25,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.wiki.api.core.*;
 import org.apache.wiki.api.spi.Wiki;
 import org.apache.wiki.ui.TemplateManager;
-
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -59,7 +58,8 @@ extends ManyWikiActionBean
 		HttpServletResponse response = getResponse();
 		
 	    AuthenticationManager mgr = engine.getManager( AuthenticationManager.class );
-	    Context wikiContext = Wiki.context().create( engine, request, ContextEnum.WIKI_LOGIN.getRequestContext() );
+	    ContextEnum cte = ContextEnum.WIKI_LOGIN;
+	    Context wikiContext = Wiki.context().create( engine, request, cte.getRequestContext() );
 	    setVariableForJSPView( Context.ATTR_CONTEXT, wikiContext );  //Todo is it a problem that we don't specify the scope as PageContext.REQUEST_SCOPE anymore??
 	    Session wikiSession = wikiContext.getWikiSession();
 	    ResourceBundle rb = Preferences.getBundle( wikiContext, "org.apache.wiki.i18n.core.CoreResources" );

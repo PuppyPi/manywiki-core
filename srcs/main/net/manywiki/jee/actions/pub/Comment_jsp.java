@@ -48,7 +48,8 @@ extends ManyWikiActionBean
 		HttpSession session = request.getSession();
 		
 	    // Create wiki context and check for authorization
-	    Context wikiContext = Wiki.context().create( engine, request, ContextEnum.PAGE_COMMENT.getRequestContext() );
+		ContextEnum cte = ContextEnum.PAGE_COMMENT;
+	    Context wikiContext = Wiki.context().create( engine, request, cte.getRequestContext() );
 	    if( !engine.getManager( AuthorizationManager.class ).hasAccess( wikiContext, response ) ) return;
 	    if( wikiContext.getCommand().getTarget() == null ) {
 	        response.sendRedirect( wikiContext.getURL( wikiContext.getRequestContext(), wikiContext.getName() ) );
@@ -290,6 +291,8 @@ extends ManyWikiActionBean
 	    
 	    //String contentPage = engine.getManager( TemplateManager.class ).findJSP( pageContext, wikiContext.getTemplate(), "EditTemplate.jsp" );
 	    //%><wiki:Include page="<%=contentPage%>" />
+	    
+	    
 	    serveJSPView("/templates/default/EditTemplate.jsp");
 	}
 }

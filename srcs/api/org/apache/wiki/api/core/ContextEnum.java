@@ -44,7 +44,7 @@ public enum ContextEnum {
 
     WIKI_ADMIN( "admin", "%uadmin/Admin.jsp", null ),
     WIKI_CREATE_GROUP( "createGroup", "%uNewGroup.jsp", "ContentSelector_NewGroupContent" ),
-    WIKI_ERROR( "error", "%uError.jsp", "ContentSelector_DisplayMessage" ),
+    WIKI_ERROR( "error", "%uError.jsp", null ),
     WIKI_FIND( "find", "%uSearch.jsp", "ContentSelector_FindContent" ),
     WIKI_INSTALL( "install", "%uInstall.jsp", null ),
     WIKI_LOGIN( "login", "%uLogin.jsp?redirect=%n", "ContentSelector_LoginContent" ),

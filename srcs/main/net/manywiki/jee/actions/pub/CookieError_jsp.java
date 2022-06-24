@@ -1,5 +1,6 @@
 package net.manywiki.jee.actions.pub;
 
+import static rebound.GlobalCodeMetastuffContext.*;
 import org.apache.wiki.api.core.*;
 import org.apache.wiki.api.spi.Wiki;
 import org.apache.wiki.ui.TemplateManager;
@@ -21,6 +22,12 @@ extends ManyWikiActionBean
 		// Create wiki context; authorization check not needed
 		ContextEnum cte = ContextEnum.PAGE_VIEW;
 		Context wikiContext = Wiki.context().create( engine, request, cte.getRequestContext() );
+		
+		
+		
+		
+		//FIXME-PP This had no view in JSPWiki!??!
+		logBug();
 		
 		// Set the content type and include the response content
 		response.setContentType("text/html; charset="+engine.getContentEncoding() );

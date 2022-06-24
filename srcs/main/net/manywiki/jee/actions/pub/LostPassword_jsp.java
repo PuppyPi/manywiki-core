@@ -133,9 +133,6 @@ extends ManyWikiActionBean
 	    response.setDateHeader( "Expires", new Date().getTime() );
 	    response.setDateHeader( "Last-Modified", new Date().getTime() );
 
-	    //String contentPage = engine.getManager( TemplateManager.class ).findJSP( pageContext, wikiContext.getTemplate(), "ViewTemplate.jsp" );
-	    //<wiki:Include page="<%=contentPage%>" />
-	    setVariableForJSPView("contentSelector", cte.getContentSelector());
-	    serveJSPView("/templates/default/ViewTemplate.jsp");
+	    serveJSPView("/templates/default/view/LoginContent.jsp");
 	}
 }

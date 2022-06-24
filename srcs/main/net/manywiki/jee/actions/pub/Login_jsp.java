@@ -196,10 +196,6 @@ extends ManyWikiActionBean
     {
         // Retrieve the Login page context, then go and find the login form
 
-        //String contentPage = engine.getManager( TemplateManager.class ).findJSP( pageContext, wikiContext.getTemplate(), "ViewTemplate.jsp" );
-        //log.debug( "Login template content is: {}", contentPage );
-        //%><wiki:Include page="<%=contentPage%>" />
-	    setVariableForJSPView("contentSelector", cte.getContentSelector());
-        serveJSPView("/templates/default/ViewTemplate.jsp");
+        serveJSPView("/templates/default/view/LoginContent.jsp");
     }
 }

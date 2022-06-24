@@ -1,25 +1,26 @@
 package net.manywiki.jee.actions.pub;
 
-import java.util.*;
-import org.apache.logging.log4j.Logger;
-import org.apache.logging.log4j.LogManager;
-import org.apache.wiki.api.core.*;
-import org.apache.wiki.api.spi.Wiki;
-import org.apache.wiki.attachment.Attachment;
-import org.apache.wiki.auth.AuthorizationManager;
-import org.apache.wiki.pages.PageManager;
-import org.apache.wiki.preferences.Preferences;
-import org.apache.wiki.tags.BreadcrumbsTag;
-import org.apache.wiki.tags.BreadcrumbsTag.FixedQueue;
-import org.apache.wiki.ui.TemplateManager;
-import org.apache.wiki.util.HttpUtil;
-import org.apache.wiki.util.TextUtil;
+import static rebound.GlobalCodeMetastuffContext.*;
 import java.io.IOException;
+import java.util.Enumeration;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import net.manywiki.jee.actions.ManyWikiActionBean;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.apache.wiki.api.core.Context;
+import org.apache.wiki.api.core.ContextEnum;
+import org.apache.wiki.api.core.Page;
+import org.apache.wiki.api.spi.Wiki;
+import org.apache.wiki.attachment.Attachment;
+import org.apache.wiki.auth.AuthorizationManager;
+import org.apache.wiki.pages.PageManager;
+import org.apache.wiki.tags.BreadcrumbsTag;
+import org.apache.wiki.tags.BreadcrumbsTag.FixedQueue;
+import org.apache.wiki.util.HttpUtil;
+import org.apache.wiki.util.TextUtil;
 
 public class Delete_jsp
 extends ManyWikiActionBean
@@ -99,6 +100,11 @@ extends ManyWikiActionBean
 			return;
 		}
 		
+		
+		
+		
+		//FIXME-PP This had no view in JSPWiki!??!
+		logBug();
 		
 		// Set the content type and include the response content
 		// FIXME: not so.

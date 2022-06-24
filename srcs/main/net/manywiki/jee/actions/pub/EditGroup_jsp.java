@@ -78,9 +78,6 @@ extends ManyWikiActionBean
 		// Set the content type and include the response content
 		response.setContentType("text/html; charset="+engine.getContentEncoding() );
 		
-		//String contentPage = engine.getManager( TemplateManager.class ).findJSP( pageContext, wikiContext.getTemplate(), "EditTemplate.jsp" );
-		//%><wiki:Include page="<%=contentPage%>" />
-	    setVariableForJSPView("contentSelector", cte.getContentSelector());
-		serveJSPView("/templates/default/EditTemplate.jsp");
+		serveJSPView("/templates/default/edit/EditGroupContent.jsp");
 	}
 }

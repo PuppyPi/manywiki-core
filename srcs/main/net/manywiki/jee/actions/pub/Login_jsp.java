@@ -31,6 +31,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import net.manywiki.jee.actions.ManyWikiActionBean;
+import net.manywiki.jee.actions.shared.LoginContentSharedCode;
 
 //Note: this came from both Login.jsp and LoginForm.jsp
 
@@ -180,22 +181,9 @@ extends ManyWikiActionBean
 	    }
 
 	    // If we've gotten here, the user hasn't authenticated yet.
-	    // So, find the login form and include it. This should be in the same directory
-	    // as this page. We don't need to use a tagfile.
-
-	    response.setContentType("text/html; charset="+engine.getContentEncoding() );
+	    // So show them the login form.
 	    
 	    //serveJSPView("/LoginForm.jsp");
-	    doLogicLoginForm(wikiContext, cte);
+	    LoginContentSharedCode.finish(this, wikiContext);
 	}
-	
-	
-	
-	
-    public void doLogicLoginForm(Context wikiContext, ContextEnum cte) throws ServletException, IOException
-    {
-        // Retrieve the Login page context, then go and find the login form
-
-        serveJSPView("/templates/default/view/LoginContent.jsp");
-    }
 }

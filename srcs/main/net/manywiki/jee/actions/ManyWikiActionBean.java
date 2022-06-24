@@ -51,6 +51,11 @@ extends AbstractBindingAnnotatedSimpleJEEActionBeanWithViewResourcePath
 		this.engine = engine;
 	}
 	
+	public WikiEngine getWikiEngine()
+	{
+		return engine;
+	}
+	
 	
 	public HttpServletResponse getResponse()
 	{

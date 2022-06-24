@@ -797,4 +797,25 @@
           <rtexprvalue>true</rtexprvalue>
       </attribute>
   </tag>
+  
+  
+	<function>
+		<name>formatBytes</name>
+		<function-class>
+			org.apache.wiki.ui.WikiTaglibFunctions
+		</function-class>
+		<function-signature>
+			java.lang.String formatBytes(long)
+		</function-signature>
+	</function>
+  
+	<function>
+		<name>getChangeNote</name>
+		<function-class>
+			org.apache.wiki.ui.WikiTaglibFunctions
+		</function-class>
+		<function-signature>
+			java.lang.String getChangeNote()
+		</function-signature>
+	</function>
 </taglib>

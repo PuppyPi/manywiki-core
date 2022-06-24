@@ -23,6 +23,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import net.manywiki.jee.TemporaryManyWikiRoot;
 import net.manywiki.jee.actions.ManyWikiActionBean;
+import net.manywiki.jee.actions.shared.LoginContentSharedCode;
 
 public class LostPassword_jsp
 extends ManyWikiActionBean
@@ -133,6 +134,6 @@ extends ManyWikiActionBean
 	    response.setDateHeader( "Expires", new Date().getTime() );
 	    response.setDateHeader( "Last-Modified", new Date().getTime() );
 
-	    serveJSPView("/templates/default/view/LoginContent.jsp");
+	    LoginContentSharedCode.finish(this, wikiContext);
 	}
 }

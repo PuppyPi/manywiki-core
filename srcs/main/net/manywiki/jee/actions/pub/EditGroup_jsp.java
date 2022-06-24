@@ -1,5 +1,12 @@
 package net.manywiki.jee.actions.pub;
 
+import java.security.Principal;
+import java.util.Arrays;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.wiki.api.core.*;
+import org.apache.wiki.auth.authorize.Group;
+import org.apache.wiki.util.comparators.PrincipalComparator;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
 import org.apache.wiki.api.core.*;
@@ -75,9 +82,43 @@ extends ManyWikiActionBean
 			}
 		}
 		
+		
+		
+		
+		
+		  //Context c = Context.findContext( pageContext );
+		
+		  // Extract the group name and members
+		  String name = request.getParameter( "group" );
+		  //Group group = (Group)pageContext.getAttribute( "Group", PageContext.REQUEST_SCOPE );
+		  Principal[] members = null;
+
+		  if ( group != null )
+		  {
+		    name = group.getName();
+		    members = group.members();
+		    Arrays.sort( members, new PrincipalComparator() );
+		  }
+
+		  StringBuffer membersAsString = new StringBuffer();
+		  for ( int i = 0; i < members.length; i++ )
+		  {
+		    membersAsString.append( members[i].getName().trim() ).append( '\n' );
+		  }
+
+		
+		
+		setVariableForJSPView("name", name);
+		setVariableForJSPView("membersAsString", membersAsString);
+		
+		
+		
+		
+		
+		
+		
 		// Set the content type and include the response content
 		response.setContentType("text/html; charset="+engine.getContentEncoding() );
-		
 		serveJSPView("/templates/default/edit/EditGroupContent.jsp");
 	}
 }

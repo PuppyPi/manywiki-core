@@ -15,6 +15,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import net.manywiki.jee.actions.ManyWikiActionBean;
+import net.manywiki.jee.actions.shared.InfoContentSharedCode;
 
 public class Diff_jsp
 extends ManyWikiActionBean
@@ -77,11 +78,8 @@ extends ManyWikiActionBean
 			
 			// log.debug("Request for page diff for '"+pagereq+"' from "+HttpUtil.getRemoteAddress(request)+" by "+request.getRemoteUser()+".  R1="+ver1+", R2="+ver2 );
 			
-			// Set the content type and include the response content
-			response.setContentType("text/html; charset="+engine.getContentEncoding() );
-			
-			//serveJSPView("/templates/default/view/DiffContent.jsp");
-			serveJSPView("/templates/default/view/InfoContent.jsp");
+			//serveJSPView("/templates/default/view/DiffContent.jsp");  //(this file was just a delegate to InfoContent.jsp)
+			InfoContentSharedCode.finish(this, wikiContext);
 			
 		} finally { w.exitState(); }		
 	}

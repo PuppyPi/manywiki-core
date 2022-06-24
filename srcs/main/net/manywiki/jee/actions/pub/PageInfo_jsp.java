@@ -14,6 +14,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import net.manywiki.jee.actions.ManyWikiActionBean;
+import net.manywiki.jee.actions.shared.InfoContentSharedCode;
 
 public class PageInfo_jsp
 extends ManyWikiActionBean
@@ -41,10 +42,7 @@ extends ManyWikiActionBean
 		try {
 			w.enterState("Generating INFO response",60);
 			
-			// Set the content type and include the response content
-			response.setContentType("text/html; charset="+engine.getContentEncoding() );
-			
-			serveJSPView("/templates/default/view/InfoContent.jsp");
+			InfoContentSharedCode.finish(this, wikiContext);
 			
 		} finally { w.exitState(); }		
 	}

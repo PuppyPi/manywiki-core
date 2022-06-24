@@ -21,6 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import net.manywiki.jee.actions.ManyWikiActionBean;
+import net.manywiki.jee.actions.shared.InfoContentSharedCode;
 
 public class Rename_jsp
 extends ManyWikiActionBean
@@ -104,10 +105,10 @@ extends ManyWikiActionBean
 			
 		}
 		
+		
+		//TODO-PP Should this variable be used??  I don't think it is in the JSP!
 		setVariableForJSPView( "renameto", TextUtil.replaceEntities( renameTo ) );  //Todo is it a problem that we don't specify the scope as PageContext.REQUEST_SCOPE anymore??
 		
-		response.setContentType("text/html; charset=" + engine.getContentEncoding() );
-		
-        serveJSPView("/templates/default/view/InfoContent.jsp");
+		InfoContentSharedCode.finish(this, wikiContext);
 	}
 }

@@ -51,7 +51,7 @@ extends ManyWikiActionBean
 	    // Set the content type and include the response content
 	    response.setContentType("text/html; charset="+engine.getContentEncoding() );
 	    
-		//serveJSPView("/templates/default/view/GroupContent.jsp");
+		//serveJSPView("/templates/default/view/GroupContent.jsp");  //(this file was just a delegate to PreferencesContent.jsp)
 		serveJSPView("/templates/default/view/PreferencesContent.jsp");
 	}
 }

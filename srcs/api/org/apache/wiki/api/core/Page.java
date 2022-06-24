@@ -78,7 +78,7 @@ public interface Page extends Cloneable, Comparable< Page > {
     int getVersion();
 
     /**
-     *  Returns the size of the page.
+     *  Returns the size of the page in bytes.
      *
      *  @return the size of the page. 
      *  @since 2.1.109
@@ -88,7 +88,7 @@ public interface Page extends Cloneable, Comparable< Page > {
     /**
      *  Sets the size.  Typically called by the provider only.
      *
-     *  @param size The size of the page.
+     *  @param size The size of the page in bytes.
      *  @since 2.1.109
      */
     void setSize( long size );

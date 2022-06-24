@@ -5,6 +5,8 @@ import rebound.annotations.semantic.meta.dependencies.DependencyFile;
 
 @DependencyFile("META-INF/jspwiki.tld")
 
+@DependencyClass(org.apache.wiki.ui.WikiTaglibFunctions.class)
+
 @DependencyClass(org.apache.wiki.tags.AdminBeanIteratorInfo.class)
 @DependencyClass(org.apache.wiki.tags.AdminBeanIteratorTag.class)
 @DependencyClass(org.apache.wiki.tags.AttachmentsIteratorInfo.class)

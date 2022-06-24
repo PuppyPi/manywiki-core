@@ -51,10 +51,13 @@ extends ManyWikiActionBean
 			getRequest().setAttribute( SpamFilter.HorribleHiddenVariableInHttpServletRequest, lastchange );
 		}
 		
+		String wikiMarkup = EditorManager.getEditedText(request);
+		
+		setVariableForJSPView("editorSelector", EditorSelectors.getActiveEditorsSelector(engine, wikiContext));
+		setVariableForJSPView("wikiMarkup", wikiMarkup);
+		
 		// Set the content type and include the response content
 		response.setContentType("text/html; charset="+engine.getContentEncoding() );
-		
-	    setVariableForJSPView("editorSelector", EditorSelectors.getActiveEditorsSelector(engine, wikiContext));
 		serveJSPView("/templates/default/view/PreviewContent.jsp");
 	}
 }

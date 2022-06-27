@@ -18,10 +18,13 @@
  */
 package org.apache.wiki.i18n;
 
+import static rebound.util.collections.CollectionUtilities.*;
 import java.text.MessageFormat;
 import java.util.Locale;
+import java.util.Map;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
+import rebound.annotations.semantic.AccessedDynamicallyOrExternallyToJavaOrKnownToBeInImportantSerializedUse;
 import rebound.annotations.semantic.meta.dependencies.DependencyDirectory;
 
 /**
@@ -103,4 +106,14 @@ public interface InternationalizationManager {
         return mf.format( args );
     }
 
+    
+    
+	/**
+	 * @return keys are the language code, values are the descriptive name to show to the user
+	 */
+	@AccessedDynamicallyOrExternallyToJavaOrKnownToBeInImportantSerializedUse  //by JSP!
+	public default Map<String, String> listLanguages()
+	{
+		return mapof("en/US", "English, United States");  //FIXME-PP FIXXXXXXxxxxxxxxxxthisssssssss!
+	}
 }

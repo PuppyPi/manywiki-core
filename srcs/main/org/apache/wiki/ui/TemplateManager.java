@@ -21,11 +21,12 @@ package org.apache.wiki.ui;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.wiki.api.core.Context;
+import org.apache.wiki.api.core.Engine;
 import org.apache.wiki.i18n.InternationalizationManager;
 import org.apache.wiki.modules.ModuleManager;
 import org.apache.wiki.preferences.Preferences;
 import org.apache.wiki.util.ClassUtil;
-
+import javax.servlet.ServletContext;
 import javax.servlet.jsp.PageContext;
 import javax.servlet.jsp.jstl.fmt.LocaleSupport;
 import java.util.Enumeration;
@@ -143,7 +144,7 @@ public interface TemplateManager extends ModuleManager {
      *   @return Set of Strings with the skin names.
      *   @since 2.3.26
      */
-    Set< String > listSkins( PageContext pageContext, String template );
+    Set< String > listSkins( ServletContext servletContext, String template );
 
     /**
      * List all installed i18n language properties by classpath searching for files like :
@@ -157,7 +158,7 @@ public interface TemplateManager extends ModuleManager {
     default Map< String, String > listLanguages( final PageContext pageContext ) {
         final Map< String, String > resultMap = new LinkedHashMap<>();
         final String clientLanguage = pageContext.getRequest().getLocale().toString();
-        final List< String > entries = ClassUtil.classpathEntriesUnder( DIRECTORY );
+        final List< String > entries = ClassUtil.classpathEntriesUnder( DIRECTORY );  //FIXME-PP this definitely doesn't work the way this is expecting it to anymore! XD''
         for( String name : entries ) {
             if ( name.equals( I18NRESOURCE_EN ) || (name.startsWith( I18NRESOURCE_PREFIX ) && name.endsWith( I18NRESOURCE_SUFFIX ) ) ) {
                 if( name.equals( I18NRESOURCE_EN ) ) {
@@ -185,7 +186,7 @@ public interface TemplateManager extends ModuleManager {
      * @return map of TimeFormats
      * @since 2.7.x
      */
-    Map< String, String > listTimeFormats( final PageContext pageContext );
+    Map< String, String > listTimeFormats( final Context context );
 
     /**
      * List all timezones, with special marker for server timezone
@@ -194,7 +195,7 @@ public interface TemplateManager extends ModuleManager {
      * @return map of TimeZones
      * @since 2.7.x
      */
-    default Map< String, String > listTimeZones( final PageContext pageContext ) {
+    default Map< String, String > listTimeZones( final Engine engine ) {
         final Map< String, String > resultMap = new LinkedHashMap<>();
         final String[][] tzs = {
                           { "GMT-12", "Enitwetok, Kwajalien" },
@@ -234,7 +235,7 @@ public interface TemplateManager extends ModuleManager {
             final TimeZone tz = TimeZone.getTimeZone( tzID );
             String serverTimeZone = "";
             if( servertz.getRawOffset() == tz.getRawOffset() ) {
-                serverTimeZone = LocaleSupport.getLocalizedMessage( pageContext, I18NSERVER_TIMEZONE );
+                serverTimeZone = engine.getManager( InternationalizationManager.class ).get(I18NSERVER_TIMEZONE);
                 tzID = servertz.getID();
             }
 

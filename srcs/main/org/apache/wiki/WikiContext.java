@@ -807,4 +807,10 @@ public class WikiContext implements Context, Command {
         }
     }
 
+    
+    @Override
+    public HttpServletRequest getRequest()
+    {
+    	return m_request;
+    }
 }

@@ -82,6 +82,14 @@ public class Preferences extends HashMap< String,String > {
         //}
     }
 
+    public static void setupPreferences( final HttpServletRequest request, final ServletContext servletContext ) {
+    	//HttpSession session = request.getSession();
+    	//if( session.getAttribute( SESSIONPREFS ) == null )
+    	//{
+    	reloadPreferences( request, servletContext );
+    	//}
+    }
+    
     /**
      *  Reloads the preferences from the PageContext into the WikiContext.
      *

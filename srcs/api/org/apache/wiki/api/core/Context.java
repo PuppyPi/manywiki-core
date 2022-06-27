@@ -18,19 +18,15 @@
  */
 package org.apache.wiki.api.core;
 
-import org.apache.wiki.api.core.*;
-import org.apache.wiki.auth.*;
-import org.apache.wiki.auth.permissions.*;
-import org.apache.wiki.filters.SpamFilter;
-import org.apache.wiki.pages.PageManager;
-import org.apache.wiki.tags.*;
-import org.apache.wiki.ui.*;
-import org.apache.wiki.util.TextUtil;
+import static java.util.Collections.*;
 import static rebound.util.collections.CollectionUtilities.*;
 import java.security.Principal;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.StringTokenizer;
+import javax.servlet.ServletContext;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.PageContext;
@@ -42,10 +38,13 @@ import org.apache.wiki.auth.UserManager;
 import org.apache.wiki.auth.authorize.Group;
 import org.apache.wiki.auth.authorize.GroupManager;
 import org.apache.wiki.auth.permissions.GroupPermission;
+import org.apache.wiki.auth.permissions.PagePermission;
 import org.apache.wiki.auth.user.UserProfile;
+import org.apache.wiki.i18n.InternationalizationManager;
 import org.apache.wiki.pages.PageManager;
 import org.apache.wiki.render.RenderingManager;
 import org.apache.wiki.ui.EditorManager;
+import org.apache.wiki.ui.TemplateManager;
 import org.apache.wiki.util.comparators.PrincipalComparator;
 import rebound.annotations.semantic.AccessedDynamicallyOrExternallyToJavaOrKnownToBeInImportantSerializedUse;
 
@@ -362,7 +361,7 @@ public interface Context extends Cloneable, Command {
 	@AccessedDynamicallyOrExternallyToJavaOrKnownToBeInImportantSerializedUse  //by JSP!
 	public default List<Cookie> getCookies()
 	{
-		return asList(getRequest().getCookied());
+		return asList(getRequest().getCookies());
 	}
 	
 	@AccessedDynamicallyOrExternallyToJavaOrKnownToBeInImportantSerializedUse  //by JSP!
@@ -485,4 +484,43 @@ public interface Context extends Cloneable, Command {
 	        */
 	    }
 	}
+	
+	
+	@AccessedDynamicallyOrExternallyToJavaOrKnownToBeInImportantSerializedUse  //by JSP!
+	public default Set<String> listSkins()
+	{
+		//TemplateManager t = getEngine().getManager( TemplateManager.class );
+		//return t.listSkins(getServletContext(), this.getTemplate() );
+		return emptySet();  //Todo-PP the whole themes ("templates/skins") system is going to be totally redone anyway X3
+	}
+	
+	/**
+	 * @return keys are the language code, values are the descriptive name to show to the user
+	 */
+	@AccessedDynamicallyOrExternallyToJavaOrKnownToBeInImportantSerializedUse  //by JSP!
+	public default Map<String, String> listLanguages()
+	{
+		InternationalizationManager im = getEngine().getManager( InternationalizationManager.class );
+		return im.listLanguages();
+	}
+	
+	@AccessedDynamicallyOrExternallyToJavaOrKnownToBeInImportantSerializedUse  //by JSP!
+	public default Map<String, String> listTimeZones()
+	{
+		TemplateManager t = getEngine().getManager( TemplateManager.class );
+		return t.listTimeZones(getEngine());
+	}
+	
+	@AccessedDynamicallyOrExternallyToJavaOrKnownToBeInImportantSerializedUse  //by JSP!
+	public default Map<String, String> listTimeFormats()
+	{
+		TemplateManager t = getEngine().getManager( TemplateManager.class );
+		return t.listTimeFormats(this);
+	}
+	
+	
+	
+	//public ServletContext getServletContext();
+	public HttpServletRequest getRequest();
+	//public HttpServletResponse getResponse();
 }

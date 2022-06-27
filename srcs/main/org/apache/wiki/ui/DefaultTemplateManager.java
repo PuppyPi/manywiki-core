@@ -177,10 +177,9 @@ public class DefaultTemplateManager extends BaseModuleManager implements Templat
 
     /** {@inheritDoc} */
     @Override
-    public Set< String > listSkins( final PageContext pageContext, final String template ) {
+    public Set< String > listSkins( final ServletContext servletContext, final String template ) {
         final String place = makeFullJSPName( template, SKIN_DIRECTORY );
-        final ServletContext sContext = pageContext.getServletContext();
-        final Set< String > skinSet = sContext.getResourcePaths( place );
+        final Set< String > skinSet = servletContext.getResourcePaths( place );
         final Set< String > resultSet = new TreeSet<>();
 
         log.debug( "Listings skins from {}", place );
@@ -201,8 +200,7 @@ public class DefaultTemplateManager extends BaseModuleManager implements Templat
 
     /** {@inheritDoc} */
     @Override
-    public Map< String, String > listTimeFormats( final PageContext pageContext ) {
-        final Context context = Context.findContext( pageContext );
+    public Map< String, String > listTimeFormats( final Context context ) {
         final Properties props = m_engine.getWikiProperties();
         final ArrayList< String > tfArr = new ArrayList<>(40);
         final LinkedHashMap< String, String > resultMap = new LinkedHashMap<>();

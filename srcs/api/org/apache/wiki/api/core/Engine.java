@@ -481,32 +481,4 @@ public interface Engine {
 	{
 		return asList(this.getManager( EditorManager.class ).getEditorList());
 	}
-	
-	@AccessedDynamicallyOrExternallyToJavaOrKnownToBeInImportantSerializedUse  //by JSP!
-	public default List<String> listSkins()
-	{
-		TemplateManager t = this.getManager( TemplateManager.class );
-		return t.listSkins(pageContext, wikiPageContext.getTemplate() );
-	}
-	
-	@AccessedDynamicallyOrExternallyToJavaOrKnownToBeInImportantSerializedUse  //by JSP!
-	public default List<String> listLanguages()
-	{
-		TemplateManager t = this.getManager( TemplateManager.class );
-		return t.listLanguages(pageContext);
-	}
-	
-	@AccessedDynamicallyOrExternallyToJavaOrKnownToBeInImportantSerializedUse  //by JSP!
-	public default List<String> listTimeZones()
-	{
-		TemplateManager t = this.getManager( TemplateManager.class );
-		return t.listTimeZones(pageContext);
-	}
-	
-	@AccessedDynamicallyOrExternallyToJavaOrKnownToBeInImportantSerializedUse  //by JSP!
-	public default List<String> listTimeFormats()
-	{
-		TemplateManager t = this.getManager( TemplateManager.class );
-		return t.listTimeFormats(pageContext);
-	}
 }

@@ -205,7 +205,7 @@ public final class TextUtil {
     }
 
     /**
-     *  Replaces the relevant entities inside the String. All &amp; &gt;, &lt;, and &quot; are replaced by their respective names.
+     *  Replaces the relevant entities inside the String. All &amp; &gt;, &lt;, &quot;, and &apos; are replaced by their respective names.
      *
      *  @since 1.6.1
      *  @param src The source string.
@@ -216,6 +216,7 @@ public final class TextUtil {
         src = replaceString( src, "<", "&lt;" );
         src = replaceString( src, ">", "&gt;" );
         src = replaceString( src, "\"", "&quot;" );
+        src = replaceString( src, "'", "&apos;" );
 
         return src;
     }

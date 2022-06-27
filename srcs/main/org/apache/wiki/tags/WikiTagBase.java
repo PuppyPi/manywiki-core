@@ -76,7 +76,7 @@ public abstract class WikiTagBase extends TagSupport implements TryCatchFinally 
     }
 
     /**
-     *  This method is allowed to do pretty much whatever he wants.
+     *  This method is allowed to do pretty much whatever it wants.
      *  We then catch all mistakes.
      */
     public abstract int doWikiStartTag() throws Exception;

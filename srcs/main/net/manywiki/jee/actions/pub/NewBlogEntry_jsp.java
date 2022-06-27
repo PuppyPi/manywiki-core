@@ -26,7 +26,7 @@ extends ManyWikiActionBean
 		
 	    // Create wiki context; no need to check for authorization since the redirect will take care of that
 		ContextEnum cte = ContextEnum.PAGE_EDIT;
-	    Context wikiContext = Wiki.context().create( engine, request, cte.getRequestContext() );
+	    Context wikiContext = Wiki.context().create( engine, request, cte.getRequestContext(), getContext().getServletContext() );
 	    String pagereq = wikiContext.getName();
 	    
 	    // Redirect if the request was for a 'special page'

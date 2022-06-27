@@ -25,6 +25,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.wiki.InternalWikiException;
 import org.apache.wiki.api.core.Context;
+import org.apache.wiki.api.core.Engine;
 import org.apache.wiki.i18n.InternationalizationManager;
 import org.apache.wiki.util.HttpUtil;
 import org.apache.wiki.util.PropertyReader;
@@ -107,8 +108,10 @@ public class Preferences extends HashMap< String,String > {
         
         final Context ctx = Context.findContext( request );
         
-        final String dateFormat = ctx.getEngine().getManager( InternationalizationManager.class )
-        .get( InternationalizationManager.CORE_BUNDLE, getLocale( ctx ), "common.datetimeformat" );
+        Engine engine = ctx.getEngine();
+        InternationalizationManager im = engine.getManager( InternationalizationManager.class );
+        
+        final String dateFormat = im.get( InternationalizationManager.CORE_BUNDLE, getLocale( ctx ), "common.datetimeformat" );
         
         final Preferences prefs = new Preferences();
         

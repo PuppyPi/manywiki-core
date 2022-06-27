@@ -31,7 +31,7 @@ extends ManyWikiActionBean
 		
 	    String bean = request.getParameter("bean");
 	    // Create wiki context and check for authorization
-	    Context wikiContext = Wiki.context().create( engine, request, ContextEnum.WIKI_ADMIN.getRequestContext() );
+	    Context wikiContext = Wiki.context().create( engine, request, ContextEnum.WIKI_ADMIN.getRequestContext(), getContext().getServletContext() );
 	    if(!engine.getManager( AuthorizationManager.class ).hasAccess( wikiContext, response ) ) return;
 
 	    // Set the content type and include the response content

@@ -42,7 +42,7 @@ import javax.servlet.jsp.JspException;
  *
  *  @since 2.0
  */
-public class WYSIWYGEditorMode extends WikiTagBase {
+public class WYSIWYGEditorModeTag extends WikiTagBase {
 
     private static final long serialVersionUID = 0l;
 

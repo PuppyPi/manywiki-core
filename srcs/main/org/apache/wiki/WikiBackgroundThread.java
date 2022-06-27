@@ -18,6 +18,7 @@
  */
 package org.apache.wiki;
 
+import static rebound.util.ExceptionPrettyPrintingUtilities.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.wiki.api.core.Engine;
@@ -141,8 +142,10 @@ public abstract class WikiBackgroundThread extends Thread implements WikiEventLi
             // Perform the shutdown task
             shutdownTask();
         } catch( final Throwable t ) {
-            LOG.error( "Background thread error: (stack trace follows)", t );
-            throw new InternalWikiException( t.getMessage() ,t );
+            //LOG.error( "Background thread error: (stack trace follows)", t );  //I hate logging frameworks X"D
+        	printStackTraceFully(t);
+            
+            //throw new InternalWikiException( t.getMessage() ,t );  //this does nothing! we're a toplevel JVM method!!  XD
         }
     }
     

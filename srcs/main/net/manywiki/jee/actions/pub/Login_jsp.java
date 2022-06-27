@@ -60,7 +60,7 @@ extends ManyWikiActionBean
 		
 	    AuthenticationManager mgr = engine.getManager( AuthenticationManager.class );
 	    ContextEnum cte = ContextEnum.WIKI_LOGIN;
-	    Context wikiContext = Wiki.context().create( engine, request, cte.getRequestContext() );
+	    Context wikiContext = Wiki.context().create( engine, request, cte.getRequestContext(), getContext().getServletContext() );
 	    setVariableForJSPView( Context.ATTR_CONTEXT, wikiContext );  //Todo is it a problem that we don't specify the scope as PageContext.REQUEST_SCOPE anymore??
 	    Session wikiSession = wikiContext.getWikiSession();
 	    ResourceBundle rb = Preferences.getBundle( wikiContext, "org.apache.wiki.i18n.core.CoreResources" );

@@ -804,7 +804,7 @@
 
   <tag>
     <name>WYSIWYGEditorMode</name>
-    <tag-class>org.apache.wiki.tags.WYSIWYGEditorMode</tag-class>
+    <tag-class>org.apache.wiki.tags.WYSIWYGEditorModeTag</tag-class>
     <body-content>JSP</body-content>
   </tag>
   

@@ -164,8 +164,6 @@ extends AbstractBindingAnnotatedSimpleJEEActionBeanWithViewResourcePath
 	{
 		try
 		{
-			Preferences.setupPreferences(getRequest(), getContext().getServletContext());  //COOKIE read client preferences
-			
 			log("DFLKDSJFLJF 9) "+getResponse().isCommitted());  //TODO REMOVE
 			
 			doBufferTuning();

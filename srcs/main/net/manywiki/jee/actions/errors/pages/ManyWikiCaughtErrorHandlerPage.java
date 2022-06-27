@@ -35,7 +35,7 @@ public class ManyWikiCaughtErrorHandlerPage
 	
 	public void doLogic(Throwable exception) throws ServletException, IOException
 	{
-		Context wikiContext = Wiki.context().create( engine, request, ContextEnum.WIKI_ERROR.getRequestContext() );
+		Context wikiContext = Wiki.context().create( engine, request, ContextEnum.WIKI_ERROR.getRequestContext(), servletContext );
 		String pagereq = wikiContext.getName();
 		
 		String msg = "An unknown error was caught by Error.jsp";

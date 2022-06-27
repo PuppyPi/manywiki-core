@@ -22,7 +22,8 @@ import org.apache.wiki.api.core.Command;
 import org.apache.wiki.api.core.Context;
 import org.apache.wiki.api.core.Engine;
 import org.apache.wiki.api.core.Page;
-
+import org.apache.wiki.preferences.Preferences;
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
 
@@ -75,8 +76,15 @@ public class ContextDSL {
      *  @param request the HTTP request
      *  @param requestContext the default context to use
      */
-    public Context create( final Engine engine, final HttpServletRequest request, final String requestContext ) {
-        return contextSPI.create( engine, request, requestContext );
+    public Context create( final Engine engine, final HttpServletRequest request, final String requestContext, ServletContext servletContext ) {
+        Context c = contextSPI.create( engine, request, requestContext );
+        
+        request.setAttribute(Context.ATTR_CONTEXT, c);  //TODO-PP get riiiidddddddd offffffff hiddennnnnn vaaaaarrrriiiaaaabbbblllleeeeesssss X'D
+        
+        if (servletContext != null)
+        	Preferences.setupPreferences(request, servletContext);  //COOKIE read client preferences
+		
+        return c;
     }
 
 }

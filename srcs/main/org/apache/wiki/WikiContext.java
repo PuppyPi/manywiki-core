@@ -28,25 +28,31 @@ import org.apache.wiki.api.core.Page;
 import org.apache.wiki.api.core.Session;
 import org.apache.wiki.api.spi.Wiki;
 import org.apache.wiki.auth.AuthorizationManager;
+import org.apache.wiki.auth.GroupPrincipal;
 import org.apache.wiki.auth.NoSuchPrincipalException;
 import org.apache.wiki.auth.UserManager;
 import org.apache.wiki.auth.WikiPrincipal;
+import org.apache.wiki.auth.authorize.Group;
 import org.apache.wiki.auth.permissions.AllPermission;
 import org.apache.wiki.auth.user.UserDatabase;
+import org.apache.wiki.auth.user.UserProfile;
 import org.apache.wiki.pages.PageManager;
 import org.apache.wiki.ui.CommandResolver;
 import org.apache.wiki.ui.Installer;
 import org.apache.wiki.ui.PageCommand;
 import org.apache.wiki.ui.WikiCommand;
 import org.apache.wiki.util.TextUtil;
-
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.servlet.jsp.PageContext;
 import java.security.Permission;
 import java.security.Principal;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.PropertyPermission;
+import java.util.Set;
 
 /**
  *  <p>Provides state information throughout the processing of a page.  A WikiContext is born when the JSP pages that are the main entry
@@ -813,4 +819,158 @@ public class WikiContext implements Context, Command {
     {
     	return m_request;
     }
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    //Overrides for JSPppppppppppp because apparently it doesn't detect default interface methodssssssssss!
+	@Override
+	public String getEncodedName()
+	{
+		return Context.super.getEncodedName();
+	}
+
+	@Override
+	public String getWikiJsonURL()
+	{
+		return Context.super.getWikiJsonURL();
+	}
+
+	@Override
+	public List<Page> getVersionHistoryOfCurrentPage()
+	{
+		return Context.super.getVersionHistoryOfCurrentPage();
+	}
+
+	@Override
+	public Page getLatestVersionOfCurrentPage()
+	{
+		return Context.super.getLatestVersionOfCurrentPage();
+	}
+
+	@Override
+	public String getTextOfCurrentPage()
+	{
+		return Context.super.getTextOfCurrentPage();
+	}
+
+	@Override
+	public int getWordCountOfCurrentPage()
+	{
+		return Context.super.getWordCountOfCurrentPage();
+	}
+
+	@Override
+	public int getNumberOfAttachmentsOnCurrentPage()
+	{
+		return Context.super.getNumberOfAttachmentsOnCurrentPage();
+	}
+
+	@Override
+	public UserProfile getCurrentUserProfile()
+	{
+		return Context.super.getCurrentUserProfile();
+	}
+
+	@Override
+	public List<Cookie> getCookies()
+	{
+		return Context.super.getCookies();
+	}
+
+	@Override
+	public String isWeblog()
+	{
+		return Context.super.isWeblog();
+	}
+
+	@Override
+	public List<GroupPrincipal> getGroupPrincipals()
+	{
+		return Context.super.getGroupPrincipals();
+	}
+
+	@Override
+	public boolean checkPermission(String name, String actions)
+	{
+		return Context.super.checkPermission(name, actions);
+	}
+
+	@Override
+	public Group getGroupByName(String name)
+	{
+		return Context.super.getGroupByName(name);
+	}
+
+	@Override
+	public List<Principal> getGroupMembers(Group group)
+	{
+		return Context.super.getGroupMembers(group);
+	}
+
+	@Override
+	public String getEditURLOfActivePage()
+	{
+		return Context.super.getEditURLOfActivePage();
+	}
+
+	@Override
+	public String getCommentURLOfActivePage()
+	{
+		return Context.super.getCommentURLOfActivePage();
+	}
+
+	@Override
+	public String getEditedTextOfActivePage()
+	{
+		return Context.super.getEditedTextOfActivePage();
+	}
+
+	@Override
+	public String getPureTextOfActivePage()
+	{
+		return Context.super.getPureTextOfActivePage();
+	}
+
+	@Override
+	public String getNoPageUsertextForEditor()
+	{
+		return Context.super.getNoPageUsertextForEditor();
+	}
+
+	@Override
+	public String renderPageAsHTML(String usertext)
+	{
+		return Context.super.renderPageAsHTML(usertext);
+	}
+
+	@Override
+	public Set<String> listSkins()
+	{
+		return Context.super.listSkins();
+	}
+
+	@Override
+	public Map<String, String> listLanguages()
+	{
+		return Context.super.listLanguages();
+	}
+
+	@Override
+	public Map<String, String> listTimeZones()
+	{
+		return Context.super.listTimeZones();
+	}
+
+	@Override
+	public Map<String, String> listTimeFormats()
+	{
+		return Context.super.listTimeFormats();
+	}
 }

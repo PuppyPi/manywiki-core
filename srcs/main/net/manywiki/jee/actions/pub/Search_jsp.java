@@ -35,7 +35,7 @@ extends ManyWikiActionBean
 		
 		// Create wiki context and check for authorization
 		ContextEnum cte = ContextEnum.WIKI_FIND;
-		Context wikiContext = Wiki.context().create( engine, request, cte.getRequestContext() );
+		Context wikiContext = Wiki.context().create( engine, request, cte.getRequestContext(), getContext().getServletContext() );
 		if(!engine.getManager( AuthorizationManager.class ).hasAccess( wikiContext, response )) return;
 		String pagereq = wikiContext.getName();
 		

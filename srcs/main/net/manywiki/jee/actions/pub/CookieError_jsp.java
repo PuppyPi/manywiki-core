@@ -21,7 +21,7 @@ extends ManyWikiActionBean
 		
 		// Create wiki context; authorization check not needed
 		ContextEnum cte = ContextEnum.PAGE_VIEW;
-		Context wikiContext = Wiki.context().create( engine, request, cte.getRequestContext() );
+		Context wikiContext = Wiki.context().create( engine, request, cte.getRequestContext(), getContext().getServletContext() );
 		
 		
 		

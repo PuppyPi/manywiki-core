@@ -34,7 +34,7 @@ extends ManyWikiActionBean
 		
 	    // Create wiki context and check for authorization
 		ContextEnum cte = ContextEnum.PAGE_CONFLICT;
-	    Context wikiContext = Wiki.context().create( engine, request, cte.getRequestContext() );
+	    Context wikiContext = Wiki.context().create( engine, request, cte.getRequestContext(), getContext().getServletContext() );
 	    if( !engine.getManager( AuthorizationManager.class ).hasAccess( wikiContext, response ) ) return;
 	    if( wikiContext.getCommand().getTarget() == null ) {
 	        response.sendRedirect( wikiContext.getURL( wikiContext.getRequestContext(), wikiContext.getName() ) );

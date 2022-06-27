@@ -988,4 +988,33 @@ public class WikiEngine implements Engine {
         return ( T )m_attributes.remove( key );
     }
 
+    
+    
+    
+    
+    
+    //Overrides for JSPppppppppppp because apparently it doesn't detect default interface methodssssssssss!
+	@Override
+	public String getPluginSearchPath()
+	{
+		return Engine.super.getPluginSearchPath();
+	}
+
+	@Override
+	public String newProgressIdentifier()
+	{
+		return Engine.super.newProgressIdentifier();
+	}
+
+	@Override
+	public String getNameAndVersion()
+	{
+		return Engine.super.getNameAndVersion();
+	}
+
+	@Override
+	public List<String> getEditors()
+	{
+		return Engine.super.getEditors();
+	}
 }

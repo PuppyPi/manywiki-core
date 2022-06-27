@@ -173,7 +173,7 @@ public class AttachmentServlet extends HttpServlet {
     // FIXME: Messages would need to be localized somehow.
     @Override
     public void doGet( final HttpServletRequest  req, final HttpServletResponse res ) throws IOException {
-        final Context context = Wiki.context().create( m_engine, req, ContextEnum.PAGE_ATTACH.getRequestContext() );
+        final Context context = Wiki.context().create( m_engine, req, ContextEnum.PAGE_ATTACH.getRequestContext(), getServletContext() );
         final AttachmentManager mgr = m_engine.getManager( AttachmentManager.class );
         final AuthorizationManager authmgr = m_engine.getManager( AuthorizationManager.class );
         final String version = req.getParameter( HDR_VERSION );
@@ -386,7 +386,7 @@ public class AttachmentServlet extends HttpServlet {
             final FileItemFactory factory = new DiskFileItemFactory();
 
             // Create the context _before_ Multipart operations, otherwise strict servlet containers may fail when setting encoding.
-            final Context context = Wiki.context().create( m_engine, req, ContextEnum.PAGE_ATTACH.getRequestContext() );
+            final Context context = Wiki.context().create( m_engine, req, ContextEnum.PAGE_ATTACH.getRequestContext(), getServletContext() );
             final UploadListener pl = new UploadListener();
 
             m_engine.getManager( ProgressManager.class ).startProgress( pl, progressId );

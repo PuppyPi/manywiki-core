@@ -37,7 +37,7 @@ extends ManyWikiActionBean
 		HttpServletResponse response = getResponse();
 		
 			
-			  Context wikiContext = Wiki.context().create( engine, request, ContextEnum.WIKI_FIND.getRequestContext() );
+			  Context wikiContext = Wiki.context().create( engine, request, ContextEnum.WIKI_FIND.getRequestContext(), getContext().getServletContext() );
 			  if(!engine.getManager( AuthorizationManager.class ).hasAccess( wikiContext, response ) ) return;  //TODO don't send 401?!?
 
 			  String query = request.getParameter( "query");

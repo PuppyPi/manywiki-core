@@ -69,6 +69,7 @@ import rebound.annotations.semantic.meta.dependencies.DependencyFile;
 @DependencyClass(org.apache.wiki.tags.UserNameTag.class)
 @DependencyClass(org.apache.wiki.tags.UserProfileTag.class)
 @DependencyClass(org.apache.wiki.tags.VariableTag.class)
+@DependencyClass(org.apache.wiki.tags.WYSIWYGEditorModeTag.class)
 
 public class DependenciesOfJSPTagLibrary
 {

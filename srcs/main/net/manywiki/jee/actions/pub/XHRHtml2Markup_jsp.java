@@ -21,7 +21,7 @@ extends ManyWikiActionBean
 	protected void doLogic() throws ServletException, IOException
 	{
 		ContextEnum cte = ContextEnum.PAGE_VIEW;
-		Context wikiContext = Wiki.context().create( engine, getRequest(), cte.getRequestContext() );
+		Context wikiContext = Wiki.context().create( engine, getRequest(), cte.getRequestContext(), getContext().getServletContext() );
 		
 		if( !engine.getManager( AuthorizationManager.class ).hasAccess( wikiContext, getResponse() ) ) return;
 		

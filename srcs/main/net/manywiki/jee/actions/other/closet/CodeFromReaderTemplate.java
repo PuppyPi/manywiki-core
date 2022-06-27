@@ -27,6 +27,8 @@ extends ManyWikiActionBean
 	    // ...
 	    
 		setVariableForJSPView("wikiJsonUrl", wikiContext.getURL( ContextEnum.PAGE_NONE.getRequestContext(), "ajax" ));
+		setVariableForJSPView("wikiPageContext", wikiContext);
+		
         serveJSPView("/templates/reader/ViewTemplate.jsp");
 	}
 }

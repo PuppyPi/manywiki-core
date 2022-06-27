@@ -31,6 +31,7 @@ extends ManyWikiActionBean
 		// Stash the wiki context and message text
 		request.setAttribute( Context.ATTR_CONTEXT, wikiContext );
 		request.setAttribute( "message", request.getParameter( "message" ) );
+		setVariableForJSPView("wikiPageContext", wikiContext);
 		
 		// Set the content type and include the response content
 		response.setContentType( "text/html; charset=" + engine.getContentEncoding() );

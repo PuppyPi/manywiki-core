@@ -110,6 +110,7 @@ extends ManyWikiActionBean
 		
 		setVariableForJSPView("name", name);
 		setVariableForJSPView("membersAsString", membersAsString);
+		setVariableForJSPView("wikiPageContext", wikiContext);
 		
 		
 		

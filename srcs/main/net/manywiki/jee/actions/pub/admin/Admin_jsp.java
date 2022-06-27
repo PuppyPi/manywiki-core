@@ -65,6 +65,7 @@ extends ManyWikiActionBean
 	    setVariableForJSPView("adminBeanId", ab == null ? null : ab.getId());
 	    setVariableForJSPView("adminBeanTitle", ab == null ? null : ab.getTitle());
 	    setVariableForJSPView("adminBeanResponse", adminBeanResponse);
+		setVariableForJSPView("wikiPageContext", wikiContext);
 	    
 	    //%><wiki:Include page="<%=contentPage%>" />		
 		serveJSPView("/templates/default/admin/AdminTemplate.jsp");

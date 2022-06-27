@@ -290,6 +290,7 @@ extends ManyWikiActionBean
 	    response.setDateHeader( "Last-Modified", new Date().getTime() );
 	    
 	    setVariableForJSPView("editorSelector", EditorSelectors.getActiveEditorsSelector(engine, wikiContext));
+		setVariableForJSPView("wikiPageContext", wikiContext);
 	    serveJSPView("/templates/default/edit/CommentContent.jsp");
 	}
 }

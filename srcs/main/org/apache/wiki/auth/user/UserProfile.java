@@ -21,6 +21,7 @@ package org.apache.wiki.auth.user;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Map;
+import rebound.annotations.semantic.AccessedDynamicallyOrExternallyToJavaOrKnownToBeInImportantSerializedUse;
 
 /**
  * Class for representing wiki user information, such as the login name, full
@@ -46,6 +47,7 @@ public interface UserProfile extends Serializable
      * Returns the creation date.
      * @return the creation date
      */
+	@AccessedDynamicallyOrExternallyToJavaOrKnownToBeInImportantSerializedUse  //by JSP!
     Date getCreated();
 
     /**
@@ -64,6 +66,7 @@ public interface UserProfile extends Serializable
      * Returns the last-modified date.
      * @return the date and time of last modification
      */
+	@AccessedDynamicallyOrExternallyToJavaOrKnownToBeInImportantSerializedUse  //by JSP!
     Date getLastModified();
 
     /**

@@ -17,6 +17,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import net.manywiki.jee.actions.ManyWikiActionBean;
+import net.manywiki.jee.actions.shared.AJAXSearchSharedCode;
 
 public class Search_jsp
 extends ManyWikiActionBean
@@ -39,7 +40,7 @@ extends ManyWikiActionBean
 		String pagereq = wikiContext.getName();
 		
 		// Get the search results
-		Collection< SearchResult > list = null;
+		Collection< SearchResult > searchresults = null;
 		String query = request.getParameter( "query");
 		String go    = request.getParameter("go");
 		
@@ -47,8 +48,8 @@ extends ManyWikiActionBean
 			log.info("Searching for string "+query);
 			
 			try {
-				list = engine.getManager( SearchManager.class ).findPages( query, wikiContext );
-				setVariableForJSPView( "searchresults", list );  //Todo is it a problem that we don't specify the scope as PageContext.REQUEST_SCOPE anymore??
+				searchresults = engine.getManager( SearchManager.class ).findPages( query, wikiContext );
+				setVariableForJSPView( "searchresults", searchresults );  //Todo is it a problem that we don't specify the scope as PageContext.REQUEST_SCOPE anymore??
 			} catch( Exception e ) {
 				wikiContext.getWikiSession().addMessage( e.getMessage() );
 			}
@@ -61,8 +62,8 @@ extends ManyWikiActionBean
 			//  Did the user click on "go"?
 			//
 			if( go != null ) {
-				if( list != null && list.size() > 0 ) {
-					SearchResult sr = list.iterator().next();
+				if( searchresults != null && searchresults.size() > 0 ) {
+					SearchResult sr = searchresults.iterator().next();
 					Page wikiPage = sr.getPage();
 					String url = wikiContext.getViewURL( wikiPage.getName() );
 					response.sendRedirect( url );
@@ -71,9 +72,11 @@ extends ManyWikiActionBean
 			}
 		}
 		
+		setVariableForJSPView("maxitems", AJAXSearchSharedCode.computeMaxItems(request, searchresults));
+		setVariableForJSPView("wikiPageContext", wikiContext);
+		
 		// Set the content type and include the response content
 		response.setContentType("text/html; charset="+engine.getContentEncoding() );
-		
 		serveJSPView("/templates/default/view/FindContent.jsp");
 		
 		log.debug("SEARCH COMPLETE");

@@ -93,6 +93,7 @@ public class InfoContentSharedCode
 		bean.setVariableForJSPView("paginationURL", wikiContext.getURL(ContextEnum.PAGE_INFO.getRequestContext(), wikiPage.getName(), "start=%s"));
 		bean.setVariableForJSPView("progressId", wikiContext.getEngine().getManager( ProgressManager.class ).getNewProgressIdentifier());
 		
+		bean.setVariableForJSPView("wikiPageContext", wikiContext);
 		
 		
 		

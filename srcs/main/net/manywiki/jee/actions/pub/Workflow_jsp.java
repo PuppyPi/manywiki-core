@@ -98,9 +98,11 @@ extends ManyWikiActionBean
 	    request.setAttribute("decisions",   dq.getActorDecisions(wikiSession));
 	    request.setAttribute("workflows",   engine.getManager( WorkflowManager.class ).getOwnerWorkflows( wikiSession ) );
 	    request.setAttribute("wikiSession", wikiSession);
+		setVariableForJSPView("wikiPageContext", wikiContext);
 	    
+		
+		
 	    response.setContentType("text/html; charset="+engine.getContentEncoding() );
-	    
         serveJSPView("/templates/default/view/WorkflowContent.jsp");
 	}
 }

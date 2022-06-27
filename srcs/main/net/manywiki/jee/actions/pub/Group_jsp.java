@@ -48,6 +48,12 @@ extends ManyWikiActionBean
 	        wikiSession.addMessage( GroupManager.MESSAGES_KEY, e.getMessage() );
 	    }
 	    
+	    
+	    
+	    
+		setVariableForJSPView("wikiPageContext", wikiContext);
+		
+	    
 	    // Set the content type and include the response content
 	    response.setContentType("text/html; charset="+engine.getContentEncoding() );
 	    

@@ -12,6 +12,7 @@ import net.manywiki.jee.TemporaryManyWikiRoot;
 import net.manywiki.jee.actions.errors.ManyWikiErrorStatusCodeInterceptor;
 import net.manywiki.jee.actions.errors.pages.ManyWikiCaughtErrorHandlerPage;
 import org.apache.wiki.WikiEngine;
+import org.apache.wiki.preferences.Preferences;
 import rebound.net.ReURL;
 import rebound.simplejee.FlushPendingHttpServletResponseDecorator;
 import rebound.simplejee.ReplacementErrorResolutionResponseWrapper;
@@ -163,6 +164,8 @@ extends AbstractBindingAnnotatedSimpleJEEActionBeanWithViewResourcePath
 	{
 		try
 		{
+			Preferences.setupPreferences(pageContext);  //COOKIE read client preferences
+			
 			log("DFLKDSJFLJF 9) "+getResponse().isCommitted());  //TODO REMOVE
 			
 			doBufferTuning();

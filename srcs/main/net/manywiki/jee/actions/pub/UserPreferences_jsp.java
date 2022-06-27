@@ -131,8 +131,10 @@ extends ManyWikiActionBean
 		}
 		
 		
-		response.setContentType( "text/html; charset=" + engine.getContentEncoding() );
 		
+		setVariableForJSPView("wikiPageContext", wikiContext);
+		
+		response.setContentType( "text/html; charset=" + engine.getContentEncoding() );
         serveJSPView("/templates/default/view/PreferencesContent.jsp");
 	}
 }

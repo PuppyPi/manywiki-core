@@ -20,6 +20,7 @@ package org.apache.wiki.api.core;
 
 import java.util.Date;
 import java.util.Map;
+import rebound.annotations.semantic.AccessedDynamicallyOrExternallyToJavaOrKnownToBeInImportantSerializedUse;
 
 
 public interface Page extends Cloneable, Comparable< Page > {
@@ -75,6 +76,7 @@ public interface Page extends Cloneable, Comparable< Page > {
      *
      *  @return the version number of this page.
      */
+    @AccessedDynamicallyOrExternallyToJavaOrKnownToBeInImportantSerializedUse  //by JSP!
     int getVersion();
 
     /**

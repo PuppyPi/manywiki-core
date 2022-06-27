@@ -267,6 +267,7 @@ extends ManyWikiActionBean
 		
 		
 	    setVariableForJSPView("editorSelector", EditorSelectors.getActiveEditorsSelector(engine, wikiContext));
+		setVariableForJSPView("wikiPageContext", wikiContext);
 		serveJSPView("/templates/default/edit/EditContent.jsp");
 	}
 }

@@ -54,7 +54,10 @@ extends ManyWikiActionBean
 
 	    log.info("Page concurrently modified "+pagereq);
 	    setVariableForJSPView( "usertext", usertext );  //Todo is it a problem that we don't specify the scope as PageContext.REQUEST_SCOPE anymore??
+		setVariableForJSPView("wikiPageContext", wikiContext);
 
+		
+		
 	    // Set the content type and include the response content
 	    response.setContentType("text/html; charset="+engine.getContentEncoding() );
 	    

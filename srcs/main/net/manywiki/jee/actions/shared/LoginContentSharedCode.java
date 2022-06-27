@@ -47,6 +47,7 @@ public class LoginContentSharedCode
 	    
 	    bean.setVariableForJSPView("allowsCookieAuthentication", mgr.allowsCookieAuthentication());
 	    bean.setVariableForJSPView("loginURL", loginURL);
+		bean.setVariableForJSPView("wikiPageContext", wikiContext);
 		
 		
 		

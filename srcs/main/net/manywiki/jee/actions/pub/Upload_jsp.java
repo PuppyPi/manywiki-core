@@ -31,6 +31,9 @@ extends ManyWikiActionBean
 	    if(!engine.getManager( AuthorizationManager.class ).hasAccess( wikiContext, response )) return;
 	    String pagereq = wikiContext.getName();
 
+	    setVariableForJSPView("wikiPageContext", wikiContext);
+	    
+	    
 	    // Set the content type and include the response content
 	    response.setContentType("text/html; charset="+engine.getContentEncoding() );
 	    

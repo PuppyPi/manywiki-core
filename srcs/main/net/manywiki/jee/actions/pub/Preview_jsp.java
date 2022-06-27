@@ -53,8 +53,9 @@ extends ManyWikiActionBean
 		
 		String wikiMarkup = EditorManager.getEditedText(request);
 		
-		setVariableForJSPView("editorSelector", EditorSelectors.getActiveEditorsSelector(engine, wikiContext));
 		setVariableForJSPView("wikiMarkup", wikiMarkup);
+		setVariableForJSPView("editorSelector", EditorSelectors.getActiveEditorsSelector(engine, wikiContext));
+		setVariableForJSPView("wikiPageContext", wikiContext);
 		
 		// Set the content type and include the response content
 		response.setContentType("text/html; charset="+engine.getContentEncoding() );

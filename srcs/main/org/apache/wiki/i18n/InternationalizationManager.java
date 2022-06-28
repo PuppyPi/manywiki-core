@@ -18,6 +18,7 @@
  */
 package org.apache.wiki.i18n;
 
+import static rebound.text.StringUtilities.*;
 import static rebound.util.collections.CollectionUtilities.*;
 import java.text.MessageFormat;
 import java.util.Locale;
@@ -26,6 +27,7 @@ import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 import rebound.annotations.semantic.AccessedDynamicallyOrExternallyToJavaOrKnownToBeInImportantSerializedUse;
 import rebound.annotations.semantic.meta.dependencies.DependencyDirectory;
+import rebound.exceptions.ResourceException;
 
 /**
  *  Manages all internationalization in JSPWiki.
@@ -88,7 +90,14 @@ public interface InternationalizationManager {
      *  @throws MissingResourceException If the key cannot be located at all, even from the default locale.
      */
     default String get( final String bundle, final Locale locale, final String key ) throws MissingResourceException {
-        return getBundle( bundle, locale ).getString( key );
+        try
+		{
+			return getBundle( bundle, locale ).getString( key );
+		}
+		catch (MissingResourceException exc)
+		{
+			throw new ResourceException("Can't find resource for bundle "+repr(bundle)+" in locale "+repr(locale.toString())+" for key "+repr(key), exc);
+		}
     }
 
     /**

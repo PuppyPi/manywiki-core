@@ -12,7 +12,6 @@ import net.manywiki.jee.TemporaryManyWikiRoot;
 import net.manywiki.jee.actions.errors.ManyWikiErrorStatusCodeInterceptor;
 import net.manywiki.jee.actions.errors.pages.ManyWikiCaughtErrorHandlerPage;
 import org.apache.wiki.WikiEngine;
-import org.apache.wiki.preferences.Preferences;
 import rebound.net.ReURL;
 import rebound.simplejee.FlushPendingHttpServletResponseDecorator;
 import rebound.simplejee.ReplacementErrorResolutionResponseWrapper;
@@ -111,6 +110,8 @@ extends AbstractBindingAnnotatedSimpleJEEActionBeanWithViewResourcePath
 	@Override
 	public final void doAction() throws ServletException, IOException
 	{
+		getRequest().getSession(true);  //Always create a session for ManyWiki, even if it's just an anonymous person on the internet, that way the "breadcrumb" thing will work (and we can't go back and make one after the response has been committed because we'll need to send a cookie!)
+		
 		log("DFLKDSJFLJF 7) "+getResponse().isCommitted());  //TODO REMOVE
 		if (!getRequest().getMethod().equals("GET") && !getRequest().getMethod().equals("POST"))
 		{
@@ -192,8 +193,12 @@ extends AbstractBindingAnnotatedSimpleJEEActionBeanWithViewResourcePath
 		{
 			//Note that we VERY MUCH don't want to use getResponse()!! (or else when it invoked response.sendError() it will get intercepted!!).
 			//It must use the equivalent of getContext().getResponse() instead—ie, the original response!
-			ManyWikiCaughtErrorHandlerPage errorHandler = new ManyWikiCaughtErrorHandlerPage(getContext().getRequest(), getContext().getResponse(), getContext().getServletContext(), engine);
-			errorHandler.doLogic(exc);
+			HttpServletResponse originalResponse = getContext().getResponse();
+			if (!originalResponse.isCommitted())
+			{
+				ManyWikiCaughtErrorHandlerPage errorHandler = new ManyWikiCaughtErrorHandlerPage(getContext().getRequest(), originalResponse, getContext().getServletContext(), engine);
+				errorHandler.doLogic(exc);
+			}
 		}
 	}
 	

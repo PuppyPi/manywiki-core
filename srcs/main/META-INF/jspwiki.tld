@@ -824,7 +824,7 @@
 			org.apache.wiki.ui.WikiTaglibFunctions
 		</function-class>
 		<function-signature>
-			java.lang.String getChangeNote()
+			java.lang.String getChangeNote(org.apache.wiki.api.core.Page)
 		</function-signature>
 	</function>
   

@@ -113,7 +113,6 @@ extends AbstractBindingAnnotatedSimpleJEEActionBeanWithViewResourcePath
 	{
 		getRequest().getSession(true);  //Always create a session for ManyWiki, even if it's just an anonymous person on the internet, that way the "breadcrumb" thing will work (and we can't go back and make one after the response has been committed because we'll need to send a cookie!)
 		
-		log("DFLKDSJFLJF 7) "+getResponse().isCommitted());  //TODO REMOVE
 		if (!getRequest().getMethod().equals("GET") && !getRequest().getMethod().equals("POST"))
 		{
 			//We can include a nice body in this as HTML in case they render it to someone somewhere X3
@@ -154,7 +153,6 @@ extends AbstractBindingAnnotatedSimpleJEEActionBeanWithViewResourcePath
 		}
 		else
 		{
-			log("DFLKDSJFLJF 8) "+getResponse().isCommitted());  //TODO REMOVE
 			doValidAction();
 		}
 	}
@@ -166,21 +164,15 @@ extends AbstractBindingAnnotatedSimpleJEEActionBeanWithViewResourcePath
 	{
 		try
 		{
-			log("DFLKDSJFLJF 9) "+getResponse().isCommitted());  //TODO REMOVE
-			
 			doBufferTuning();
-			
-			log("DFLKDSJFLJF 10) "+getResponse().isCommitted());  //TODO REMOVE
 			
 			long start = System.currentTimeMillis();
 			try
 			{
 				if (doBinding()) //This has to come before passFail() because it binds information used in determining the  auth checks, etc.
 				{
-					log("DFLKDSJFLJF 11) "+getResponse().isCommitted());  //TODO REMOVE
 					if (passFail())
 					{
-						log("DFLKDSJFLJF 12) "+getResponse().isCommitted());  //TODO REMOVE
 						doLogic();
 					}
 				}
@@ -224,7 +216,6 @@ extends AbstractBindingAnnotatedSimpleJEEActionBeanWithViewResourcePath
 	protected void doLogic() throws ServletException, IOException
 	{
 		//This is the default :3
-		log("DFLKDSJFLJF 13) "+getResponse().isCommitted());  //TODO REMOVE
 		serveView();
 	}
 	

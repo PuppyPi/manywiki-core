@@ -2,6 +2,7 @@ package net.manywiki.jee.actions;
 
 import static rebound.GlobalCodeMetastuffContext.*;
 import static rebound.text.StringUtilities.*;
+import static rebound.util.ExceptionPrettyPrintingUtilities.*;
 import java.io.IOException;
 import java.lang.annotation.Annotation;
 import java.net.URLEncoder;
@@ -189,15 +190,18 @@ extends AbstractBindingAnnotatedSimpleJEEActionBeanWithViewResourcePath
 				logBenchmark(start, "Whole action for "+getClass());
 			}
 		}
-		catch (Throwable exc)
+		catch (Throwable t)
 		{
+			System.err.println("Error encountered serving the request URI path "+repr(getContext().getRequest().getRequestURI())+" :");
+			printStackTraceFully(t);
+			
 			//Note that we VERY MUCH don't want to use getResponse()!! (or else when it invoked response.sendError() it will get intercepted!!).
 			//It must use the equivalent of getContext().getResponse() instead—ie, the original response!
 			HttpServletResponse originalResponse = getContext().getResponse();
 			if (!originalResponse.isCommitted())
 			{
 				ManyWikiCaughtErrorHandlerPage errorHandler = new ManyWikiCaughtErrorHandlerPage(getContext().getRequest(), originalResponse, getContext().getServletContext(), engine);
-				errorHandler.doLogic(exc);
+				errorHandler.doLogic(t);
 			}
 		}
 	}

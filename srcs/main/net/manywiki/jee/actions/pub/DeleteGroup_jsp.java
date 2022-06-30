@@ -30,7 +30,7 @@ extends ManyWikiActionBean
 		
 	    // Create wiki context and check for authorization
 		ContextEnum cte = ContextEnum.GROUP_DELETE;
-	    Context wikiContext = Wiki.context().create( engine, request, cte.getRequestContext(), getContext().getServletContext() );
+	    Context wikiContext = Wiki.context().create( engine, request, cte.getRequestContext(), getActionBeanContext().getServletContext() );
 	    if(!engine.getManager( AuthorizationManager.class ).hasAccess( wikiContext, response )) return;
 
 	    Session wikiSession = wikiContext.getWikiSession();

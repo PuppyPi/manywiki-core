@@ -64,8 +64,8 @@ extends AbstractBindingAnnotatedSimpleJEEActionBeanWithViewResourcePath
 		{
 			if (errorInterceptorResponse == null)
 			{
-				HttpServletResponse underlying = getContext().getResponse();
-				errorInterceptorResponse = new ReplacementErrorResolutionResponseWrapper(underlying, (int code, String message) -> ManyWikiErrorStatusCodeInterceptor.sendError(getContext().getRequest(), underlying, getContext().getServletContext(), code, message, engine));
+				HttpServletResponse underlying = getActionBeanContext().getResponse();
+				errorInterceptorResponse = new ReplacementErrorResolutionResponseWrapper(underlying, (int code, String message) -> ManyWikiErrorStatusCodeInterceptor.sendError(getActionBeanContext().getRequest(), underlying, getActionBeanContext().getServletContext(), code, message, engine));
 				this.errorInterceptorResponse = errorInterceptorResponse;
 			}
 		}
@@ -184,15 +184,15 @@ extends AbstractBindingAnnotatedSimpleJEEActionBeanWithViewResourcePath
 		}
 		catch (Throwable t)
 		{
-			System.err.println("Error encountered serving the request URI path "+repr(getContext().getRequest().getRequestURI())+" :");
+			System.err.println("Error encountered serving the request URI path "+repr(getActionBeanContext().getRequest().getRequestURI())+" :");
 			printStackTraceFully(t);
 			
 			//Note that we VERY MUCH don't want to use getResponse()!! (or else when it invoked response.sendError() it will get intercepted!!).
 			//It must use the equivalent of getContext().getResponse() instead—ie, the original response!
-			HttpServletResponse originalResponse = getContext().getResponse();
+			HttpServletResponse originalResponse = getActionBeanContext().getResponse();
 			if (!originalResponse.isCommitted())
 			{
-				ManyWikiCaughtErrorHandlerPage errorHandler = new ManyWikiCaughtErrorHandlerPage(getContext().getRequest(), originalResponse, getContext().getServletContext(), engine);
+				ManyWikiCaughtErrorHandlerPage errorHandler = new ManyWikiCaughtErrorHandlerPage(getActionBeanContext().getRequest(), originalResponse, getActionBeanContext().getServletContext(), engine);
 				errorHandler.doLogic(t);
 			}
 		}

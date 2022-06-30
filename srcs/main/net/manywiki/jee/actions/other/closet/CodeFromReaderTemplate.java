@@ -22,7 +22,7 @@ extends ManyWikiActionBean
 		
 	    // Create wiki context and check for authorization
 		ContextEnum cte = ContextEnum.PAGE_COMMENT;
-	    Context wikiContext = Wiki.context().create( engine, request, cte.getRequestContext(), getContext().getServletContext() );
+	    Context wikiContext = Wiki.context().create( engine, request, cte.getRequestContext(), getActionBeanContext().getServletContext() );
 	    
 	    // ...
 	    

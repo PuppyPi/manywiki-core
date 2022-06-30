@@ -41,7 +41,7 @@ extends ManyWikiActionBean
 		
 		// Create wiki context and check for authorization
 		ContextEnum cte = ContextEnum.WIKI_PREFS;
-		Context wikiContext = Wiki.context().create( engine, request, cte.getRequestContext(), getContext().getServletContext() );
+		Context wikiContext = Wiki.context().create( engine, request, cte.getRequestContext(), getActionBeanContext().getServletContext() );
 		if( !engine.getManager( AuthorizationManager.class ).hasAccess( wikiContext, response ) ) return;
 		
 		// Extract the user profile and action attributes
@@ -97,7 +97,7 @@ extends ManyWikiActionBean
 			}
 		}
 		if( "setAssertedName".equals( request.getParameter( "action" ) ) ) {
-			Preferences.reloadPreferences( request, getContext().getServletContext() );
+			Preferences.reloadPreferences( request, getActionBeanContext().getServletContext() );
 			
 			String assertedName = request.getParameter( "assertedName" );
 			CookieAssertionLoginModule.setUserCookie( response, assertedName );
@@ -116,7 +116,7 @@ extends ManyWikiActionBean
 		if( "clearAssertedName".equals( request.getParameter( "action" ) ) ) {
 			HttpUtil.clearCookie( response, Preferences.COOKIE_USER_PREFS_NAME );
 			CookieAssertionLoginModule.clearUserCookie( response );
-			Preferences.reloadPreferences( request, getContext().getServletContext() );
+			Preferences.reloadPreferences( request, getActionBeanContext().getServletContext() );
 			
 			String redirectPage = request.getParameter( "redirect" );
 			if( !engine.getManager( PageManager.class ).wikiPageExists( redirectPage ) )

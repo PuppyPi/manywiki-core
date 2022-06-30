@@ -20,7 +20,7 @@ extends ManyWikiActionBean
 		HttpServletResponse response = getResponse();
 		
 		  // Copied from a top-level jsp -- which would be a better place to put this 
-		  Context wikiContext = Wiki.context().create( engine, request, ContextEnum.PAGE_VIEW.getRequestContext(), getContext().getServletContext() );
+		  Context wikiContext = Wiki.context().create( engine, request, ContextEnum.PAGE_VIEW.getRequestContext(), getActionBeanContext().getServletContext() );
 		  if( !engine.getManager( AuthorizationManager.class ).hasAccess( wikiContext, response ) ) return;
 		  String pagereq = wikiContext.getPage().getName();
 

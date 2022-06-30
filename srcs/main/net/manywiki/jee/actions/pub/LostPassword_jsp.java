@@ -107,7 +107,7 @@ extends ManyWikiActionBean
 	    // If no context, it means we're using container auth.  So, create one anyway
 //	    if( wikiContext == null ) {
 			ContextEnum cte = ContextEnum.WIKI_LOGIN;
-	    	Context wikiContext = Wiki.context().create( engine, request, cte.getRequestContext(), getContext().getServletContext() ); /* reuse login context ! */
+	    	Context wikiContext = Wiki.context().create( engine, request, cte.getRequestContext(), getActionBeanContext().getServletContext() ); /* reuse login context ! */
 	        setVariableForJSPView( Context.ATTR_CONTEXT, wikiContext );  //Todo is it a problem that we don't specify the scope as PageContext.REQUEST_SCOPE anymore??
 //	    }
 

@@ -41,7 +41,7 @@ extends ManyWikiActionBean
 	     */
 	    // Create wiki context and check for authorization
 		ContextEnum cte = ContextEnum.PAGE_RSS;
-	    Context wikiContext = Wiki.context().create( engine, request, cte.getRequestContext(), getContext().getServletContext() );
+	    Context wikiContext = Wiki.context().create( engine, request, cte.getRequestContext(), getActionBeanContext().getServletContext() );
 	    if( !engine.getManager( AuthorizationManager.class ).hasAccess( wikiContext, response ) ) return;
 	    
 	    Set< String > allPages = engine.getManager( ReferenceManager.class ).findCreated();

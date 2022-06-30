@@ -831,10 +831,10 @@
 	<function>
 		<name>escapeHTML</name>
 		<function-class>
-			org.apache.wiki.util.TextUtil
+			org.apache.wiki.ui.WikiTaglibFunctions
 		</function-class>
 		<function-signature>
-			java.lang.String replaceEntities(java.lang.String)
+			java.lang.String escapeHTML(java.lang.String)
 		</function-signature>
 	</function>
 </taglib>

@@ -56,7 +56,7 @@ public class DefaultVariableManager implements VariableManager {
     /**
      *  Contains a list of those properties that shall never be shown. Put names here in lower case.
      */
-    static final String[] THE_BIG_NO_NO_LIST = {
+    static final String[] THE_BIG_NO_NO_LIST = {   //FIXME-PP AWWwwwww! That's a cute name!! :DD     But this is permission-based blocklisting not capability-based passlisting security..and that itself is a no-no XD   The master password shouldn't even be accessible by the same system as the background color imo! XDD''
         "jspwiki.auth.masterpassword"
     };
 

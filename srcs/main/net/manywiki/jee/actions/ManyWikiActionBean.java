@@ -111,8 +111,6 @@ extends AbstractBindingAnnotatedSimpleJEEActionBeanWithViewResourcePath
 	@Override
 	public final void doAction() throws ServletException, IOException
 	{
-		getRequest().getSession(true);  //Always create a session for ManyWiki, even if it's just an anonymous person on the internet, that way the "breadcrumb" thing will work (and we can't go back and make one after the response has been committed because we'll need to send a cookie!)
-		
 		if (!getRequest().getMethod().equals("GET") && !getRequest().getMethod().equals("POST"))
 		{
 			//We can include a nice body in this as HTML in case they render it to someone somewhere X3

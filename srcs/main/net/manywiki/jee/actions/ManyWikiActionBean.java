@@ -57,6 +57,12 @@ extends AbstractBindingAnnotatedSimpleJEEActionBeanWithViewResourcePath
 		return engine;
 	}
 	
+	@Override
+	public void setViewResourcePath(String path)
+	{
+		super.setViewResourcePath(path);
+	}
+	
 	
 	public HttpServletResponse getResponse()
 	{
